@@ -15,32 +15,57 @@
  */
 
 def versions = [
-    support: '25.0.1'
+    kotlin    : "1.1.51",
+    rxBinding : "2.0.0",
+    support   : "26.1.0"
+]
+
+def apt = [
+    javapoet : "com.squareup:javapoet:1.9.0",
 ]
 
 def build = [
-    buildToolsVersion: '25.0.2',
-    compileSdkVersion: 25,
+    androidPlugin       : "com.android.tools.build:gradle:2.3.1",
+    buildToolsVersion   : "26.0.2",
+    compileSdkVersion   : 26,
     ci: 'true' == System.getenv('CI'),
-    minSdkVersion: 16,
-    targetSdkVersion: 25,
+    googleJavaFormatter : "com.google.googlejavaformat:google-java-format:1.4",
+    minSdkVersion       : 16,
+    targetSdkVersion    : 25
+]
 
-    gradlePlugins: [
-        android: 'com.android.tools.build:gradle:2.3.1',
-    ]
+def external = [
+    rxbinding             : "com.jakewharton.rxbinding2:rxbinding:${versions.rxBinding}",
+    rxbindingAppCompat    : "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${versions.rxBinding}",
+    rxbindingDesign       : "com.jakewharton.rxbinding2:rxbinding-design:${versions.rxBinding}",
+    rxbindingRecyclerView : "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${versions.rxBinding}",
+    rxbindingSupportV4    : "com.jakewharton.rxbinding2:rxbinding-support-v4:${versions.rxBinding}",
+    rxjava2               : "io.reactivex.rxjava2:rxjava:2.1.4",
+    rxrelay2              : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
+]
+
+def kotlin = [
+    gradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+    stdLibJre8   : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
 ]
 
 def support = [
-    appcompat   : "com.android.support:appcompat-v7:${versions.support}"
+    appcompat : "com.android.support:appcompat-v7:${versions.support}"
 ]
 
 def test = [
-    junit: 'junit:junit:4.12',
+    junit       : 'junit:junit:4.12',
+    robolectric : "org.robolectric:android-all:8.1.0-robolectric-4402310"
+    truth       : "com.google.truth:truth:0.34",
 ]
 
 ext.deps = [
-    "build": build,
-    "support": support,
-    "test": test,
-    "versions": versions
+    "apt"      : apt,
+    "build"    : build,
+    "external" : external,
+    "kotlin"   : kotlin,
+    "support"  : support,
+    "test"     : test,
+    "versions" : versions
 ]
+
