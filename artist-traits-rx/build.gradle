@@ -1,0 +1,15 @@
+apply plugin: "kotlin"
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    // Also requires RxBinding be on the classpath. Since it is an AAR, we can't include it here.
+    compile deps.apt.javapoet
+    compile deps.kotlin.stdLibJre7
+    compile deps.external.rxjava2
+    compile deps.external.rxrelay2
+    compile project(":artist-api")
+}
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

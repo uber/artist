@@ -1,0 +1,12 @@
+apply plugin: "kotlin"
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    compile deps.apt.javapoet
+    compile deps.kotlin.stdLibJre7
+    compile project(":artist-api")
+}
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

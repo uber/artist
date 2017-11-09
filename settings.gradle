@@ -1,0 +1,4 @@
+include ':artist'
+include ':artist-api'
+include ':artist-traits'
+include ':artist-traits-rx'
