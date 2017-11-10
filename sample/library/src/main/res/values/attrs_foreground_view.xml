@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ForegroundView">
+    <attr name="android:foreground"/>
+    <attr name="android:foregroundGravity"/>
+    <attr name="foregroundInsidePadding"/>
+  </declare-styleable>
+</resources>

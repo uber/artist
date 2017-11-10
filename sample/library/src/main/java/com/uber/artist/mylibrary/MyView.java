@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits
+package com.uber.artist.mylibrary;
 
-import com.uber.artist.api.TraitProvider
-
-class DefaultTraitProvider : TraitProvider {
-
-    override fun traits() = setOf(
-            ForegroundTrait(),
-            VisibilityTrait()
-    )
-}
+public interface MyView { }

@@ -21,7 +21,6 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.Trait
-import com.uber.artist.api.TypeNames
 import com.uber.artist.traits.rx.config.ArtistRxConfigService
 import javax.lang.model.element.Modifier
 
@@ -34,22 +33,9 @@ open class ViewTrait : Trait {
             rClass: ClassName,
             sourceType: String) {
 
-        // Visibility convenience methods
-        type.addMethod(addVisibilityConvenienceMethods("visible"))
-        type.addMethod(addVisibilityConvenienceMethods("gone"))
-        type.addMethod(addVisibilityConvenienceMethods("invisible"))
-
         clicks(type, sourceType)
         longClicks(type, sourceType)
         layoutChanges(type)
-    }
-
-    open fun addVisibilityConvenienceMethods(type: String): MethodSpec {
-        return MethodSpec.methodBuilder("is${type.capitalize()}")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(TypeName.BOOLEAN)
-                .addStatement("return getVisibility() == \$T.${type.toUpperCase()}", TypeNames.Android.View)
-                .build()
     }
 
     open fun clicks(type: TypeSpec.Builder, sourceType: String) {

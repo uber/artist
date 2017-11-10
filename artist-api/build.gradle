@@ -8,4 +8,6 @@ dependencies {
     compile deps.kotlin.stdLibJre7
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+if (rootProject.projectDir.name != "buildSrc") {
+    apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+}

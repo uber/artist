@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits
+apply plugin: 'java'
 
-import com.uber.artist.api.TraitProvider
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
-class DefaultTraitProvider : TraitProvider {
-
-    override fun traits() = setOf(
-            ForegroundTrait(),
-            VisibilityTrait()
-    )
+dependencies {
+    compile project(":artist-api")
+    compile project(":artist-traits")
+    compile project(":artist-traits-rx")
 }

@@ -18,6 +18,7 @@ buildscript {
     apply from: project.file('gradle/dependencies.gradle')
 
     repositories {
+        maven { url 'https://maven.google.com' }
         jcenter()
         mavenCentral()
         maven { url deps.build.gradlePluginsUrl }
@@ -29,15 +30,19 @@ buildscript {
     }
 }
 
+apply from: project.file('gradle/dependencies.gradle')
 subprojects {
     buildscript {
         repositories {
+            maven { url 'https://maven.google.com' }
             jcenter()
         }
     }
 
     repositories {
         jcenter()
+        maven { url deps.build.gradlePluginsUrl }
+        maven { url 'https://maven.google.com' }
     }
 
     apply plugin: 'checkstyle'

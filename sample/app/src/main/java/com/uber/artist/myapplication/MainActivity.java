@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits
+package com.uber.artist.myapplication;
 
-import com.uber.artist.api.TraitProvider
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-class DefaultTraitProvider : TraitProvider {
+import com.uber.artist.mylibrary.MyTextView;
 
-    override fun traits() = setOf(
-            ForegroundTrait(),
-            VisibilityTrait()
-    )
+/**
+ * Sample activity.
+ */
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ((MyTextView) findViewById(R.id.text)).setText("This is a generated MyTextView");
+    }
 }

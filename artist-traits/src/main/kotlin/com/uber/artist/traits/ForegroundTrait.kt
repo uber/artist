@@ -26,6 +26,19 @@ import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
+/**
+ * This [Trait] ports [FrameLayout]'s foreground functionality to other views. In order to use this, the module that
+ * applies that [Artist] plugin must declare the ForegroundView styleable in res/values/attrs_foreground_view.xml.
+ *
+ * <?xml version="1.0" encoding="utf-8"?>
+ * <resources>
+ *   <declare-styleable name="ForegroundView">
+ *     <attr name="android:foreground"/>
+ *     <attr name="android:foregroundGravity"/>
+ *     <attr name="foregroundInsidePadding"/>
+ *   </declare-styleable>
+ * </resources>
+ */
 class ForegroundTrait : Trait {
     override fun generateFor(
             type: TypeSpec.Builder,
