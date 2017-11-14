@@ -19,12 +19,12 @@ package com.uber.artist.myproviders;
 import com.uber.artist.api.Trait;
 import com.uber.artist.api.ViewStencil;
 import com.uber.artist.api.ViewStencilProvider;
+import com.uber.artist.myproviders.trait.SampleTrait;
 import com.uber.artist.traits.ForegroundTrait;
 import com.uber.artist.traits.VisibilityTrait;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -32,22 +32,23 @@ import java.util.Set;
  */
 public class SampleViewStencilProvider implements ViewStencilProvider {
 
-    @Override
-    public Set<ViewStencil> stencils() {
-        return new HashSet<>(Arrays.asList(
-            new ViewStencil("android.support.v7.widget.AppCompatButton", 3, "buttonStyle"),
-            new ViewStencil("android.support.v7.widget.AppCompatEditText", 3, "android.R.attr.editTextStyle"),
-            new ViewStencil("android.widget.LinearLayout", 3, null),
-            new ViewStencil("android.support.v7.widget.AppCompatImageView", 3, null),
-            new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle")
-        ));
-    }
+  @Override
+  public Set<ViewStencil> stencils() {
+    return new LinkedHashSet<>(Arrays.asList(
+        new ViewStencil("android.support.v7.widget.AppCompatButton", 3, "buttonStyle"),
+        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3, "android.R.attr.editTextStyle"),
+        new ViewStencil("android.widget.LinearLayout", 3, null),
+        new ViewStencil("android.support.v7.widget.AppCompatImageView", 3, null),
+        new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle")
+    ));
+  }
 
-    @Override
-    public Set<Class<? extends Trait>> globalTraits() {
-        return new HashSet<Class<? extends Trait>>(Arrays.asList(
-            VisibilityTrait.class,
-            ForegroundTrait.class
-        ));
-    }
+  @Override
+  public Set<Class<? extends Trait>> globalTraits() {
+    return new LinkedHashSet<>(Arrays.asList(
+        SampleTrait.class,
+        VisibilityTrait.class,
+        ForegroundTrait.class
+    ));
+  }
 }
