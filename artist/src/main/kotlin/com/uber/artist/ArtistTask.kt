@@ -46,5 +46,4 @@ open class ArtistTask : DefaultTask() {
     fun execute(inputs: IncrementalTaskInputs) {
         generateViewsFor(outputDirectory, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
     }
-
 }

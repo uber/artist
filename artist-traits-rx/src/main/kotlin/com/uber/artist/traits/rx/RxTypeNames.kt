@@ -32,7 +32,7 @@ class RxTypeNames {
             val PublishRelay: ClassName = ClassName.get(com.jakewharton.rxrelay2.PublishRelay::class.java)
 
             // RxBinding
-            val RecyclerViewScrollEvent : ClassName = ClassName.get("com.jakewharton.rxbinding2.support.v7.widget", "RecyclerViewScrollEvent")
+            val RecyclerViewScrollEvent: ClassName = ClassName.get("com.jakewharton.rxbinding2.support.v7.widget", "RecyclerViewScrollEvent")
             val RxView: ClassName = ClassName.get("com.jakewharton.rxbinding2.view", "RxView")
             val RxCompoundButton: ClassName = ClassName.get("com.jakewharton.rxbinding2.widget", "RxCompoundButton")
             val RxNestedScrollView: ClassName = ClassName.get("com.jakewharton.rxbinding2.support.v4.widget", "RxNestedScrollView")

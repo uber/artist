@@ -26,10 +26,10 @@ import com.uber.artist.mylibrary.MyTextView;
  */
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ((MyTextView) findViewById(R.id.text)).setText("This is a generated MyTextView");
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    ((MyTextView) findViewById(R.id.text)).setText("This is a generated MyTextView");
+  }
 }

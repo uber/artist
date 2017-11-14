@@ -53,6 +53,5 @@ class ScrollableTrait : Trait {
                             "@return an observable of scroll events on this RecyclerView"),
                     RxTypeNames.Rx.RecyclerViewScrollEvent))
         }
-
     }
 }

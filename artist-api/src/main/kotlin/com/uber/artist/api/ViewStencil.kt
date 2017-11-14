@@ -58,14 +58,12 @@ open class ViewStencil(
      * Hook for implementing the `init()` method.
      */
     open fun initMethodHook(type: TypeSpec.Builder, initMethod: MethodSpec.Builder) {
-
     }
 
     /**
      * Hook for the type builder implementation.
      */
     open fun typeHook(type: TypeSpec.Builder) {
-
     }
 
     fun setGlobalTraits(traits: Set<Class<out Trait>>) {
