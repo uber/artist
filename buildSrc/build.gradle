@@ -1,0 +1,49 @@
+buildscript {
+    apply from: project.rootProject.file("../gradle/dependencies.gradle")
+
+    repositories {
+        maven { url 'https://maven.google.com' }
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath deps.build.androidPlugin
+        classpath deps.kotlin.gradlePlugin
+    }
+}
+
+apply from: project.rootProject.file("../gradle/dependencies.gradle")
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+subprojects { subproject ->
+    if (subproject.buildFile.exists()) {
+        apply from: project.rootProject.file("../gradle/dependencies.gradle")
+        repositories {
+            jcenter()
+            mavenCentral()
+        }
+
+        rootProject.dependencies {
+            runtime project(path)
+        }
+    }
+    subproject.afterEvaluate {
+        // Disable useless tasks in buildSrc
+        if (subproject.plugins.hasPlugin("kotlin")) {
+            subproject.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+                kotlinOptions.suppressWarnings = true
+            }
+        }
+
+        subproject.tasks.findAll {
+            it.name.toLowerCase().contains("test") ||
+                it.name.toLowerCase().contains("lint") ||
+                it.name.toLowerCase().contains("checkstyle") }.each {
+            it.enabled = false
+        }
+    }
+}
