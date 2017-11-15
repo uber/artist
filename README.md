@@ -1,63 +1,120 @@
 # Artist [![Build Status](https://travis-ci.org/uber/artist.svg?branch=master)](https://travis-ci.org/uber/artist)
 
-An artist is something that creates Views.
+An artist creates views. **Artist** is a code generation tool that creates a base set of Android `View`s.
 
-## Checklist
+## Overview
 
-- [x] Clone this repository into a folder of your project's name `git clone git@github.com:uber/android-template.git MY_PROJECT`. Or if you're copying the folder, don't forget hidden files!
-- [x] Reinitialize git
-    - [x] Delete the `.git` folder
-    - [x] Start a git repo with `git init`
-    - [x] Make initial git commit with all files
-- [x] Update the `PROJECT_NAME` inside the files `./github/ISSUE_TEMPLATE.md` and `./github/PULL_REQUEST_TEMPLATE.md` to your project’s name.
-- [ ] Move your project's modules into the sample project
-    - [ ] Update `settings.gradle` to point to the modules you added
-    - [ ] Update `dependencies.gradle` and respective `build.gradle` files to make sure dependencies are hooked up and compiling properly
-- [ ] Remove the sample modules `app` and `lib`.
-- [ ] Modify `CHANGELOG.md` to reflect the version of your initial release.
-- [ ] Update this `README.md` file to reflect your project.
-    - [ ] Update the Travis Build Status badge to reflect your project
-    - [ ] Delete everything above including these checkboxes
+Artist is a Gradle plugin written in Kotlin that generates the code for a base set of Android `View`s. Artist-generated views are generated classes using a stencil and trait system. Each unique view type is declared with a single stencil, which in turn can declare multiple traits. The entire code gen infrastructure is written in Kotlin. All of this comes together to create an easily maintainable system of stencils and traits.
 
-# Artist [![Build Status](https://travis-ci.org/uber/artist.svg?branch=master)](https://travis-ci.org/uber/artist)
+*Stencils*: A 1:1 ratio of stencils to corresponding generated views. Each Stencil can declare a set of traits they exhibit, while also implementing custom code that’s specific to their view (e.g. RecyclerView’s APIs).
 
-An artist is something that creates Views.
+*Traits*: Each trait can be declared by multiple stencils, and generate otherwise duplicate code across all views that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the stencil’s code get process that are called during each stencil’s generation.
 
 ## Motivation
 
-Explain why this library exists and what problems it solves.
+Artist-generated views are an infrastructure of base `View` classes that power the UI layer of apps and libraries. Their core principles include:
 
-## Download
+#### Common Façade
 
-Include instructions on how to integrate the library into your projects. For instance install in your build.gradle:
+Everything is behind the façade of commonly named classes, basically "[YOUR_PREFIX]ViewName". This allows you to push as much functionality as you want behind them whilst not changing the front facing entry point. Things we can push behind them include new functionality, other base classes, framework bug fixes, etc.
 
-```
-dependencies {
-  compile 'com.uber.artist:artist:0.0.1'
-  compile 'com.uber.artist:artist-traits:0.0.1'
-  compile 'com.uber.artist:artist-traits-rx:0.0.1'
-}
-```
+#### Intelligence
+
+Artist-generated views have deep internal knowledge of their internal state and interactions. This gives you flexibility to do a number of interesting, contextual actions under the hood.
+
+*Automatic Instrumentation*: Artist-generated views know when they're being attached, changed to visible, clicked, etc. This allows you to do automatic instrumentation of impressions and taps in views when they occur, provided the developer has provided an ID. You can also detect and signal a developer if an ID is missing where there should be one.
+
+*Accessibility*: This intelligence gives you enough insight into the state of the view hierarchy to make accessibility a first class citizen in the daily development cycle. Artist-generated views can intelligently infer if there are content description errors associated with them, and signal them to developers in the apps.
+
+#### Reactive Semantics
+
+Artist-generated views can have [RxBinding](https://github.com/JakeWharton/RxBinding) APIs as first class citizens in their public APIs. In a increasingly reactive world, this gracefully bridges common UI listener interactions to RxJava streams.
+
+#### Sane, simple maintainability
+
+The stencil and trait system ensures that base views are defined in one place and that extra functionality is divided up into single-focus traits.
 
 ## Usage
 
-Provide instructions on how to use and integrate the library into a project.
+#### Create the Provider module
+- Create a new plain Java/Kotlin module (non-Android)
+- Add Artist dependencies (API, Traits, Traits-Rx)
+- Create a class that implements `ViewStencilProvider`
+- Put the fully qualified class name of the stencil provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.ViewStencilProvider`
+- If you have custom traits, then create a class that implements `TraitProvider`
+- Put the fully qualified class name of the trait provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.TraitProvider`
 
-If there's some special peices for testing (ie Mocks) explain those here as well.
+#### Setup buildSrc
+- Create a dir at root of project named `buildSrc`
+- Navigate to `buildSrc` and add a relative symlink to the provider module `cd $PROJECT_ROOT/buildSrc; ln -s ../path/to/provider/module/root custom-artist-providers`
+- Create a `settings.gradle` in `buildSrc` and add `include :custom-artist-providers`
+- Update the `build.gradle` for the `buildSrc` project to ensure that the `custom-artist-providers` module is added the buildScript classpath so it is available to the Artist plugin
+```
+subprojects { subproject ->
+    if (subproject.buildFile.exists()) {
+        repositories {
+            jcenter()
+            mavenCentral()
+        }
+
+        rootProject.dependencies {
+            runtime project(path)
+        }
+    }
+    subproject.afterEvaluate {
+        // Disable useless tasks in buildSrc
+        if (subproject.plugins.hasPlugin("kotlin")) {
+            subproject.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+                kotlinOptions.suppressWarnings = true
+            }
+        }
+
+        subproject.tasks.findAll {
+            it.name.toLowerCase().contains("test") ||
+                it.name.toLowerCase().contains("lint") ||
+                it.name.toLowerCase().contains("checkstyle") }.each {
+            it.enabled = false
+        }
+    }
+}
+```
+
+## Download
+
+Artist Plugin [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist)
+```gradle
+classpath 'com.uber.artist:artist:0.0.1'
+```
+
+Artist API [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-api.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-api)
+```gradle
+classpath 'com.uber.artist:artist-api:0.0.1'
+```
+
+Artist Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits)
+```gradle
+classpath 'com.uber.artist:artist-traits:0.0.1'
+```
+
+Artist Rx Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits-rx.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits-rx)
+```gradle
+classpath 'com.uber.artist:artist-traits-rx:0.0.1'
+```
 
 ## License
 
-    Copyright (C) 2017 Uber Technologies
+```
+Copyright (C) 2017 Uber Technologies
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+   http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
