@@ -22,6 +22,10 @@ import com.uber.artist.api.ViewStencilProvider;
 import com.uber.artist.myproviders.trait.SampleTrait;
 import com.uber.artist.traits.ForegroundTrait;
 import com.uber.artist.traits.VisibilityTrait;
+import com.uber.artist.traits.rx.CheckableTrait;
+import com.uber.artist.traits.rx.ScrollableTrait;
+import com.uber.artist.traits.rx.TextInputTrait;
+import com.uber.artist.traits.rx.ViewTrait;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -36,10 +40,12 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
   public Set<ViewStencil> stencils() {
     return new LinkedHashSet<>(Arrays.asList(
         new ViewStencil("android.support.v7.widget.AppCompatButton", 3, "buttonStyle"),
-        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3, "android.R.attr.editTextStyle"),
+        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3, "android.R.attr.editTextStyle", TextInputTrait.class),
         new ViewStencil("android.widget.LinearLayout", 3, null),
         new ViewStencil("android.support.v7.widget.AppCompatImageView", 3, null),
-        new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle")
+        new ViewStencil("android.support.v4.widget.NestedScrollView", 3, null, ScrollableTrait.class),
+        new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
+        new SwitchStencil()
     ));
   }
 
@@ -48,7 +54,19 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
     return new LinkedHashSet<>(Arrays.asList(
         SampleTrait.class,
         VisibilityTrait.class,
-        ForegroundTrait.class
+        ForegroundTrait.class,
+        ViewTrait.class
     ));
+  }
+
+  private static class SwitchStencil extends ViewStencil {
+    public SwitchStencil() {
+      super("android.support.v7.widget.SwitchCompat", 3, "switchStyle", CheckableTrait.class);
+    }
+
+    @Override
+    public String name() {
+      return "MySwitch";
+    }
   }
 }

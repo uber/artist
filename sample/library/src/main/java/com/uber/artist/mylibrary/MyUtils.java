@@ -14,12 +14,29 @@
  * limitations under the License.
  */
 
-package com.uber.artist.myproviders;
+package com.uber.artist.mylibrary;
 
-import com.squareup.javapoet.ClassName;
+import android.util.Log;
 
-public class SampleTypeNames {
-  public static final ClassName MY_UTILS = ClassName.get("com.uber.artist.mylibrary", "MyUtils");
-  public static final ClassName SIGNAL = ClassName.get("com.uber.artist.mylibrary", "Signal");
-  public static final ClassName VIEW = ClassName.get("android.view", "View");
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+
+public class MyUtils {
+  public static Consumer<Object> createTapProcessor() {
+    return new Consumer<Object>() {
+      @Override
+      public void accept(Object o) {
+        Log.d("Artist", "Tapped a MyView");
+      }
+    };
+  }
+
+  public static Function<Object, Signal> createRxBindingSignalMapper() {
+    return new Function() {
+      @Override
+      public Signal apply(Object o) throws Exception {
+        return Signal.INSTANCE;
+      }
+    };
+  }
 }

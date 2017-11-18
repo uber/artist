@@ -18,18 +18,93 @@ package com.uber.artist.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
+import com.uber.artist.mylibrary.MyButton;
+import com.uber.artist.mylibrary.MyEditText;
+import com.uber.artist.mylibrary.MyImageView;
+import com.uber.artist.mylibrary.MyNestedScrollView;
+import com.uber.artist.mylibrary.MySwitch;
 import com.uber.artist.mylibrary.MyTextView;
+import com.uber.artist.mylibrary.Signal;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Sample activity.
  */
 public class MainActivity extends AppCompatActivity {
 
+  private MyButton button;
+  private MyEditText editText;
+  private MyImageView imageView;
+  private MyNestedScrollView scrollView;
+  private MyTextView textView;
+  private MySwitch toggle;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ((MyTextView) findViewById(R.id.text)).setText("This is a generated MyTextView");
+    button = findViewById(R.id.button);
+    editText = findViewById(R.id.edittext);
+    imageView = findViewById(R.id.image);
+    scrollView = findViewById(R.id.scrollView);
+    textView = findViewById(R.id.text);
+    toggle = findViewById(R.id.toggle);
+    demoArtistViewUsage();
+  }
+
+  private void demoArtistViewUsage() {
+    textView.sampleMethodFromCustomTrait();
+
+    button.clicks()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<Signal>() {
+          @Override
+          public void accept(Signal signal) throws Exception {
+            toast("Click from MyButton's clicks() stream!");
+          }
+        });
+
+    editText.textChanges()
+        .skip(1)
+        .debounce(200, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<CharSequence>() {
+          @Override
+          public void accept(CharSequence charSequence) throws Exception {
+            toast("MyEditText's textChanges() stream sent: " + charSequence);
+          }
+        });
+
+    scrollView.scrollChangeEvents()
+        .debounce(200, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<ViewScrollChangeEvent>() {
+          @Override
+          public void accept(ViewScrollChangeEvent event) throws Exception {
+            toast("Scroll from MyScrollView's debounced scrollEvents() stream");
+          }
+        });
+
+    toggle.checkedChanges()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<Boolean>() {
+          @Override
+          public void accept(Boolean isChecked) throws Exception {
+            toast("MySwitch's checkedChanges() stream sent: " + isChecked);
+          }
+        });
+  }
+
+  private void toast(CharSequence msg) {
+    Toast.makeText(this, msg, LENGTH_SHORT).show();
   }
 }

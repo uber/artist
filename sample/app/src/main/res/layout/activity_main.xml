@@ -14,46 +14,65 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<com.uber.artist.mylibrary.MyLinearLayout
+<com.uber.artist.mylibrary.MyNestedScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_main"
+  android:id="@+id/scrollView"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:divider="@drawable/divider"
-  android:orientation="vertical"
-  android:paddingBottom="@dimen/activity_vertical_margin"
-  android:paddingLeft="@dimen/activity_horizontal_margin"
-  android:paddingRight="@dimen/activity_horizontal_margin"
-  android:paddingTop="@dimen/activity_vertical_margin"
-  android:showDividers="middle"
-  tools:context=".MainActivity">
+  android:layout_height="match_parent">
 
-  <com.uber.artist.mylibrary.MyTextView
-    android:id="@+id/text"
-    android:layout_width="wrap_content"
+  <com.uber.artist.mylibrary.MyLinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foregroundGravity="center"
-    android:text="This is a generated MyTextView" />
+    android:divider="@drawable/divider"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:showDividers="middle"
+    tools:context=".MainActivity">
 
-  <com.uber.artist.mylibrary.MyEditText
-    android:id="@+id/edittext"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:foregroundGravity="center"
-    android:hint="This is a generated MyEditText" />
+    <com.uber.artist.mylibrary.MyTextView
+      android:id="@+id/text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:foregroundGravity="center"
+      android:text="This is a generated MyTextView" />
 
-  <com.uber.artist.mylibrary.MyButton
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:foregroundGravity="center"
-    android:text="Generated MyButton" />
+    <com.uber.artist.mylibrary.MyEditText
+      android:id="@+id/edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:foregroundGravity="center"
+      android:hint="This is a generated MyEditText" />
 
-  <com.uber.artist.mylibrary.MyImageView
-    android:id="@+id/image"
-    android:layout_width="64dp"
-    android:layout_height="64dp"
-    android:src="@mipmap/ic_launcher" />
+    <com.uber.artist.mylibrary.MyButton
+      android:id="@+id/button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:foregroundGravity="center"
+      android:text="Generated MyButton" />
 
-</com.uber.artist.mylibrary.MyLinearLayout>
+    <com.uber.artist.mylibrary.MySwitch
+      android:id="@+id/toggle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+
+    <com.uber.artist.mylibrary.MyImageView
+      android:id="@+id/image"
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:src="@mipmap/ic_launcher" />
+
+    <!-- image with large margin so we scroll -->
+    <com.uber.artist.mylibrary.MyImageView
+      android:id="@+id/otherImage"
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:layout_marginTop="512dp"
+      android:src="@mipmap/ic_launcher" />
+
+  </com.uber.artist.mylibrary.MyLinearLayout>
+
+</com.uber.artist.mylibrary.MyNestedScrollView>

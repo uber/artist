@@ -16,7 +16,6 @@
 
 package com.uber.artist.traits.rx.config
 
-import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.TypeName
 
@@ -55,5 +54,5 @@ abstract class ArtistRxConfig {
      * This defines the type to be used for RxBinding event signals. It can be changed if processRxBindingSignalEvent()
      * has been overridden to map the signal events to a new type. The default type is Object.
      */
-    open fun rxBindingSignalEventTypeName(): ClassName = TypeName.OBJECT
+    open fun rxBindingSignalEventTypeName(): TypeName = TypeName.OBJECT
 }

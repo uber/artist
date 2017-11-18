@@ -57,6 +57,8 @@ dependencies {
     compile deps.external.rxbindingDesign
     compile deps.external.rxbindingRecyclerView
     compile deps.external.rxbindingSupportV4
+    compile deps.external.rxjava2
+    compile deps.external.rxrelay2
 }
 
 if (project.rootProject.name != 'buildSrc') {

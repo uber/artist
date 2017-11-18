@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.uber.artist.myproviders;
+package com.uber.artist.mylibrary;
 
-import com.squareup.javapoet.ClassName;
+/** Enum useful for Rx streams that are just notifications with no actual values. */
+public enum Signal {
+  INSTANCE;
 
-public class SampleTypeNames {
-  public static final ClassName MY_UTILS = ClassName.get("com.uber.artist.mylibrary", "MyUtils");
-  public static final ClassName SIGNAL = ClassName.get("com.uber.artist.mylibrary", "Signal");
-  public static final ClassName VIEW = ClassName.get("android.view", "View");
+  @Override
+  public String toString() {
+    return "██████";
+  }
 }

@@ -34,7 +34,7 @@ public class SampleTrait implements Trait {
   public void generateFor(TypeSpec.Builder type, MethodSpec.Builder initMethod, ClassName rClass,
       String sourceType) {
 
-    type.addMethod(MethodSpec.methodBuilder("sampleMethod")
+    type.addMethod(MethodSpec.methodBuilder("sampleMethodFromCustomTrait")
         .addModifiers(Modifier.PUBLIC)
         .returns(SampleTypeNames.VIEW)
         .addStatement("return this")

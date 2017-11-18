@@ -57,9 +57,6 @@ fun TypeName.irrelevantIfObject(): TypeName {
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
     val artistRxConfig = ArtistRxConfigService.newInstance().getArtistRxConfig()
-    if (api.observableType == artistRxConfig.rxBindingSignalEventTypeName()) {
-        throw RuntimeException("Irrelevant type on $api")
-    }
     type.addMethod(MethodSpec.methodBuilder(api.rxBindingInfo.methodName)
             .addJavadoc("${api.rxBindingInfo.methodDoc}\n")
             .apply {
