@@ -18,8 +18,13 @@ package com.uber.artist.myproviders;
 
 import com.squareup.javapoet.ClassName;
 
-public class SampleTypeNames {
+/**
+ * Sample TypeNames.
+ */
+public final class SampleTypeNames {
   public static final ClassName MY_UTILS = ClassName.get("com.uber.artist.mylibrary", "MyUtils");
   public static final ClassName SIGNAL = ClassName.get("com.uber.artist.mylibrary", "Signal");
   public static final ClassName VIEW = ClassName.get("android.view", "View");
+
+  private SampleTypeNames() { }
 }

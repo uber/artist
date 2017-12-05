@@ -203,8 +203,8 @@
         <!--module name="FinalParameters"/-->
         <!--module name="DescendantToken"/-->
         <module name="Indentation">
-            <property name="lineWrappingIndentation" value="0"/>
-            <property name="arrayInitIndent" value="8"/>
+            <property name="basicOffset" value="2"/>
+            <property name="caseIndent" value="2"/>
         </module>
         <module name="TrailingComment"/>
         <module name="OuterTypeFilename"/>

@@ -21,7 +21,19 @@ import android.util.Log;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
-public class MyUtils {
+/**
+ * Various utilities used during code generation.
+ */
+public final class MyUtils {
+
+  private MyUtils() { }
+
+  /**
+   * A static factory method that creates the Consumer that processes the tap. In this case we
+   * write a message in LogCat.
+   *
+   * @return The processor consumer.
+   */
   public static Consumer<Object> createTapProcessor() {
     return new Consumer<Object>() {
       @Override
@@ -31,6 +43,12 @@ public class MyUtils {
     };
   }
 
+  /**
+   * A static factory method that creates the Function that maps RxBinding signals to another type.
+   * In this case we map them to our instance of Signal.
+   *
+   * @return The mapper function.
+   */
   public static Function<Object, Signal> createRxBindingSignalMapper() {
     return new Function() {
       @Override

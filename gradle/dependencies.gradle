@@ -51,13 +51,15 @@ def kotlin = [
 ]
 
 def support = [
-    appcompat : "com.android.support:appcompat-v7:${versions.support}"
+    annotations : "com.android.support:support-annotations:${versions.support}",
+    appcompat   : "com.android.support:appcompat-v7:${versions.support}"
 ]
 
 def test = [
-    junit       : 'junit:junit:4.12',
-    robolectric : "org.robolectric:android-all:8.1.0-robolectric-4402310",
-    truth       : "com.google.truth:truth:0.34"
+    compileTesting : "com.google.testing.compile:compile-testing:0.11",
+    junit          : 'junit:junit:4.12',
+    robolectric    : "org.robolectric:android-all:8.1.0-robolectric-4402310",
+    truth          : "com.google.truth:truth:0.34"
 ]
 
 ext.deps = [

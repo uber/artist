@@ -40,7 +40,8 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
   public Set<ViewStencil> stencils() {
     return new LinkedHashSet<>(Arrays.asList(
         new ViewStencil("android.support.v7.widget.AppCompatButton", 3, "buttonStyle"),
-        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3, "android.R.attr.editTextStyle", TextInputTrait.class),
+        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3,
+            "android.R.attr.editTextStyle", TextInputTrait.class),
         new ViewStencil("android.widget.LinearLayout", 3, null),
         new ViewStencil("android.support.v7.widget.AppCompatImageView", 3, null),
         new ViewStencil("android.support.v4.widget.NestedScrollView", 3, null, ScrollableTrait.class),
