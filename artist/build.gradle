@@ -14,9 +14,11 @@ dependencies {
 
     // Dont need to run tests in buildSrc
     if (rootProject.projectDir.name != "buildSrc") {
-        compile deps.test.junit
-        compile deps.test.robolectric
-        compile deps.test.truth
+        testCompile deps.support.annotations
+        testCompile deps.test.compileTesting
+        testCompile deps.test.junit
+        testCompile deps.test.robolectric
+        testCompile deps.test.truth
     }
 }
 
