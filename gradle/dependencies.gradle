@@ -15,7 +15,7 @@
  */
 
 def versions = [
-    kotlin    : "1.1.51",
+    kotlin    : "1.2.0",
     rxBinding : "2.0.0",
     support   : "26.1.0"
 ]
