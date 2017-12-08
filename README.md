@@ -1,18 +1,16 @@
 # Artist [![Build Status](https://travis-ci.org/uber/artist.svg?branch=master)](https://travis-ci.org/uber/artist)
 
-An artist creates views. **Artist** is a code generation tool that creates a base set of Android `View`s.
+As Android apps grow, providing common features and consistent functionality across Views becomes challenging. Typically, this results in copy-pasting features across views, monolithic classes, or complicated inheritance trees. Artist is a highly-extensible platform for creating and maintaining an app’s base set of Android views.
 
 ## Overview
 
-Artist is a Gradle plugin written in Kotlin that generates the code for a base set of Android `View`s. Artist-generated views are generated classes using a stencil and trait system. Each unique view type is declared with a single stencil, which in turn can declare multiple traits. The entire code gen infrastructure is written in Kotlin. All of this comes together to create an easily maintainable system of stencils and traits.
+Artist is a Gradle plugin written in Kotlin that generates a base set of Android `View`s. Artist-generated views are created using a stencil and trait system. Each view type is declared with a single stencil, which is comprised of  a set of  traits. All of this comes together to create an easily maintainable system of stencils and traits.
 
 *Stencils*: A 1:1 ratio of stencils to corresponding generated views. Each Stencil can declare a set of traits they exhibit, while also implementing custom code that’s specific to their view (e.g. RecyclerView’s APIs).
 
 *Traits*: Each trait can be declared by multiple stencils, and generate otherwise duplicate code across all views that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the stencil’s code get process that are called during each stencil’s generation.
 
 ## Motivation
-
-Artist-generated views are an infrastructure of base `View` classes that power the UI layer of apps and libraries. Their core principles include:
 
 #### Common Façade
 
