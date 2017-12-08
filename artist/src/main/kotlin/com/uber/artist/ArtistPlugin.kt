@@ -56,11 +56,12 @@ class ArtistPlugin : Plugin<Project> {
             variants: DomainObjectSet<T>) {
         val generateViews = project.task("generateViews")
         variants.all { variant ->
+            val outputDir = resolveVariantOutputDir(project, variant, ARTIST)
             val artistTask = project.tasks.create(
                     "generate${variant.name.capitalize()}Views", ArtistTask::class.java)
                     .apply {
                         group = ARTIST
-                        outputDirectory = resolveVariantOutputDir(project, variant, ARTIST)
+                        outputDirectory = outputDir
                         description = "Generate ${variant.name} base views."
                         packageName = artistExtension.packageName ?: variant.applicationId
                         viewPackageName = artistExtension.viewPackageName ?: packageName
@@ -68,6 +69,7 @@ class ArtistPlugin : Plugin<Project> {
                         viewNamePrefix = artistExtension.viewNamePrefix
                         formatSource = artistExtension.formatSource
                     }
+            artistTask.outputs.dir(outputDir)
             generateViews.dependsOn(artistTask)
 
             variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
