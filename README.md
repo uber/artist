@@ -16,6 +16,14 @@ Artist is a Gradle plugin written in Kotlin that generates a base set of Android
 
 Everything is behind the façade of commonly named classes, basically "[YOUR_PREFIX]ViewName". This allows you to push as much functionality as you want behind them whilst not changing the front facing entry point. Things we can push behind them include new functionality, other base classes, framework bug fixes, etc.
 
+#### Sane, simple maintainability
+
+The stencil and trait system ensures that base views are defined in one place and that extra functionality is divided up into single-focus traits.
+
+#### Reactive Semantics
+
+Artist-generated views can have [RxBinding](https://github.com/JakeWharton/RxBinding) APIs as first class citizens in their public APIs. In a increasingly reactive world, this gracefully bridges common UI listener interactions to RxJava streams. This can optionally be brought in via the `artist-traits-rx` module.
+
 #### Intelligence
 
 Artist-generated views have deep internal knowledge of their internal state and interactions. This gives you flexibility to do a number of interesting, contextual actions under the hood.
@@ -24,29 +32,44 @@ Artist-generated views have deep internal knowledge of their internal state and 
 
 *Accessibility*: This intelligence gives you enough insight into the state of the view hierarchy to make accessibility a first class citizen in the daily development cycle. Artist-generated views can intelligently infer if there are content description errors associated with them, and signal them to developers in the apps.
 
-#### Reactive Semantics
-
-Artist-generated views can have [RxBinding](https://github.com/JakeWharton/RxBinding) APIs as first class citizens in their public APIs. In a increasingly reactive world, this gracefully bridges common UI listener interactions to RxJava streams.
-
-#### Sane, simple maintainability
-
-The stencil and trait system ensures that base views are defined in one place and that extra functionality is divided up into single-focus traits.
+For more examples of things you can do with Artist, check out the Recipes wiki page.
 
 ## Usage
 
 #### Create the Provider module
 - Create a new plain Java/Kotlin module (non-Android)
 - Add Artist dependencies (API, Traits, Traits-Rx)
+
+#### Implement the Stencil Provider
 - Create a class that implements `ViewStencilProvider`
 - Put the fully qualified class name of the stencil provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.ViewStencilProvider`
+
+#### Implement the Trait Provider (Optional)
 - If you have custom traits, then create a class that implements `TraitProvider`
 - Put the fully qualified class name of the trait provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.TraitProvider`
 
-#### Setup buildSrc
+#### Add Provider module to Plugin Classpath
+_Option #1_
+
+If your provider module is in it's own project, then you can add the JAR to the buildscript classpath in your main project's root `build.gradle` like:
+
+```
+buildscript {
+  dependencies {
+    classpath <include for your jar>
+  }
+}
+```
+
+_Option #2_
+
+Otherwise, if your provider module is in your primary project, then in order for Artist to find the classes on the plugin classpath during code generation, we must leverage Gradle's `buildSrc`. We use this project within your project to build the classes that will be added to the plugin classpath. This will run before your primary project is built.
+
 - Create a dir at root of project named `buildSrc`
 - Navigate to `buildSrc` and add a relative symlink to the provider module `cd $PROJECT_ROOT/buildSrc; ln -s ../path/to/provider/module/root custom-artist-providers`
 - Create a `settings.gradle` in `buildSrc` and add `include :custom-artist-providers`
-- Update the `build.gradle` for the `buildSrc` project to ensure that the `custom-artist-providers` module is added the buildScript classpath so it is available to the Artist plugin
+- Update the `build.gradle` for the `buildSrc` project to ensure that the `custom-artist-providers` module is added the buildScript classpath so it is available to the Artist plugin:
+
 ```
 subprojects { subproject ->
     if (subproject.buildFile.exists()) {
@@ -81,22 +104,22 @@ subprojects { subproject ->
 
 Artist Plugin [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist)
 ```gradle
-classpath 'com.uber.artist:artist:0.0.1'
+classpath 'com.uber.artist:artist:0.1.0'
 ```
 
 Artist API [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-api.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-api)
 ```gradle
-classpath 'com.uber.artist:artist-api:0.0.1'
+classpath 'com.uber.artist:artist-api:0.1.0'
 ```
 
 Artist Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits)
 ```gradle
-classpath 'com.uber.artist:artist-traits:0.0.1'
+classpath 'com.uber.artist:artist-traits:0.1.0'
 ```
 
 Artist Rx Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits-rx.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits-rx)
 ```gradle
-classpath 'com.uber.artist:artist-traits-rx:0.0.1'
+classpath 'com.uber.artist:artist-traits-rx:0.1.0'
 ```
 
 ## License
