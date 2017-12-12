@@ -32,7 +32,7 @@ Artist-generated views have deep internal knowledge of their internal state and 
 
 *Accessibility*: This intelligence gives you enough insight into the state of the view hierarchy to make accessibility a first class citizen in the daily development cycle. Artist-generated views can intelligently infer if there are content description errors associated with them, and signal them to developers in the apps.
 
-For more examples of things you can do with Artist, check out the Recipes wiki page.
+For more examples of things you can do with Artist, check out the [Recipes](https://github.com/uber/artist/wiki/Recipes) wiki page.
 
 ## Usage
 
