@@ -10,6 +10,40 @@ Artist is a Gradle plugin written in Kotlin that generates a base set of Android
 
 *Traits*: Each trait can be declared by multiple stencils, and generate otherwise duplicate code across all views that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the stencil’s code get process that are called during each stencil’s generation.
 
+A simple `Trait` that adds visibility helper methods would look like:
+
+```kotlin
+class VisibilityTrait : Trait {
+  override fun generateFor(type: Builder, initMethod: MethodSpec.Builder, rClass: ClassName, baseType: String) {
+    arrayOf("visible", "invisible", "gone")
+        .forEach { type.addMethod(createVisibilityConvenienceMethod(it)) }
+  }
+
+  private fun createVisibilityConvenienceMethod(type: String): MethodSpec {
+    return MethodSpec.methodBuilder("is${type.capitalize()}")
+        .addModifiers(Modifier.PUBLIC)
+        .returns(TypeName.BOOLEAN)
+        .addStatement("return getVisibility() == \$T.${type.toUpperCase()}", TypeNames.Android.View)
+        .build()
+  }
+}
+```
+
+A simple `ViewStencil` to generate a `Switch` with visibility helper methods would look like:
+
+```kotlin
+class SwitchStencil : ViewStencil(
+    "android.support.v7.widget.SwitchCompat",
+    3,
+    "switchStyle",
+    VisibilityTrait::class.java) {
+  
+  override fun name() = "MySwitch"
+}
+```
+
+The set of `ViewStencil`s that Artist should process are provided via the `ViewStencilProvider`. The [sample's ViewStencilProvider](https://github.com/uber/artist/blob/master/sample/providers/src/main/java/com/uber/artist/myproviders/SampleViewStencilProvider.java) would configure Artist to generate [these Views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary).
+
 ## Motivation
 
 #### Common Façade
@@ -53,7 +87,7 @@ _Option #1_
 
 If your provider module is in it's own project, then you can add the JAR to the buildscript classpath in your main project's root `build.gradle` like:
 
-```
+```groovy
 buildscript {
   dependencies {
     classpath <include for your jar>
@@ -70,7 +104,7 @@ Otherwise, if your provider module is in your primary project, then in order for
 - Create a `settings.gradle` in `buildSrc` and add `include :custom-artist-providers`
 - Update the `build.gradle` for the `buildSrc` project to ensure that the `custom-artist-providers` module is added the buildScript classpath so it is available to the Artist plugin:
 
-```
+```groovy
 subprojects { subproject ->
     if (subproject.buildFile.exists()) {
         repositories {
@@ -99,6 +133,10 @@ subprojects { subproject ->
     }
 }
 ```
+
+#### Use the Generated Views
+The [generated views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary) will be added to the library's source files. They can then be consumed as regular views. To add even more consistency, you can write a lint rule or ErrorProne check to ensure that all `View` subclasses use your Artist-generated views.
+
 
 ## Download
 
