@@ -42,7 +42,29 @@ class SwitchStencil : ViewStencil(
 }
 ```
 
-The set of `ViewStencil`s that Artist should process are provided via the `ViewStencilProvider`. The [sample's ViewStencilProvider](https://github.com/uber/artist/blob/master/sample/providers/src/main/java/com/uber/artist/myproviders/SampleViewStencilProvider.java) would configure Artist to generate [these Views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary).
+Finally leaving you with a generated view like this:
+
+```java
+public class MySwitch extends SwitchCompat {
+  // Constructors
+  
+  // protected init method - provided in every stencil
+  
+  public boolean isVisible() {
+    return getVisibility() == View.VISIBLE;
+  }
+  
+  public boolean isGone() {
+    return getVisibility() == View.GONE;
+  }
+  
+  public boolean isInvisible() {
+    return getVisibility() == View.INVISIBLE;
+  }
+}
+```
+
+This may look like a lot of boilerplate for simple helpers, but it scales quite well when you want to have these methods on _all_ your base views.
 
 ## Motivation
 
@@ -137,6 +159,9 @@ subprojects { subproject ->
 #### Use the Generated Views
 The [generated views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary) will be added to the library's source files. They can then be consumed as regular views. To add even more consistency, you can write a lint rule or ErrorProne check to ensure that all `View` subclasses use your Artist-generated views.
 
+## Further examples
+
+The set of `ViewStencil`s that Artist should process are provided via the `ViewStencilProvider`. The [sample's ViewStencilProvider](https://github.com/uber/artist/blob/master/sample/providers/src/main/java/com/uber/artist/myproviders/SampleViewStencilProvider.java) would configure Artist to generate [these Views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary).
 
 ## Download
 
