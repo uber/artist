@@ -4,11 +4,11 @@ As Android apps grow, providing common features and consistent functionality acr
 
 ## Overview
 
-Artist is a Gradle plugin written in Kotlin that generates a base set of Android `View`s. Artist-generated views are created using a stencil and trait system. Each view type is declared with a single stencil, which is comprised of  a set of  traits. All of this comes together to create an easily maintainable system of stencils and traits.
+Artist is a Gradle plugin written in Kotlin that generates a base set of Android `View`s. Artist-generated views are created using a stencil and trait system. Each view type is declared with a single stencil, which is comprised of a set of traits. All of this comes together to create an easily maintainable system of stencils and traits.
 
-*Stencils*: A 1:1 ratio of stencils to corresponding generated views. Each Stencil can declare a set of traits they exhibit, while also implementing custom code that’s specific to their view (e.g. RecyclerView’s APIs).
+*Stencils*: A `Stencil` defines a View class to be generated. Each `Stencil` has some properties that can be configured and declares a set of traits they exhibit.
 
-*Traits*: Each trait can be declared by multiple stencils, and generate otherwise duplicate code across all views that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the stencil’s code get process that are called during each stencil’s generation.
+*Traits*: A `Trait` defines the new functionality that should be added to a view. It is a hook into the `Stencil`’s codegen process that is called during each `Stencil`’s generation. It is responsible for generating the code that implements `Trait`'s functionality. This could be used to do things like add automatic view analytics to every view or add first-party support for RxBinding APIs (clicks, attach events, visibility changes, etc.) on all your views. 
 
 A simple `Trait` that adds visibility helper methods would look like:
 
