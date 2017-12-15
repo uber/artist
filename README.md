@@ -33,10 +33,10 @@ A simple `ViewStencil` to generate a `Switch` with visibility helper methods wou
 
 ```kotlin
 class SwitchStencil : ViewStencil(
-    "android.support.v7.widget.SwitchCompat",
-    3,
-    "switchStyle",
-    VisibilityTrait::class.java) {
+    extendedType = "android.support.v7.widget.SwitchCompat",
+    constructorCount = 3,
+    defaultAttrRes = "switchStyle",
+    addedTraits = VisibilityTrait::class.java) {
   
   override fun name() = "MySwitch"
 }
