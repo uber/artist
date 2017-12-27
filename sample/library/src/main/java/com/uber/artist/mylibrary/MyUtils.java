@@ -50,7 +50,7 @@ public final class MyUtils {
    * @return The mapper function.
    */
   public static Function<Object, Signal> createRxBindingSignalMapper() {
-    return new Function() {
+    return new Function<Object, Signal>() {
       @Override
       public Signal apply(Object o) throws Exception {
         return Signal.INSTANCE;
