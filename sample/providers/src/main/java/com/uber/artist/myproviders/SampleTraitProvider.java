@@ -20,7 +20,7 @@ import com.uber.artist.api.Trait;
 import com.uber.artist.api.TraitProvider;
 import com.uber.artist.myproviders.trait.SampleTrait;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -31,7 +31,7 @@ public class SampleTraitProvider implements TraitProvider {
 
   @Override
   public Set<Trait> traits() {
-    return new LinkedHashSet<Trait>(Arrays.asList(
+    return new LinkedHashSet<Trait>(Collections.singletonList(
         new SampleTrait()
     ));
   }
