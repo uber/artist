@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package com.ubercab.artist.traits.rx.config
-
-import com.uber.artist.traits.rx.config.ArtistRxConfig
+package com.uber.artist.traits.rx.config
 
 class DefaultArtistRxConfig : ArtistRxConfig()
