@@ -26,7 +26,7 @@ class TextInputTrait : Trait {
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,
             rClass: ClassName,
-            baseType: String) {
+            sourceType: String) {
 
         // TextChanges
         addRxBindingApiForAdditive(type, AdditiveApi(

@@ -27,10 +27,10 @@ class ScrollableTrait : Trait {
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,
             rClass: ClassName,
-            baseType: String) {
+            sourceType: String) {
 
         // ScrollView overrides
-        if (baseType.contains("ScrollView")) {
+        if (sourceType.contains("ScrollView")) {
             addRxBindingApiForSettable(type, SettableApi(
                     RxBindingInfo(RxTypeNames.Rx.RxNestedScrollView,
                             "scrollChangeEvents",
@@ -42,11 +42,11 @@ class ScrollableTrait : Trait {
                     MethodSpec.methodBuilder("accept")
                             .addModifiers(Modifier.PUBLIC)
                             .addParameter(RxTypeNames.Rx.ViewScrollChangeEvent, "event")
-                            .addStatement("l.onScrollChange($baseType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
+                            .addStatement("l.onScrollChange($sourceType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
         }
 
         // RecyclerView overrides
-        if (baseType.contains("RecyclerView")) {
+        if (sourceType.contains("RecyclerView")) {
             addRxBindingApiForAdditive(type, AdditiveApi(
                     RxBindingInfo(RxTypeNames.Rx.RxRecyclerView,
                             "scrollEvents",
