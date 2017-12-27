@@ -16,7 +16,6 @@
 
 package com.uber.artist.traits.rx.config
 
-import com.ubercab.artist.traits.rx.config.DefaultArtistRxConfig
 import java.util.ServiceLoader
 
 class ArtistRxConfigService private constructor() {
