@@ -44,9 +44,9 @@ class ForegroundTrait : Trait {
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,
             rClass: ClassName,
-            baseType: String) {
+            sourceType: String) {
 
-        val isLayout = baseType.endsWith("Layout")
+        val isLayout = sourceType.endsWith("Layout")
 
         // The field
         type.addField(TypeNames.Android.Drawable, "foreground", Modifier.PRIVATE)
@@ -115,7 +115,7 @@ class ForegroundTrait : Trait {
 
         type.addMethod(onSizeChangedMethod.build())
 
-        if (baseType.endsWith("ImageView")) {
+        if (sourceType.endsWith("ImageView")) {
             type.addMethod(MethodSpec.methodBuilder("hasOverlappingRendering")
                     .addAnnotation(Override::class.java)
                     .addModifiers(Modifier.PUBLIC)

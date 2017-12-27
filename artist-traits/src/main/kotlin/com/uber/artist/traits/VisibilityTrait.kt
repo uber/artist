@@ -13,7 +13,7 @@ class VisibilityTrait : Trait {
         type: Builder,
         initMethod: MethodSpec.Builder,
         rClass: ClassName,
-        baseType: String) {
+        sourceType: String) {
 
         // Visibility convenience methods
         arrayOf("visible", "invisible", "gone")
