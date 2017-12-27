@@ -27,7 +27,7 @@ open class ViewStencil(
         val defaultAttrRes: String? = null,
         vararg val addedTraits: Class<out Trait> = emptyArray()) {
 
-    val sourcePackage = "${extendedType.substringBeforeLast('.')}"
+    val sourcePackage = extendedType.substringBeforeLast('.')
     val sourceName = extendedType.split('.').last()
     val sourceType = ClassName.get(sourcePackage, sourceName)
     val globalTraits = mutableSetOf<Class<out Trait>>()
