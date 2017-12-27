@@ -17,10 +17,10 @@ import javax.lang.model.element.Modifier
 class ArtistTest {
 
     companion object {
-        val TEST_PACKAGE_NAME = "foo.bar"
+        const val TEST_PACKAGE_NAME = "foo.bar"
         val TRAITS = setOf(TestTrait())
 
-        val IMAGE_VIEW_SOURCE_NO_TRAITS = """package foo.bar;
+        const val IMAGE_VIEW_SOURCE_NO_TRAITS = """package foo.bar;
 
 import android.content.Context;
 import android.support.annotation.AttrRes;
