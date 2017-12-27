@@ -30,7 +30,7 @@ import org.gradle.api.Project
 class ArtistPlugin : Plugin<Project> {
 
     companion object {
-        private val ARTIST = "artist"
+        private const val ARTIST = "artist"
     }
 
     private val artistExtension = ArtistExtension()
