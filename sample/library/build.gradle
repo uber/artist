@@ -51,14 +51,14 @@ task checkstyle(type: Checkstyle) {
 check.dependsOn 'checkstyle'
 
 dependencies {
-    compile deps.support.appcompat
-    compile deps.external.rxbinding
-    compile deps.external.rxbindingAppCompat
-    compile deps.external.rxbindingDesign
-    compile deps.external.rxbindingRecyclerView
-    compile deps.external.rxbindingSupportV4
-    compile deps.external.rxjava2
-    compile deps.external.rxrelay2
+    api deps.support.appcompat
+    api deps.external.rxbinding
+    api deps.external.rxbindingAppCompat
+    api deps.external.rxbindingDesign
+    api deps.external.rxbindingRecyclerView
+    api deps.external.rxbindingSupportV4
+    api deps.external.rxjava2
+    api deps.external.rxrelay2
 }
 
 if (project.rootProject.name != 'buildSrc') {

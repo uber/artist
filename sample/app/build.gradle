@@ -50,6 +50,6 @@ task checkstyle(type: Checkstyle) {
 check.dependsOn 'checkstyle'
 
 dependencies {
-    compile project(":sample:library")
-    compile deps.support.appcompat
+    api project(":sample:library")
+    api deps.support.appcompat
 }
