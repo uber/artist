@@ -16,6 +16,7 @@
 
 package com.uber.artist.myproviders;
 
+import com.google.auto.service.AutoService;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import com.uber.artist.traits.rx.config.ArtistRxConfig;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Sample Artist RxTrait Config.
  */
+@AutoService(ArtistRxConfig.class)
 public class SampleRxConfig extends ArtistRxConfig {
 
   @Override
