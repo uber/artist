@@ -1,5 +1,6 @@
 package com.uber.artist.traits
 
+import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
@@ -8,6 +9,7 @@ import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
+@AutoService(Trait::class)
 class VisibilityTrait : Trait {
     override fun generateFor(
         type: Builder,

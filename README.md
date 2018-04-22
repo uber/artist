@@ -13,6 +13,7 @@ Artist is a Gradle plugin written in Kotlin that generates a base set of Android
 A simple `Trait` that adds visibility helper methods would look like:
 
 ```kotlin
+@AutoService(Trait::class)
 class VisibilityTrait : Trait {
   override fun generateFor(type: Builder, initMethod: MethodSpec.Builder, rClass: ClassName, baseType: String) {
     arrayOf("visible", "invisible", "gone")
