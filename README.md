@@ -132,7 +132,7 @@ subprojects { subproject ->
     if (subproject.buildFile.exists()) {
         repositories {
             jcenter()
-            mavenCentral()
+            google()
         }
 
         rootProject.dependencies {
