@@ -99,11 +99,11 @@ For more examples of things you can do with Artist, check out the [Recipes](http
 
 #### Implement the Stencil Provider
 - Create a class that implements `ViewStencilProvider`
-- Put the fully qualified class name of the stencil provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.ViewStencilProvider`
+- Annotate your class with `@AutoService(ViewStencilProvider::class)`
 
-#### Implement the Trait Provider (Optional)
-- If you have custom traits, then create a class that implements `TraitProvider`
-- Put the fully qualified class name of the trait provider in a file `src/main/resources/META-INF/services/com.uber.artist.api.TraitProvider`
+#### Implement Custom Traits (Optional)
+- If you have custom traits, then create classes that implement `Trait`
+- Annotate those classes with `@AutoService(Trait::class)`
 
 #### Add Provider module to Plugin Classpath
 _Option #1_
