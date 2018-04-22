@@ -16,6 +16,7 @@
 
 package com.uber.artist.traits.rx
 
+import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.MethodSpec
@@ -25,6 +26,7 @@ import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.Trait
 import javax.lang.model.element.Modifier
 
+@AutoService(Trait::class)
 class CheckableTrait : Trait {
     override fun generateFor(
             type: TypeSpec.Builder,

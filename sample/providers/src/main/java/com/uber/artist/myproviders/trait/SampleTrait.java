@@ -17,6 +17,7 @@
 
 package com.uber.artist.myproviders.trait;
 
+import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -28,6 +29,7 @@ import javax.lang.model.element.Modifier;
 /**
  * A somewhat arbitrary example of a custom Trait.
  */
+@AutoService(Trait.class)
 public class SampleTrait implements Trait {
 
   @Override

@@ -16,6 +16,7 @@
 
 package com.uber.artist.traits
 
+import com.google.auto.service.AutoService
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
@@ -39,6 +40,7 @@ import javax.lang.model.element.Modifier
  *   </declare-styleable>
  * </resources>
  */
+@AutoService(Trait::class)
 class ForegroundTrait : Trait {
     override fun generateFor(
             type: TypeSpec.Builder,

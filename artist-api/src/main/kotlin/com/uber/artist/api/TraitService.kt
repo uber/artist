@@ -20,7 +20,7 @@ import java.util.ServiceLoader
 
 class TraitService private constructor() {
 
-    private val serviceLoader = ServiceLoader.load(TraitProvider::class.java)
+    private val serviceLoader = ServiceLoader.load(Trait::class.java)
 
     /**
      * Gets the [Trait] implementations loaded.
@@ -30,7 +30,7 @@ class TraitService private constructor() {
     fun get(): Set<Trait> {
         val traits = LinkedHashSet<Trait>()
         serviceLoader.iterator()
-                .forEach { traits.addAll(it.traits()) }
+                .forEach { traits.add(it) }
         return traits
     }
 

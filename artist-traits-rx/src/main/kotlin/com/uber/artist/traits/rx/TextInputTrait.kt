@@ -16,11 +16,13 @@
 
 package com.uber.artist.traits.rx
 
+import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.Trait
 
+@AutoService(Trait::class)
 class TextInputTrait : Trait {
     override fun generateFor(
             type: TypeSpec.Builder,

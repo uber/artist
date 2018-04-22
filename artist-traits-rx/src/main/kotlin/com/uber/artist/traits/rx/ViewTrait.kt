@@ -16,6 +16,7 @@
 
 package com.uber.artist.traits.rx
 
+import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
@@ -24,6 +25,7 @@ import com.uber.artist.api.Trait
 import com.uber.artist.traits.rx.config.ArtistRxConfigService
 import javax.lang.model.element.Modifier
 
+@AutoService(Trait::class)
 open class ViewTrait : Trait {
     private val artistRxConfig by lazy { ArtistRxConfigService.newInstance().getArtistRxConfig() }
 
