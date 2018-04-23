@@ -2,9 +2,9 @@ buildscript {
     apply from: project.rootProject.file("../gradle/dependencies.gradle")
 
     repositories {
-        maven { url 'https://maven.google.com' }
         jcenter()
-        mavenCentral()
+        google()
+        maven { url deps.build.gradlePluginsUrl }
     }
 
     dependencies {
@@ -16,7 +16,7 @@ buildscript {
 apply from: project.rootProject.file("../gradle/dependencies.gradle")
 repositories {
     jcenter()
-    mavenCentral()
+    google()
 }
 
 subprojects { subproject ->
@@ -24,7 +24,7 @@ subprojects { subproject ->
         apply from: project.rootProject.file("../gradle/dependencies.gradle")
         repositories {
             jcenter()
-            mavenCentral()
+            google()
         }
 
         rootProject.dependencies {

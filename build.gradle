@@ -18,9 +18,8 @@ buildscript {
     apply from: project.file('gradle/dependencies.gradle')
 
     repositories {
-        maven { url 'https://maven.google.com' }
         jcenter()
-        mavenCentral()
+        google()
         maven { url deps.build.gradlePluginsUrl }
     }
 
@@ -34,8 +33,8 @@ apply from: project.file('gradle/dependencies.gradle')
 subprojects {
     buildscript {
         repositories {
-            maven { url 'https://maven.google.com' }
             jcenter()
+            google()
         }
     }
 
