@@ -8,7 +8,7 @@ import com.squareup.javapoet.TypeSpec.Builder
 import com.uber.artist.api.Trait
 
 @AutoService(Trait::class)
-class SuppressNullabilityInitializerTrait: Trait {
+class SuppressNullabilityInitializerTrait : Trait {
   override fun generateFor(
       type: Builder,
       initMethod: MethodSpec.Builder,
