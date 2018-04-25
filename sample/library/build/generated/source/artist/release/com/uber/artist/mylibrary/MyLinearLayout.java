@@ -325,7 +325,6 @@ public class MyLinearLayout extends LinearLayout implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,

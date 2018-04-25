@@ -246,7 +246,6 @@ public class MyButton extends AppCompatButton implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,

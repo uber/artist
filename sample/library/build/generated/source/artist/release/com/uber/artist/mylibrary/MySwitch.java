@@ -291,7 +291,6 @@ public class MySwitch extends SwitchCompat implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,
