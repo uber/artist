@@ -246,7 +246,6 @@ public class MyTextView extends TextView implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,

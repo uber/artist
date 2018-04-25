@@ -251,7 +251,6 @@ public class MyImageView extends AppCompatImageView implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,

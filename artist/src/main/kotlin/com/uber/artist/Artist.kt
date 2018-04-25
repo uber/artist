@@ -107,9 +107,6 @@ private fun createInitBuilderFor(
         rClass: ClassName): MethodSpec.Builder {
     val initMethod = MethodSpec.methodBuilder("init")
             .addAnnotation(TypeNames.Annotations.CallSuper)
-            .addAnnotation(AnnotationSpec.builder(SuppressWarnings::class.java)
-                    .addMember("value", "\$S", "CheckNullabilityTypes")
-                    .build())
             .addModifiers(Modifier.PROTECTED)
             .addParameter(ParameterSpec.builder(TypeNames.Android.Context, "context")
                     .build())

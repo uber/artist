@@ -296,7 +296,6 @@ public class MyNestedScrollView extends NestedScrollView implements MyView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,

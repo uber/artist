@@ -29,7 +29,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import java.lang.SuppressWarnings;
 
 public class MyImageView extends ImageView {
   public MyImageView(Context context) {
@@ -46,7 +45,6 @@ public class MyImageView extends ImageView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,
@@ -65,7 +63,6 @@ import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import java.lang.String;
-import java.lang.SuppressWarnings;
 
 public class MyImageView extends ImageView {
   public MyImageView(Context context) {
@@ -86,7 +83,6 @@ public class MyImageView extends ImageView {
   }
 
   @CallSuper
-  @SuppressWarnings("CheckNullabilityTypes")
   protected void init(
       Context context,
       @Nullable AttributeSet attrs,
