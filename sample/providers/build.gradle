@@ -24,7 +24,7 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'net.ltgt.apt'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -34,7 +34,8 @@ dependencies {
     annotationProcessor deps.apt.autoService
     compileOnly deps.apt.autoService
 
-    compile project(":artist-api")
-    compile project(":artist-traits")
-    compile project(":artist-traits-rx")
+    implementation deps.support.annotations
+    implementation project(":artist-api")
+    implementation project(":artist-traits")
+    implementation project(":artist-traits-rx")
 }

@@ -21,7 +21,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import com.uber.artist.traits.rx.config.ArtistRxConfig;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 /**
  * Sample Artist RxTrait Config.
@@ -36,7 +36,7 @@ public class SampleRxConfig extends ArtistRxConfig {
   }
 
   @Override
-  public void processRxBindingSignalEvent(@NotNull CodeBlock.Builder codeBlockBuilder) {
+  public void processRxBindingSignalEvent(@NonNull CodeBlock.Builder codeBlockBuilder) {
     super.processRxBindingSignalEvent(codeBlockBuilder);
     codeBlockBuilder.add(".map($T.createRxBindingSignalMapper())", SampleTypeNames.MY_UTILS);
   }
