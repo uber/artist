@@ -4,22 +4,11 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    compile gradleApi()
+    compileOnly gradleApi()
 
-    compile deps.apt.javapoet
-    compile deps.build.androidPlugin
-    compile deps.build.googleJavaFormatter
-    compile deps.kotlin.stdLibJre7
-    compile project(":artist-api")
-
-    // Dont need to run tests in buildSrc
-    if (rootProject.projectDir.name != "buildSrc") {
-        testCompile deps.support.annotations
-        testCompile deps.test.compileTesting
-        testCompile deps.test.junit
-        testCompile deps.test.robolectric
-        testCompile deps.test.truth
-    }
+    implementation deps.build.androidPlugin
+    implementation deps.kotlin.stdLibJre7
+    implementation project(":artist-core")
 }
 
 if (rootProject.projectDir.name != "buildSrc") {

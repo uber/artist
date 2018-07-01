@@ -16,7 +16,7 @@
 
 package com.uber.artist
 
-import com.android.annotations.VisibleForTesting
+import com.google.common.annotations.VisibleForTesting
 import com.google.googlejavaformat.java.Formatter
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
