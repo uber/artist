@@ -1,5 +1,5 @@
-apply plugin: "kotlin"
-apply plugin: 'kotlin-kapt'
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "org.jetbrains.kotlin.kapt"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -9,11 +9,12 @@ dependencies {
     compileOnly deps.apt.autoService
 
     // Also requires RxBinding be on the classpath. Since it is an AAR, we can't include it here.
-    compile deps.apt.javapoet
-    compile deps.kotlin.stdLibJre7
-    compile deps.external.rxjava2
-    compile deps.external.rxrelay2
-    compile project(":artist-api")
+    api deps.apt.javapoet
+    api deps.external.rxjava2
+    api deps.external.rxrelay2
+    api project(":artist-api")
+
+    implementation deps.kotlin.stdLibJre7
 }
 
 if (rootProject.projectDir.name != "buildSrc") {
