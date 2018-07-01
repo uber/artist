@@ -18,8 +18,8 @@ buildscript {
     apply from: project.file('gradle/dependencies.gradle')
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url deps.build.gradlePluginsUrl }
     }
 
@@ -33,15 +33,15 @@ apply from: project.file('gradle/dependencies.gradle')
 subprojects {
     buildscript {
         repositories {
-            jcenter()
             google()
+            jcenter()
         }
     }
 
     repositories {
+        google()
         jcenter()
         maven { url deps.build.gradlePluginsUrl }
-        maven { url 'https://maven.google.com' }
     }
 
     apply plugin: 'checkstyle'
@@ -52,7 +52,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
+    gradleVersion = '4.7'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 

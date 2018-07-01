@@ -16,7 +16,7 @@
 
 package com.uber.artist
 
-import com.android.annotations.VisibleForTesting
+import com.google.common.annotations.VisibleForTesting
 import com.google.googlejavaformat.java.Formatter
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
@@ -90,7 +90,7 @@ private fun generateTypeSpecFor(
     superinterfaceClassName?.let { typeBuilder.addSuperinterface(superinterface(superinterfaceClassName)) }
 
     generateConstructorsFor(stencil, typeBuilder, rClass)
-    val initMethod = createInitBuilderFor(stencil, typeBuilder, rClass)
+    val initMethod = createInitBuilderFor(stencil, typeBuilder)
 
     stencil.traits()
             .map { traitName -> traitMap[traitName] }
@@ -103,8 +103,7 @@ private fun generateTypeSpecFor(
 
 private fun createInitBuilderFor(
         stencil: ViewStencil,
-        type: TypeSpec.Builder,
-        rClass: ClassName): MethodSpec.Builder {
+        type: TypeSpec.Builder): MethodSpec.Builder {
     val initMethod = MethodSpec.methodBuilder("init")
             .addAnnotation(TypeNames.Annotations.CallSuper)
             .addModifiers(Modifier.PROTECTED)
