@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 0.2.1
+-------------
+
+_2018-07-01_
+
+* Separated core artist functionality into a module
+
 Version 0.2.0
 -------------
 

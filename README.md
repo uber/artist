@@ -168,22 +168,22 @@ The set of `ViewStencil`s that Artist should process are provided via the `ViewS
 
 Artist Plugin [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist)
 ```gradle
-classpath 'com.uber.artist:artist:0.2.0'
+classpath 'com.uber.artist:artist:0.2.1'
 ```
 
 Artist API [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-api.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-api)
 ```gradle
-classpath 'com.uber.artist:artist-api:0.2.0'
+classpath 'com.uber.artist:artist-api:0.2.1'
 ```
 
 Artist Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits)
 ```gradle
-classpath 'com.uber.artist:artist-traits:0.2.0'
+classpath 'com.uber.artist:artist-traits:0.2.1'
 ```
 
 Artist Rx Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits-rx.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits-rx)
 ```gradle
-classpath 'com.uber.artist:artist-traits-rx:0.2.0'
+classpath 'com.uber.artist:artist-traits-rx:0.2.1'
 ```
 
 ## License
