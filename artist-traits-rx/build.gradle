@@ -15,7 +15,7 @@ dependencies {
     api deps.external.rxrelay2
     api project(":artist-api")
 
-    implementation deps.kotlin.stdLibJre7
+    implementation deps.kotlin.stdLibJdk7
 }
 
 if (rootProject.projectDir.name != "buildSrc") {

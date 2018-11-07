@@ -123,7 +123,6 @@ public class MyImageView extends ImageView {
         val generatedFileName = viewOutputDir.listFiles().first()
         val generatedViewContent = generatedFileName.readText()
         assertAbout(javaSource())
-                .withFailureMessage("$generatedFileName did not compile")
                 .that(forSourceString("$TEST_PACKAGE_NAME.MyImageView", generatedViewContent))
                 .compilesWithoutError()
 
@@ -136,7 +135,7 @@ public class MyImageView extends ImageView {
     fun testArtist_withAddedTrait_shouldGenerateExpectedSource() {
         val outputDir = Files.createTempDir()
         val stencils: Set<ViewStencil> = setOf(
-                ViewStencil("android.widget.ImageView", 3, addedTraits = TestTrait::class.java))
+                ViewStencil("android.widget.ImageView", 3, addedTraits = *arrayOf(TestTrait::class.java)))
 
         generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
 
@@ -146,7 +145,6 @@ public class MyImageView extends ImageView {
         val generatedFileName = viewOutputDir.listFiles().first()
         val generatedViewContent = generatedFileName.readText()
         assertAbout(javaSource())
-                .withFailureMessage("$generatedFileName did not compile")
                 .that(forSourceString("$TEST_PACKAGE_NAME.MyImageView", generatedViewContent))
                 .compilesWithoutError()
 
@@ -170,7 +168,6 @@ public class MyImageView extends ImageView {
         val generatedFileName = viewOutputDir.listFiles().first()
         val generatedViewContent = generatedFileName.readText()
         assertAbout(javaSource())
-                .withFailureMessage("$generatedFileName did not compile")
                 .that(forSourceString("$TEST_PACKAGE_NAME.MyImageView", generatedViewContent))
                 .compilesWithoutError()
 

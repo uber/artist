@@ -7,7 +7,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     api deps.apt.javapoet
 
-    implementation deps.kotlin.stdLibJre7
+    implementation deps.kotlin.stdLibJdk7
 }
 
 if (rootProject.projectDir.name != "buildSrc") {
