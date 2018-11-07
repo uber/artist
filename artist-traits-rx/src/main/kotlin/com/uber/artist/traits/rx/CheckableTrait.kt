@@ -24,6 +24,7 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.Trait
+import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
 @AutoService(Trait::class)
@@ -76,7 +77,9 @@ class CheckableTrait : Trait {
                             .addParameter(TypeName.BOOLEAN.box(), "isChecked")
                             .addStatement("l.onCheckedChanged($baseType.this, isChecked)"),
                     true,
-                    CodeBlock.of("\$T.createDefault(isChecked())", RxTypeNames.Rx.BehaviorRelay)))
+                    CodeBlock.of("\$T.createDefault(isChecked())", RxTypeNames.Rx.BehaviorRelay),
+                    setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
+            ))
         }
     }
 }
