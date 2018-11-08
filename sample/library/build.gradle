@@ -51,7 +51,7 @@ task checkstyle(type: Checkstyle) {
 check.dependsOn 'checkstyle'
 
 dependencies {
-    api deps.support.appcompat
+    api deps.androidx.appcompat
     api deps.external.rxbinding
     api deps.external.rxbindingAppCompat
     api deps.external.rxbindingDesign

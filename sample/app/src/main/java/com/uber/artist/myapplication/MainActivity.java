@@ -17,7 +17,7 @@
 package com.uber.artist.myapplication;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;

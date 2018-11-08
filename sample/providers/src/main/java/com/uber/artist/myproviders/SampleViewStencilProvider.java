@@ -41,12 +41,12 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
   @Override
   public Set<ViewStencil> stencils() {
     return new LinkedHashSet<>(Arrays.asList(
-        new ViewStencil("android.support.v7.widget.AppCompatButton", 3, "buttonStyle"),
-        new ViewStencil("android.support.v7.widget.AppCompatEditText", 3,
+        new ViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
+        new ViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
             "android.R.attr.editTextStyle", TextInputTrait.class),
         new ViewStencil("android.widget.LinearLayout", 3, null),
-        new ViewStencil("android.support.v7.widget.AppCompatImageView", 3, null),
-        new ViewStencil("android.support.v4.widget.NestedScrollView", 3, null, ScrollableTrait.class),
+        new ViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
+        new ViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait.class),
         new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         new SwitchStencil()
     ));
@@ -64,7 +64,7 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
 
   private static class SwitchStencil extends ViewStencil {
     public SwitchStencil() {
-      super("android.support.v7.widget.SwitchCompat", 3, "switchStyle", CheckableTrait.class);
+      super("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", CheckableTrait.class);
     }
 
     @Override
