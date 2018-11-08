@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 0.2.2
+-------------
+
+_2018-11-07_
+
+* **Note:** This is the final version that uses the non-AndroidX Support Library
+* Annotate underlying `setOnClickListener(listener)` method param as `@Nullable` to match AOSP
+* Dependency updates including using Support Library, Kotlin, RxJava, and RxBinding
+
 Version 0.2.1
 -------------
 
