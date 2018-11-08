@@ -23,13 +23,13 @@ android {
     defaultConfig {
         applicationId "com.uber.artist.myapplication"
         minSdkVersion deps.build.minSdkVersion
-        targetSdkVersion 26
+        targetSdkVersion deps.build.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     // Setup a simple lint config for an android app/library.
