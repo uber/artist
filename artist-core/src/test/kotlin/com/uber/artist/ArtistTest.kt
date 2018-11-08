@@ -23,12 +23,12 @@ class ArtistTest {
         const val IMAGE_VIEW_SOURCE_NO_TRAITS = """package foo.bar;
 
 import android.content.Context;
-import android.support.annotation.AttrRes;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import androidx.annotation.AttrRes;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 
 public class MyImageView extends ImageView {
   public MyImageView(Context context) {
@@ -56,12 +56,12 @@ public class MyImageView extends ImageView {
         val IMAGE_VIEW_WITH_TEST_TRAIT = """package foo.bar;
 
 import android.content.Context;
-import android.support.annotation.AttrRes;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import androidx.annotation.AttrRes;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import java.lang.String;
 
 public class MyImageView extends ImageView {

@@ -21,7 +21,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import com.uber.artist.traits.rx.config.ArtistRxConfig;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Sample Artist RxTrait Config.

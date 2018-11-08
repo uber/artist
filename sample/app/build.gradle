@@ -51,5 +51,5 @@ check.dependsOn 'checkstyle'
 
 dependencies {
     api project(":sample:library")
-    api deps.support.appcompat
+    api deps.androidx.annotations
 }

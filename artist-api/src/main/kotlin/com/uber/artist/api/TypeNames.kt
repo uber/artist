@@ -30,10 +30,10 @@ class TypeNames {
             val Context: ClassName = ClassName.get("android.content", "Context")
             val Drawable: ClassName = ClassName.get("android.graphics.drawable", "Drawable")
             val Gravity: ClassName = ClassName.get("android.view", "Gravity")
-            val GravityCompat: ClassName = ClassName.get("android.support.v4.view", "GravityCompat")
+            val GravityCompat: ClassName = ClassName.get("androidx.core.view", "GravityCompat")
             val MenuItem: ClassName = ClassName.get("android.view", "MenuItem")
             val Rect: ClassName = ClassName.get("android.graphics", "Rect")
-            val TabLayout: ClassName = ClassName.get("android.support.design.widget", "TabLayout")
+            val TabLayout: ClassName = ClassName.get("com.google.android.material.tabs", "TabLayout")
             val TabLayoutTab: ClassName = TabLayout.nestedClass("Tab")
             val TypedArray: ClassName = ClassName.get("android.content.res", "TypedArray")
             val View: ClassName = ClassName.get("android.view", "View")
@@ -43,13 +43,13 @@ class TypeNames {
 
     class Annotations {
         companion object {
-            val AttrRes: ClassName = ClassName.get("android.support.annotation", "AttrRes")
-            val CallSuper: ClassName = ClassName.get("android.support.annotation", "CallSuper")
-            val IdRes: ClassName = ClassName.get("android.support.annotation", "IdRes")
-            val Nullable: ClassName = ClassName.get("android.support.annotation", "Nullable")
-            val StyleRes: ClassName = ClassName.get("android.support.annotation", "StyleRes")
+            val AttrRes: ClassName = ClassName.get("androidx.annotation", "AttrRes")
+            val CallSuper: ClassName = ClassName.get("androidx.annotation", "CallSuper")
+            val IdRes: ClassName = ClassName.get("androidx.annotation", "IdRes")
+            val Nullable: ClassName = ClassName.get("androidx.annotation", "Nullable")
+            val StyleRes: ClassName = ClassName.get("androidx.annotation", "StyleRes")
             val TargetApi: ClassName = ClassName.get("android.annotation", "TargetApi")
-            val VisibleForTesting: ClassName = ClassName.get("android.support.annotation", "VisibleForTesting")
+            val VisibleForTesting: ClassName = ClassName.get("androidx.annotation", "VisibleForTesting")
         }
     }
 
