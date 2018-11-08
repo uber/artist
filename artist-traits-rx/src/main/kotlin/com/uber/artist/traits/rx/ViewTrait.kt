@@ -22,6 +22,7 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.Trait
+import com.uber.artist.api.TypeNames
 import com.uber.artist.traits.rx.config.ArtistRxConfigService
 import javax.lang.model.element.Modifier
 
@@ -52,7 +53,8 @@ open class ViewTrait : Trait {
                 MethodSpec.methodBuilder("accept")
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
-                        .addStatement("l.onClick($sourceType.this)")
+                        .addStatement("l.onClick($sourceType.this)"),
+                setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
         ))
     }
 
@@ -68,7 +70,8 @@ open class ViewTrait : Trait {
                 MethodSpec.methodBuilder("accept")
                         .addModifiers(Modifier.PUBLIC)
                         .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
-                        .addStatement("l.onLongClick($sourceType.this)")
+                        .addStatement("l.onLongClick($sourceType.this)"),
+                setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
         ))
     }
 

@@ -20,6 +20,7 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
+import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
@@ -42,7 +43,8 @@ data class SettableApi(
         val isStateful: Boolean = false,
         val relayInitializer: CodeBlock? = null,
         val setterCaveats: String? = null,
-        val isUViewOverride: Boolean = false)
+        val isUViewOverride: Boolean = false,
+        val setListenerMethodAnnotations: List<ClassName> = emptyList())
 
 data class AdditiveApi(
         val rxBindingInfo: RxBindingInfo,
@@ -119,7 +121,13 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: SettableApi, isDebug
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .addAnnotation(Override::class.java)
             .addAnnotation(java.lang.Deprecated::class.java)
-            .addParameter(api.listenerType, "l", Modifier.FINAL)
+            .addParameter(
+                ParameterSpec.builder(api.listenerType, "l", Modifier.FINAL).apply {
+                    api.setListenerMethodAnnotations.forEach {
+                        addAnnotation(it)
+                    }
+                }.build()
+            )
             .beginControlFlow("if ($isInitting)")
             .addStatement("$isInitting = false")
             .addStatement("super.${api.listenerMethod}(l)")
