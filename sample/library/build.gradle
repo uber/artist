@@ -56,7 +56,6 @@ dependencies {
     api deps.external.rxbindingAppCompat
     api deps.external.rxbindingDesign
     api deps.external.rxbindingRecyclerView
-    api deps.external.rxbindingSupportV4
     api deps.external.rxjava2
     api deps.external.rxrelay2
 }

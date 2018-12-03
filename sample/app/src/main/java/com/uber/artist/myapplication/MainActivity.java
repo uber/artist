@@ -20,7 +20,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
+import com.jakewharton.rxbinding3.view.ViewScrollChangeEvent;
 import com.uber.artist.mylibrary.MyButton;
 import com.uber.artist.mylibrary.MyEditText;
 import com.uber.artist.mylibrary.MyImageView;
