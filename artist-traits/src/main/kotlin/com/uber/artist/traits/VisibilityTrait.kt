@@ -5,12 +5,13 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec.Builder
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
 @AutoService(Trait::class)
-class VisibilityTrait : Trait {
+class VisibilityTrait : JavaTrait {
     override fun generateFor(
         type: Builder,
         initMethod: MethodSpec.Builder,

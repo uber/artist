@@ -16,12 +16,19 @@
 
 package com.uber.artist.api
 
-/**
- * A [Trait] defines code that must be generated in order for a [View] to receive new functionality.
- * Each [Trait] can be declared by multiple [ViewStencil]s, and generate otherwise duplicate code across all views
- * that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the
- * [ViewStencil]’s code gen process that are called during each [ViewStencil]’s generation.
- */
-interface Trait<OutputType, FunType, ClassType> {
-    fun generateFor(type: OutputType, initMethod: FunType, rClass: ClassType, sourceType: String)
+interface JavaViewStencilProvider : ViewStencilProvider<JavaViewStencil, JavaTrait> {
+
+  /**
+   * Provide a set of [ViewStencil]s to be used during code generation.
+   *
+   * @return The set of [ViewStencil]s.
+   */
+  override fun stencils(): Set<JavaViewStencil>
+
+  /**
+   * Provide a set of [Trait] classes that should be applied to all [ViewStencil]s.
+   *
+   * @return The set of [Trait] classes.
+   */
+  override fun globalTraits(): Set<Class<out JavaTrait>>
 }

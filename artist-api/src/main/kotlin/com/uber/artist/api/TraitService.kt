@@ -16,27 +16,12 @@
 
 package com.uber.artist.api
 
-import java.util.ServiceLoader
-
-class TraitService private constructor() {
-
-    private val serviceLoader = ServiceLoader.load(Trait::class.java)
+interface TraitService<TraitType> {
 
     /**
      * Gets the [Trait] implementations loaded.
      *
      * @return The located [Trait]s.
      */
-    fun get(): Set<Trait> {
-        val traits = LinkedHashSet<Trait>()
-        serviceLoader.iterator()
-                .forEach { traits.add(it) }
-        return traits
-    }
-
-    companion object {
-        fun newInstance(): TraitService {
-            return TraitService()
-        }
-    }
+    fun get(): Set<TraitType>
 }

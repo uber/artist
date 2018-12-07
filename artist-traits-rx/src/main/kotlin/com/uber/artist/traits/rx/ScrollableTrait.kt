@@ -20,11 +20,12 @@ import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 import javax.lang.model.element.Modifier
 
 @AutoService(Trait::class)
-class ScrollableTrait : Trait {
+class ScrollableTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

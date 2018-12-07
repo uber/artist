@@ -17,6 +17,9 @@
 package com.uber.artist.myproviders;
 
 import com.google.auto.service.AutoService;
+import com.uber.artist.api.JavaTrait;
+import com.uber.artist.api.JavaViewStencil;
+import com.uber.artist.api.JavaViewStencilProvider;
 import com.uber.artist.api.Trait;
 import com.uber.artist.api.ViewStencil;
 import com.uber.artist.api.ViewStencilProvider;
@@ -36,24 +39,24 @@ import java.util.Set;
  * Sample ViewStencil provider.
  */
 @AutoService(ViewStencilProvider.class)
-public class SampleViewStencilProvider implements ViewStencilProvider {
+public class SampleViewStencilProvider implements JavaViewStencilProvider {
 
   @Override
-  public Set<ViewStencil> stencils() {
+  public Set<JavaViewStencil> stencils() {
     return new LinkedHashSet<>(Arrays.asList(
-        new ViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
-        new ViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
+        new JavaViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
+        new JavaViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
             "android.R.attr.editTextStyle", TextInputTrait.class),
-        new ViewStencil("android.widget.LinearLayout", 3, null),
-        new ViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
-        new ViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait.class),
-        new ViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
+        new JavaViewStencil("android.widget.LinearLayout", 3, null),
+        new JavaViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
+        new JavaViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait.class),
+        new JavaViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         new SwitchStencil()
     ));
   }
 
   @Override
-  public Set<Class<? extends Trait>> globalTraits() {
+  public Set<Class<? extends JavaTrait>> globalTraits() {
     return new LinkedHashSet<>(Arrays.asList(
         SampleTrait.class,
         VisibilityTrait.class,
@@ -62,7 +65,7 @@ public class SampleViewStencilProvider implements ViewStencilProvider {
     ));
   }
 
-  private static class SwitchStencil extends ViewStencil {
+  private static class SwitchStencil extends JavaViewStencil {
     public SwitchStencil() {
       super("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", CheckableTrait.class);
     }

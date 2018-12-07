@@ -14,7 +14,7 @@ A simple `Trait` that adds visibility helper methods would look like:
 
 ```kotlin
 @AutoService(Trait::class)
-class VisibilityTrait : Trait {
+class VisibilityTrait : JavaTrait {
   override fun generateFor(type: Builder, initMethod: MethodSpec.Builder, rClass: ClassName, baseType: String) {
     arrayOf("visible", "invisible", "gone")
         .forEach { type.addMethod(createVisibilityConvenienceMethod(it)) }

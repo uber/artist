@@ -23,12 +23,13 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
 @AutoService(Trait::class)
-class CheckableTrait : Trait {
+class CheckableTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,
