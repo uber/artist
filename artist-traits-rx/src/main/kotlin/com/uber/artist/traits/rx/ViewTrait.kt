@@ -27,7 +27,7 @@ import com.uber.artist.api.TypeNames
 import com.uber.artist.traits.rx.config.ArtistRxConfigService
 import javax.lang.model.element.Modifier
 
-@AutoService(Trait::class)
+@AutoService(JavaTrait::class)
 open class ViewTrait : JavaTrait {
     private val artistRxConfig by lazy { ArtistRxConfigService.newInstance().getArtistRxConfig() }
 

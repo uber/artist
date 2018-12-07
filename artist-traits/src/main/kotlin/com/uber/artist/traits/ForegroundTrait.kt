@@ -41,7 +41,7 @@ import javax.lang.model.element.Modifier
  *   </declare-styleable>
  * </resources>
  */
-@AutoService(Trait::class)
+@AutoService(JavaTrait::class)
 class ForegroundTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
