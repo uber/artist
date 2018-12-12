@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.AttrRes;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
-import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.View;
+import androidx.annotation.AttrRes;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
+import androidx.core.widget.NestedScrollView;
 import com.jakewharton.rxbinding2.support.v4.widget.RxNestedScrollView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
@@ -165,7 +165,7 @@ public class MyNestedScrollView extends NestedScrollView implements MyView {
   /** @deprecated Use {@link #clicks()} */
   @Override
   @Deprecated
-  public final void setOnClickListener(final OnClickListener l) {
+  public final void setOnClickListener(@Nullable final OnClickListener l) {
     if (clicksIsInitting) {
       clicksIsInitting = false;
       super.setOnClickListener(l);
@@ -207,7 +207,7 @@ public class MyNestedScrollView extends NestedScrollView implements MyView {
   /** @deprecated Use {@link #longClicks()} */
   @Override
   @Deprecated
-  public final void setOnLongClickListener(final OnLongClickListener l) {
+  public final void setOnLongClickListener(@Nullable final OnLongClickListener l) {
     if (longClicksIsInitting) {
       longClicksIsInitting = false;
       super.setOnLongClickListener(l);

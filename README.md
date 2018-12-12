@@ -13,7 +13,7 @@ Artist is a Gradle plugin written in Kotlin that generates a base set of Android
 A simple `Trait` that adds visibility helper methods would look like:
 
 ```kotlin
-@AutoService(Trait::class)
+@AutoService(JavaTrait::class)
 class VisibilityTrait : JavaTrait {
   override fun generateFor(type: Builder, initMethod: MethodSpec.Builder, rClass: ClassName, baseType: String) {
     arrayOf("visible", "invisible", "gone")
@@ -33,7 +33,7 @@ class VisibilityTrait : JavaTrait {
 A simple `ViewStencil` to generate a `Switch` with visibility helper methods would look like:
 
 ```kotlin
-class SwitchStencil : ViewStencil(
+class SwitchStencil : JavaViewStencil(
     extendedType = "android.support.v7.widget.SwitchCompat",
     constructorCount = 3,
     defaultAttrRes = "switchStyle",
@@ -98,12 +98,12 @@ For more examples of things you can do with Artist, check out the [Recipes](http
 - Add Artist dependencies (API, Traits, Traits-Rx)
 
 #### Implement the Stencil Provider
-- Create a class that implements `ViewStencilProvider`
-- Annotate your class with `@AutoService(ViewStencilProvider::class)`
+- Create a class that implements `JavaViewStencilProvider`
+- Annotate your class with `@AutoService(JavaViewStencilProvider::class)`
 
 #### Implement Custom Traits (Optional)
-- If you have custom traits, then create classes that implement `Trait`
-- Annotate those classes with `@AutoService(Trait::class)`
+- If you have custom traits, then create classes that implement `JavaTrait`
+- Annotate those classes with `@AutoService(JavaTrait::class)`
 
 #### Add Provider module to Plugin Classpath
 _Option #1_
@@ -162,7 +162,7 @@ The [generated views](https://github.com/uber/artist/tree/master/sample/library/
 
 ## Further examples
 
-The set of `ViewStencil`s that Artist should process are provided via the `ViewStencilProvider`. The [sample's ViewStencilProvider](https://github.com/uber/artist/blob/master/sample/providers/src/main/java/com/uber/artist/myproviders/SampleViewStencilProvider.java) would configure Artist to generate [these Views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary).
+The set of `JavaViewStencil`s that Artist should process are provided via the `JavaViewStencilProvider`. The [sample's ViewStencilProvider](https://github.com/uber/artist/blob/master/sample/providers/src/main/java/com/uber/artist/myproviders/SampleViewStencilProvider.java) would configure Artist to generate [these Views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary).
 
 ## Download
 
