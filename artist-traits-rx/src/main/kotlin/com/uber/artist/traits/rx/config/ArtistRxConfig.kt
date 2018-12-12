@@ -16,43 +16,41 @@
 
 package com.uber.artist.traits.rx.config
 
-import com.squareup.javapoet.CodeBlock
-import com.squareup.javapoet.TypeName
 
 /**
  * This configuration object describes various plugin points for rx-based traits.
  */
-abstract class ArtistRxConfig {
+interface ArtistRxConfig<CodeBlockType, TypeNameType> {
 
     /**
      * Plugin point for generating additional code to invoke when a view has been tapped.
      */
-    open fun processTap(codeBlockBuilder: CodeBlock.Builder) { }
+    fun processTap(codeBlockBuilder: CodeBlockType) { }
 
     /**
      * Plugin point for generating additional code to invoke when a view has attached to the window.
      */
-    open fun processImpression(codeBlockBuilder: CodeBlock.Builder) { }
+    fun processImpression(codeBlockBuilder: CodeBlockType) { }
 
     /**
      * Plugin point for generating additional code to invoke when a view has changed visibility.
      */
-    open fun processVisibilityChanges(codeBlockBuilder: CodeBlock.Builder) { }
+    fun processVisibilityChanges(codeBlockBuilder: CodeBlockType) { }
 
     /**
      * Plugin point for generating additional code to modify an RxBinding stream.
      */
-    open fun processRxBindingStream(codeBlockBuilder: CodeBlock.Builder, streamTypeName: TypeName) { }
+    fun processRxBindingStream(codeBlockBuilder: CodeBlockType, streamTypeName: TypeNameType) { }
 
     /**
      * Plugin point for generating additional code to modify an RxBinding stream which notifies that something occurred.
      * This can be used along with rxBindingSignalEventTypeName() to map signal events to a different type.
      */
-    open fun processRxBindingSignalEvent(codeBlockBuilder: CodeBlock.Builder) { }
+    fun processRxBindingSignalEvent(codeBlockBuilder: CodeBlockType) { }
 
     /**
      * This defines the type to be used for RxBinding event signals. It can be changed if processRxBindingSignalEvent()
      * has been overridden to map the signal events to a new type. The default type is Object.
      */
-    open fun rxBindingSignalEventTypeName(): TypeName = TypeName.OBJECT
+    fun rxBindingSignalEventTypeName(): TypeNameType
 }
