@@ -16,39 +16,19 @@
 
 package com.uber.artist.api
 
-import java.util.ServiceLoader
-
-class ViewStencilService private constructor() {
-
-    private val serviceLoader = ServiceLoader.load(ViewStencilProvider::class.java)
+interface ViewStencilService<ViewStencilType, TraitType> {
 
     /**
      * Gets the [ViewStencil] implementations loaded.
      *
      * @return The located [ViewStencil]s.
      */
-    fun getStencils(): Set<ViewStencil> {
-        val stencils = LinkedHashSet<ViewStencil>()
-        serviceLoader.iterator()
-                .forEach { stencils.addAll(it.stencils()) }
-        return stencils
-    }
+    fun getStencils(): Set<ViewStencilType>
 
     /**
      * Gets the [Trait] implementations that should be applied to every [ViewStencil].
      *
      * @return The located global [Trait]s.
      */
-    fun getGlobalTraits(): Set<Class<out Trait>> {
-        val globalTraits = LinkedHashSet<Class<out Trait>>()
-        serviceLoader.iterator()
-                .forEach { globalTraits.addAll(it.globalTraits()) }
-        return globalTraits
-    }
-
-    companion object {
-        fun newInstance(): ViewStencilService {
-            return ViewStencilService()
-        }
-    }
+    fun getGlobalTraits(): Set<Class<out TraitType>>
 }

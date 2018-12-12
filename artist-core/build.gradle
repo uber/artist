@@ -6,6 +6,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     implementation deps.apt.javapoet
+    implementation deps.apt.kotlinPoet
     implementation deps.build.googleJavaFormatter
     implementation deps.kotlin.stdLibJdk7
     implementation project(":artist-api")

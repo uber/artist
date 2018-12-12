@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,22 @@
 
 package com.uber.artist.traits.rx.config
 
-interface ArtistRxConfigService<ArtistRxConfig> {
+import java.util.ServiceLoader
+
+class KotlinArtistRxConfigService private constructor() : ArtistRxConfigService<KotlinArtistRxConfig> {
+
+    private val serviceLoader = ServiceLoader.load(KotlinArtistRxConfig::class.java)
 
     /**
      * Gets the optionally overridden [ArtistRxConfig] implementation or the default.
      *
      * @return The located [ArtistRxConfig] or a default config if not provided.
      */
-    fun getArtistRxConfig(): ArtistRxConfig
+    override fun getArtistRxConfig(): KotlinArtistRxConfig = serviceLoader.asIterable().firstOrNull() ?: DEFAULT_CONFIG
+
+    companion object {
+        private val DEFAULT_CONFIG: KotlinArtistRxConfig = KotlinDefaultArtistRxConfig()
+
+        fun newInstance(): KotlinArtistRxConfigService = KotlinArtistRxConfigService()
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,57 +16,19 @@
 
 package com.uber.artist
 
-import com.google.common.base.Preconditions.checkArgument
-import com.google.common.io.CharSink
-import com.google.common.io.CharSource
-import com.google.googlejavaformat.java.Formatter
-import com.google.googlejavaformat.java.FormatterException
-import com.squareup.javapoet.JavaFile
 import java.io.File
-import java.io.IOException
-import java.io.OutputStreamWriter
-import java.io.Writer
-import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Files
 
-private val packageSplitRegex = "\\.".toRegex()
+abstract class FormattingFileWriter<OutputFileType, OutputType> {
 
-/**
- * A rough estimate of the average file size: 80 chars per line, 500 lines.
- */
-private val defaultFileSize = 80 * 500
+  protected val packageSplitRegex = "\\.".toRegex()
 
-/**
- * A file writer function that formats the code before writing out to the file system.
- */
-fun JavaFile.writeWithFormattingTo(formatter: Formatter = Formatter(), directory: File) {
-    val directoryPath = directory.toPath()
-    checkArgument(Files.notExists(directoryPath) || Files.isDirectory(directoryPath),
-            "path %s exists but is not a directoryPath.", directoryPath)
-    var outputDirectory = directoryPath
-    if (!packageName.isEmpty()) {
-        for (packageComponent in packageName.split(packageSplitRegex)
-                .filter { ! it.isEmpty() }.toTypedArray()) {
-            outputDirectory = outputDirectory.resolve(packageComponent)
-        }
-        Files.createDirectories(outputDirectory)
-    }
+  /**
+   * A rough estimate of the average file size: 80 chars per line, 500 lines.
+   */
+  protected val defaultFileSize = 80 * 500
 
-    val outputPath = outputDirectory.resolve(typeSpec.name + ".java")
-    try {
-        OutputStreamWriter(Files.newOutputStream(outputPath), UTF_8).use({ writer ->
-            val stringBuilder = StringBuilder(defaultFileSize)
-            writeTo(stringBuilder)
-            formatter.formatSource(
-                    CharSource.wrap(stringBuilder),
-                    object : CharSink() {
-                        @Throws(IOException::class)
-                        override fun openStream(): Writer {
-                            return writer
-                        }
-                    })
-        })
-    } catch (e: FormatterException) {
-        throw IOException("Error formatting " + outputPath.fileName.toString(), e)
-    }
+  /**
+   * A file writer function that formats the code before writing out to the file system.
+   */
+  abstract fun writeWithFormattingTo(directory: File)
 }

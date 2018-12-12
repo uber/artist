@@ -20,10 +20,11 @@ import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 
-@AutoService(Trait::class)
-class TextInputTrait : Trait {
+@AutoService(JavaTrait::class)
+class TextInputTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

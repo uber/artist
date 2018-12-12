@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,6 @@
  * limitations under the License.
  */
 
-package com.uber.artist
+package com.uber.artist.traits.rx.config
 
-import java.io.File
-
-fun generateViewsFor(
-    outputDir: File,
-    packageName: String,
-    viewPackageName: String,
-    superinterfaceClassName: String?,
-    viewNamePrefix: String,
-    formatSource: Boolean,
-    generateKotlin: Boolean = false) {
-  val artistCodeGenerator = if (generateKotlin) KotlinArtistCodeGenerator() else JavaArtistCodeGenerator()
-  artistCodeGenerator.generateViews(outputDir, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
-}
+class JavaDefaultArtistRxConfig : JavaArtistRxConfig()

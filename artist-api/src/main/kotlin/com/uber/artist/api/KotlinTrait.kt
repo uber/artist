@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,16 @@
 
 package com.uber.artist.api
 
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeSpec
+
 /**
- * A [Trait] defines code that must be generated in order for a [View] to receive new functionality.
- * Each [Trait] can be declared by multiple [ViewStencil]s, and generate otherwise duplicate code across all views
+ * A [KotlinTrait] defines code that must be generated in order for a [View] to receive new functionality.
+ * Each [KotlinTrait] can be declared by multiple [ViewStencil]s, and generate otherwise duplicate code across all views
  * that exhibit them. Common examples include clicks, attach events, visibility changes, etc. They are a hook into the
  * [ViewStencil]’s code gen process that are called during each [ViewStencil]’s generation.
  */
-interface Trait<OutputType, FunType, ClassType> {
-    fun generateFor(type: OutputType, initMethod: FunType, rClass: ClassType, sourceType: String)
+interface KotlinTrait : Trait<TypeSpec.Builder, FunSpec.Builder, ClassName> {
+  override fun generateFor(type: TypeSpec.Builder, initMethod: FunSpec.Builder, rClass: ClassName, sourceType: String)
 }

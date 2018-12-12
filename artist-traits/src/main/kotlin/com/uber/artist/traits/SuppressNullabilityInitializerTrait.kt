@@ -5,10 +5,11 @@ import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec.Builder
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 
-@AutoService(Trait::class)
-class SuppressNullabilityInitializerTrait : Trait {
+@AutoService(JavaTrait::class)
+class SuppressNullabilityInitializerTrait : JavaTrait {
   override fun generateFor(
       type: Builder,
       initMethod: MethodSpec.Builder,

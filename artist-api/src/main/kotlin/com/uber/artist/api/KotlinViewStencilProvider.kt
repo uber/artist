@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package com.uber.artist
+package com.uber.artist.api
 
-import java.io.File
+interface KotlinViewStencilProvider : ViewStencilProvider<KotlinViewStencil, KotlinTrait> {
 
-fun generateViewsFor(
-    outputDir: File,
-    packageName: String,
-    viewPackageName: String,
-    superinterfaceClassName: String?,
-    viewNamePrefix: String,
-    formatSource: Boolean,
-    generateKotlin: Boolean = false) {
-  val artistCodeGenerator = if (generateKotlin) KotlinArtistCodeGenerator() else JavaArtistCodeGenerator()
-  artistCodeGenerator.generateViews(outputDir, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
+  /**
+   * Provide a set of [ViewStencil]s to be used during code generation.
+   *
+   * @return The set of [ViewStencil]s.
+   */
+  override fun stencils(): Set<KotlinViewStencil>
+
+  /**
+   * Provide a set of [Trait] classes that should be applied to all [ViewStencil]s.
+   *
+   * @return The set of [Trait] classes.
+   */
+  override fun globalTraits(): Set<Class<out KotlinTrait>>
 }

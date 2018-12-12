@@ -23,6 +23,7 @@ import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
+import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
@@ -40,8 +41,8 @@ import javax.lang.model.element.Modifier
  *   </declare-styleable>
  * </resources>
  */
-@AutoService(Trait::class)
-class ForegroundTrait : Trait {
+@AutoService(JavaTrait::class)
+class ForegroundTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

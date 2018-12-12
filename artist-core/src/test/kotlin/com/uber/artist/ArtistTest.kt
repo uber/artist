@@ -9,8 +9,8 @@ import com.google.testing.compile.JavaSourceSubjectFactory.javaSource
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
-import com.uber.artist.api.Trait
-import com.uber.artist.api.ViewStencil
+import com.uber.artist.api.JavaTrait
+import com.uber.artist.api.JavaViewStencil
 import org.junit.Test
 import javax.lang.model.element.Modifier
 
@@ -95,12 +95,12 @@ public class MyImageView extends ImageView {
     @Test
     fun testArtist_withNoTraits_shouldGenerateViews() {
         val outputDir = Files.createTempDir()
-        val stencils: Set<ViewStencil> = setOf(
-                ViewStencil("android.widget.Button", 3),
-                ViewStencil("android.widget.ImageView", 3),
-                ViewStencil("android.widget.TextView", 3))
+        val stencils: Set<JavaViewStencil> = setOf(
+                JavaViewStencil("android.widget.Button", 3),
+                JavaViewStencil("android.widget.ImageView", 3),
+                JavaViewStencil("android.widget.TextView", 3))
 
-        generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
+        JavaArtistCodeGenerator().generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
 
         val viewOutputDir = outputDir.resolve(TEST_PACKAGE_NAME.replace('.', '/'))
         val viewNames = viewOutputDir.listFiles()
@@ -112,10 +112,10 @@ public class MyImageView extends ImageView {
     @Test
     fun testArtist_withNoTraits_shouldGenerateExpectedSource() {
         val outputDir = Files.createTempDir()
-        val stencils: Set<ViewStencil> = setOf(
-                ViewStencil("android.widget.ImageView", 3))
+        val stencils: Set<JavaViewStencil> = setOf(
+                JavaViewStencil("android.widget.ImageView", 3))
 
-        generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
+        JavaArtistCodeGenerator().generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
 
         val viewOutputDir = outputDir.resolve(TEST_PACKAGE_NAME.replace('.', '/'))
         assertWithMessage("$viewOutputDir does not exist").that(viewOutputDir.exists()).isTrue()
@@ -134,10 +134,10 @@ public class MyImageView extends ImageView {
     @Test
     fun testArtist_withAddedTrait_shouldGenerateExpectedSource() {
         val outputDir = Files.createTempDir()
-        val stencils: Set<ViewStencil> = setOf(
-                ViewStencil("android.widget.ImageView", 3, addedTraits = *arrayOf(TestTrait::class.java)))
+        val stencils: Set<JavaViewStencil> = setOf(
+                JavaViewStencil("android.widget.ImageView", 3, addedTraits = *arrayOf(TestTrait::class.java)))
 
-        generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
+        JavaArtistCodeGenerator().generateViewsForStencils(stencils, TRAITS, emptySet(), outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
 
         val viewOutputDir = outputDir.resolve(TEST_PACKAGE_NAME.replace('.', '/'))
         assertWithMessage("$viewOutputDir does not exist").that(viewOutputDir.exists()).isTrue()
@@ -156,11 +156,11 @@ public class MyImageView extends ImageView {
     @Test
     fun testArtist_withGlobalTrait_shouldGenerateExpectedSource() {
         val outputDir = Files.createTempDir()
-        val globalTraits: Set<Class<out Trait>> = setOf(TestTrait::class.java)
-        val stencils: Set<ViewStencil> = setOf(
-                ViewStencil("android.widget.ImageView", 3))
+        val globalTraits: Set<Class<out JavaTrait>> = setOf(TestTrait::class.java)
+        val stencils: Set<JavaViewStencil> = setOf(
+                JavaViewStencil("android.widget.ImageView", 3))
 
-        generateViewsForStencils(stencils, TRAITS, globalTraits, outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
+        JavaArtistCodeGenerator().generateViewsForStencils(stencils, TRAITS, globalTraits, outputDir, TEST_PACKAGE_NAME, TEST_PACKAGE_NAME, null, "My", true)
 
         val viewOutputDir = outputDir.resolve(TEST_PACKAGE_NAME.replace('.', '/'))
         assertWithMessage("$viewOutputDir does not exist").that(viewOutputDir.exists()).isTrue()
@@ -176,7 +176,7 @@ public class MyImageView extends ImageView {
                 .isEqualTo(IMAGE_VIEW_WITH_TEST_TRAIT)
     }
 
-    class TestTrait : Trait {
+    class TestTrait : JavaTrait {
         override fun generateFor(type: TypeSpec.Builder, initMethod: MethodSpec.Builder, rClass: ClassName, sourceType: String) {
             type.addMethod(MethodSpec.methodBuilder("testMethod")
                     .addModifiers(Modifier.PUBLIC)

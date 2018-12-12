@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Uber Technologies
+ * Copyright (C) 2018. Uber Technologies
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.rx.config
+package com.uber.artist.api
 
-class DefaultArtistRxConfig : ArtistRxConfig()
+interface JavaViewStencilProvider : ViewStencilProvider<JavaViewStencil, JavaTrait> {
+
+  /**
+   * Provide a set of [ViewStencil]s to be used during code generation.
+   *
+   * @return The set of [ViewStencil]s.
+   */
+  override fun stencils(): Set<JavaViewStencil>
+
+  /**
+   * Provide a set of [Trait] classes that should be applied to all [ViewStencil]s.
+   *
+   * @return The set of [Trait] classes.
+   */
+  override fun globalTraits(): Set<Class<out JavaTrait>>
+}
