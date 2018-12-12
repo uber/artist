@@ -36,13 +36,13 @@ abstract class ArtistCodeGenerator<
 
   fun generateViews(
       outputDir: File,
-      packageName: String,
       viewPackageName: String,
+      rPackageName: String,
       superinterfaceClassName: String?,
       viewNamePrefix: String,
       formatSource: Boolean
   ) {
-    generateViewsForStencils(viewStencils, traits, globalTraits, outputDir, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
+    generateViewsForStencils(viewStencils, traits, globalTraits, outputDir, viewPackageName, rPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
   }
 
   @VisibleForTesting
@@ -51,8 +51,8 @@ abstract class ArtistCodeGenerator<
       traits: Set<TraitType>,
       globalTraits: Set<Class<out TraitType>>,
       outputDir: File,
-      packageName: String,
       viewPackageName: String,
+      rPackageName: String,
       superinterfaceClassName: String?,
       viewNamePrefix: String,
       formatSource: Boolean) {
@@ -62,10 +62,10 @@ abstract class ArtistCodeGenerator<
       it.setGlobalTraits(globalTraits)
       it.setPrefix(viewNamePrefix)
 
-      val typeSpecBuilder = generateTypeSpecFor(it, packageName, traitMap, superinterfaceClassName)
+      val typeSpecBuilder = generateTypeSpecFor(it, rPackageName, traitMap, superinterfaceClassName)
       val fileSpec = generateFileSpecFor(viewPackageName, typeSpecBuilder)
       if (formatSource) {
-        writeFileWithFormatting(fileSpec, outputDir, typeSpecBuilder, packageName)
+        writeFileWithFormatting(fileSpec, outputDir, typeSpecBuilder, viewPackageName)
       } else {
         writeFile(fileSpec, outputDir)
       }
@@ -76,7 +76,7 @@ abstract class ArtistCodeGenerator<
 
   protected abstract fun generateTypeSpecFor(
       stencil: ViewStencilType,
-      packageName: String,
+      rPackageName: String,
       traitMap: Map<Class<out TraitType>, TraitType>,
       superinterfaceClassName: String?): OutputType
 
@@ -92,7 +92,7 @@ abstract class ArtistCodeGenerator<
 
   protected abstract fun writeFile(fileSpec: OutputFileType, outputDir: File)
 
-  protected abstract fun writeFileWithFormatting(fileSpec: OutputFileType, outputDir: File, outputType: OutputType, packageName: String)
+  protected abstract fun writeFileWithFormatting(fileSpec: OutputFileType, outputDir: File, outputType: OutputType, viewPackageName: String)
 
   protected fun superConstructorStatement(count: Int): String {
     when (count) {

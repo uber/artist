@@ -20,12 +20,12 @@ import java.io.File
 
 fun generateViewsFor(
     outputDir: File,
-    packageName: String,
     viewPackageName: String,
+    rPackageName: String,
     superinterfaceClassName: String?,
     viewNamePrefix: String,
     formatSource: Boolean,
     generateKotlin: Boolean = false) {
   val artistCodeGenerator = if (generateKotlin) KotlinArtistCodeGenerator() else JavaArtistCodeGenerator()
-  artistCodeGenerator.generateViews(outputDir, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
+  artistCodeGenerator.generateViews(outputDir, viewPackageName, rPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
 }

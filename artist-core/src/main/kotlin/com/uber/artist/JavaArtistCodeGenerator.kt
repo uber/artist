@@ -48,10 +48,10 @@ class JavaArtistCodeGenerator : ArtistCodeGenerator<JavaFile, TypeSpec.Builder, 
 
   override fun generateTypeSpecFor(
       stencil: JavaViewStencil,
-      packageName: String,
+      rPackageName: String,
       traitMap: Map<Class<out JavaTrait>, JavaTrait>,
       superinterfaceClassName: String?): TypeSpec.Builder {
-    val rClass = ClassName.get(packageName, "R")
+    val rClass = ClassName.get(rPackageName, "R")
     val typeBuilder = TypeSpec.classBuilder(stencil.name())
         .addModifiers(Modifier.PUBLIC)
         .superclass(stencil.sourceType)

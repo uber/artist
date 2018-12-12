@@ -26,7 +26,7 @@ abstract class ViewStencil<OutputType, FunType, ClassName, CodeBlock>(
     val globalTraits = mutableSetOf<Class<out Trait<*, *, *>>>()
     var namePrefix: String = ""
 
-    fun traits(): Set<Class<out Trait<*, *, *>>> = globalTraits.plus(addedTraits)
+    open fun traits(): Set<Class<out Trait<*, *, *>>> = globalTraits.plus(addedTraits)
 
     /**
      * The name of the view class.

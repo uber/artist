@@ -39,7 +39,7 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
     get() = KotlinViewStencilService.newInstance().getGlobalTraits()
 
   override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec = TODO("not implemented")
-  override fun generateTypeSpecFor(stencil: KotlinViewStencil, packageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder = TODO("not implemented")
+  override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder = TODO("not implemented")
   override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder = TODO("not implemented")
   override fun generateConstructorsFor(stencil: KotlinViewStencil, type: TypeSpec.Builder, rClass: ClassName) = TODO("not implemented")
   override fun constructorBlock(stencil: KotlinViewStencil, rClass: ClassName, total: Int, currentIndex: Int): CodeBlock = TODO("not implemented")

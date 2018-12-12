@@ -63,8 +63,8 @@ class ArtistPlugin : Plugin<Project> {
                         group = ARTIST
                         outputDirectory = outputDir
                         description = "Generate ${variant.name} base views."
-                        packageName = artistExtension.packageName ?: variant.applicationId
-                        viewPackageName = artistExtension.viewPackageName ?: packageName
+                        viewPackageName = artistExtension.viewPackageName ?: variant.applicationId
+                        rPackageName = artistExtension.rPackageName ?: (artistExtension.viewPackageName ?: variant.applicationId)
                         superinterfaceClassName = artistExtension.interfaceClassName
                         viewNamePrefix = artistExtension.viewNamePrefix
                         formatSource = artistExtension.formatSource

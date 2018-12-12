@@ -28,10 +28,10 @@ open class ArtistTask : DefaultTask() {
     lateinit var outputDirectory: File
 
     @Input
-    lateinit var packageName: String
+    lateinit var viewPackageName: String
 
     @Input
-    lateinit var viewPackageName: String
+    lateinit var rPackageName: String
 
     @Input
     var superinterfaceClassName: String? = null
@@ -44,6 +44,6 @@ open class ArtistTask : DefaultTask() {
 
     @TaskAction
     fun execute(inputs: IncrementalTaskInputs) {
-        generateViewsFor(outputDirectory, packageName, viewPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
+        generateViewsFor(outputDirectory, viewPackageName, rPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
     }
 }

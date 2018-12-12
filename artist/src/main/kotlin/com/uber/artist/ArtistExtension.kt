@@ -19,14 +19,14 @@ package com.uber.artist
 class ArtistExtension {
 
     /**
-     * Optional override of the consuming module's package name. Defaults to variant.applicationId
-     */
-    var packageName: String? = null
-
-    /**
-     * Optional override of the package name for the generated views. Defaults to packageName
+     * Optional override of the package name for the generated views. Defaults to variant.applicationId
      */
     var viewPackageName: String? = null
+
+    /**
+     * Optional override of the consuming module's package name. Defaults to variant.applicationId
+     */
+    var rPackageName: String? = null
 
     /**
      * Optional fully qualified class name for an interface that all generated views should be marked as implementing
