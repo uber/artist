@@ -25,7 +25,7 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.TypeNames
-import com.uber.artist.traits.rx.config.ArtistRxConfigService
+import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
 data class RxBindingInfo(
@@ -53,12 +53,12 @@ data class AdditiveApi(
 )
 
 fun TypeName.irrelevantIfObject(): TypeName {
-    val artistRxConfig = ArtistRxConfigService.newInstance().getArtistRxConfig()
+    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     return if (this == TypeName.OBJECT.box()) artistRxConfig.rxBindingSignalEventTypeName() else this
 }
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
-    val artistRxConfig = ArtistRxConfigService.newInstance().getArtistRxConfig()
+    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     type.addMethod(MethodSpec.methodBuilder(api.rxBindingInfo.methodName)
             .addJavadoc("${api.rxBindingInfo.methodDoc}\n")
             .apply {
@@ -85,7 +85,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
 }
 
 fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: SettableApi, isDebug: Boolean = true) {
-    val artistRxConfig = ArtistRxConfigService.newInstance().getArtistRxConfig()
+    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     val rxBindingClassName = api.rxBindingInfo.className
     val rxBindingMethod = api.rxBindingInfo.methodName
     val rxBindingMethodDoc = api.rxBindingInfo.methodDoc

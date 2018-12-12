@@ -25,11 +25,12 @@ import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import com.uber.artist.traits.rx.config.ArtistRxConfigService
+import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
 open class ViewTrait : JavaTrait {
-    private val artistRxConfig by lazy { ArtistRxConfigService.newInstance().getArtistRxConfig() }
+    private val artistRxConfig by lazy { JavaArtistRxConfigService.newInstance().getArtistRxConfig() }
 
     override fun generateFor(
             type: TypeSpec.Builder,
