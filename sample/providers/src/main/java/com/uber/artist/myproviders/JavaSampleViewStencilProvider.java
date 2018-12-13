@@ -20,7 +20,7 @@ import com.google.auto.service.AutoService;
 import com.uber.artist.api.JavaTrait;
 import com.uber.artist.api.JavaViewStencil;
 import com.uber.artist.api.JavaViewStencilProvider;
-import com.uber.artist.myproviders.trait.SampleTrait;
+import com.uber.artist.myproviders.trait.JavaSampleTrait;
 import com.uber.artist.traits.ForegroundTrait;
 import com.uber.artist.traits.VisibilityTrait;
 import com.uber.artist.traits.rx.CheckableTrait;
@@ -36,7 +36,7 @@ import java.util.Set;
  * Sample ViewStencil provider.
  */
 @AutoService(JavaViewStencilProvider.class)
-public class SampleViewStencilProvider implements JavaViewStencilProvider {
+public class JavaSampleViewStencilProvider implements JavaViewStencilProvider {
 
   @Override
   public Set<JavaViewStencil> stencils() {
@@ -55,7 +55,7 @@ public class SampleViewStencilProvider implements JavaViewStencilProvider {
   @Override
   public Set<Class<? extends JavaTrait>> globalTraits() {
     return new LinkedHashSet<>(Arrays.asList(
-        SampleTrait.class,
+        JavaSampleTrait.class,
         VisibilityTrait.class,
         ForegroundTrait.class,
         ViewTrait.class

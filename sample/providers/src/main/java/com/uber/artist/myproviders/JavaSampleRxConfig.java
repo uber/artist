@@ -27,22 +27,22 @@ import androidx.annotation.NonNull;
  * Sample Artist RxTrait Config.
  */
 @AutoService(JavaArtistRxConfig.class)
-public class SampleRxConfig extends JavaArtistRxConfig {
+public class JavaSampleRxConfig extends JavaArtistRxConfig {
 
   @Override
   public void processTap(CodeBlock.Builder codeBlockBuilder) {
     super.processTap(codeBlockBuilder);
-    codeBlockBuilder.add(".doOnNext($T.createTapProcessor())", SampleTypeNames.MY_UTILS);
+    codeBlockBuilder.add(".doOnNext($T.createTapProcessor())", JavaSampleTypeNames.MY_UTILS);
   }
 
   @Override
   public void processRxBindingSignalEvent(@NonNull CodeBlock.Builder codeBlockBuilder) {
     super.processRxBindingSignalEvent(codeBlockBuilder);
-    codeBlockBuilder.add(".map($T.createRxBindingSignalMapper())", SampleTypeNames.MY_UTILS);
+    codeBlockBuilder.add(".map($T.createRxBindingSignalMapper())", JavaSampleTypeNames.MY_UTILS);
   }
 
   @Override
   public TypeName rxBindingSignalEventTypeName() {
-    return SampleTypeNames.SIGNAL;
+    return JavaSampleTypeNames.SIGNAL;
   }
 }
