@@ -16,13 +16,18 @@
 
 package com.uber.artist
 
+import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.INT
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.uber.artist.api.KotlinTrait
 import com.uber.artist.api.KotlinTraitService
+import com.uber.artist.api.KotlinTypeNames
 import com.uber.artist.api.KotlinViewStencil
 import com.uber.artist.api.KotlinViewStencilService
 import java.io.File
@@ -38,13 +43,109 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override val globalTraits: Set<Class<out KotlinTrait>>
     get() = KotlinViewStencilService.newInstance().getGlobalTraits()
 
-  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec = TODO("not implemented")
-  override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder = TODO("not implemented")
-  override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder = TODO("not implemented")
-  override fun generateConstructorsFor(stencil: KotlinViewStencil, type: TypeSpec.Builder, rClass: ClassName) = TODO("not implemented")
-  override fun constructorBlock(stencil: KotlinViewStencil, rClass: ClassName, total: Int, currentIndex: Int): CodeBlock = TODO("not implemented")
-  override fun fallthroughConstructorStatement(stencil: KotlinViewStencil, rClass: ClassName, count: Int): CodeBlock = TODO("not implemented")
-  override fun superinterface(className: String): ClassName = TODO("not implemented")
-  override fun writeFile(fileSpec: FileSpec, outputDir: File) = TODO("not implemented")
-  override fun writeFileWithFormatting(fileSpec: FileSpec, outputDir: File, outputType: TypeSpec.Builder, packageName: String) = TODO("not implemented")
+  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
+    val typeSpec = typeSpecBuilder.build()
+    return FileSpec.builder(viewPackageName, typeSpec.name ?: throw IllegalStateException("No name for type: $typeSpec"))
+        .addType(typeSpec)
+        .build()
+  }
+
+  override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder {
+    val rClass = ClassName(rPackageName, "R")
+    val typeBuilder = TypeSpec.classBuilder(stencil.name())
+        .addModifiers(KModifier.PUBLIC)
+        .superclass(stencil.sourceType)
+
+    superinterfaceClassName?.let { typeBuilder.addSuperinterface(superinterface(superinterfaceClassName)) }
+
+    generateConstructorsFor(stencil, typeBuilder, rClass)
+    val initMethod = createInitBuilderFor(stencil, typeBuilder)
+
+    stencil.traits()
+        .map { traitName -> traitMap[traitName] }
+        .forEach { it?.generateFor(typeBuilder, initMethod, rClass, stencil.name()) }
+
+    typeBuilder.addFunction(initMethod.build())
+    stencil.typeHook(typeBuilder)
+    return typeBuilder
+  }
+
+
+  override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder {
+    return FunSpec.builder("init")
+        .addAnnotation(KotlinTypeNames.Annotations.CallSuper)
+        .addModifiers(KModifier.PROTECTED)
+        .addParameter(ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
+            .build())
+        .addParameter(ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))
+            .addAnnotation(KotlinTypeNames.Annotations.Nullable)
+            .build())
+        .addParameter(ParameterSpec.builder("defStyleAttr", INT)
+            .addAnnotation(KotlinTypeNames.Annotations.AttrRes)
+            .build())
+        .addParameter(ParameterSpec.builder("defStyleRes", INT)
+            .addAnnotation(KotlinTypeNames.Annotations.StyleRes)
+            .build())
+        .also {
+          stencil.initMethodHook(type, it)
+        }
+  }
+
+  override fun generateConstructorsFor(stencil: KotlinViewStencil, type: TypeSpec.Builder, rClass: ClassName) {
+    val paramContext = ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
+        .build()
+    val paramAttrs = ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))
+        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
+        .defaultValue("null")
+        .build()
+    val paramDefStyleAttr = ParameterSpec.builder("defStyleAttr", INT)
+        .addAnnotation(KotlinTypeNames.Annotations.AttrRes)
+        .defaultValue(stencil.defaultAttrRes?.let { CodeBlock.of("%T.attr.$it", rClass) } ?: CodeBlock.of("0"))
+        .build()
+    val paramDefStyleRes = ParameterSpec.builder("defStyleRes", INT)
+        .addAnnotation(KotlinTypeNames.Annotations.StyleRes)
+        .defaultValue("0")
+        .build()
+
+    val params = listOf(paramContext, paramAttrs, paramDefStyleAttr, paramDefStyleRes)
+    val superConstructorArgs = listOf("context", "attrs", "defStyleAttr", "defStyleRes")
+
+    val ctorOverloadsCount = stencil.constructorCount.coerceAtMost(3)
+    val overloadsConstructor = FunSpec.constructorBuilder()
+        .addAnnotation(JvmOverloads::class)
+        .addModifiers(KModifier.PUBLIC)
+        .addParameters(params.subList(0, ctorOverloadsCount))
+        .callSuperConstructor(*superConstructorArgs.subList(0, ctorOverloadsCount).toTypedArray())
+        .addStatement(initStatement(ctorOverloadsCount))
+        .build()
+
+    val targetApiConstructor = FunSpec.constructorBuilder()
+        .addAnnotation(AnnotationSpec.builder(KotlinTypeNames.Annotations.TargetApi)
+            .addMember("%T.VERSION_CODES.LOLLIPOP", ClassName("android.os", "Build"))
+            .build())
+        .addModifiers(KModifier.PUBLIC)
+        .addParameters(params)
+        .callSuperConstructor(*superConstructorArgs.toTypedArray())
+        .addStatement(initStatement(4))
+        .build()
+
+    type
+        .addFunction(overloadsConstructor)
+        .apply {
+          if (stencil.constructorCount > 3) addFunction(targetApiConstructor)
+        }
+  }
+
+  override fun superinterface(className: String) = ClassName(
+      className.substringBeforeLast('.'),
+      className.substringAfterLast('.')
+  )
+
+  override fun writeFile(fileSpec: FileSpec, outputDir: File) {
+    fileSpec.writeTo(outputDir)
+  }
+
+  override fun writeFileWithFormatting(fileSpec: FileSpec, outputDir: File, outputType: TypeSpec.Builder, packageName: String) {
+    fileSpec.writeTo(outputDir)
+  }
 }

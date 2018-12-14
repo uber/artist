@@ -153,7 +153,7 @@ class JavaArtistCodeGenerator : ArtistCodeGenerator<JavaFile, TypeSpec.Builder, 
     }
   }
 
-  override fun constructorBlock(stencil: JavaViewStencil, rClass: ClassName, total: Int, currentIndex: Int): CodeBlock {
+  private fun constructorBlock(stencil: JavaViewStencil, rClass: ClassName, total: Int, currentIndex: Int): CodeBlock {
     val builder = CodeBlock.builder()
     if (currentIndex == total || currentIndex == 3) {
       builder.addStatement(superConstructorStatement(currentIndex))
@@ -164,7 +164,7 @@ class JavaArtistCodeGenerator : ArtistCodeGenerator<JavaFile, TypeSpec.Builder, 
     return builder.build()
   }
 
-  override fun fallthroughConstructorStatement(stencil: JavaViewStencil, rClass: ClassName, count: Int): CodeBlock {
+  private fun fallthroughConstructorStatement(stencil: JavaViewStencil, rClass: ClassName, count: Int): CodeBlock {
     when (count) {
       1 -> return CodeBlock.of("this(context, null);\n")
       2 -> {

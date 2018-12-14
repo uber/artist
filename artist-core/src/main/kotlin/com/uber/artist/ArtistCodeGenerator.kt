@@ -84,10 +84,6 @@ abstract class ArtistCodeGenerator<
 
   protected abstract fun generateConstructorsFor(stencil: ViewStencilType, type: OutputType, rClass: ClassName)
 
-  protected abstract fun constructorBlock(stencil: ViewStencilType, rClass: ClassName, total: Int, currentIndex: Int): CodeBlock
-
-  protected abstract fun fallthroughConstructorStatement(stencil: ViewStencilType, rClass: ClassName, count: Int): CodeBlock
-
   protected abstract fun superinterface(className: String): ClassName
 
   protected abstract fun writeFile(fileSpec: OutputFileType, outputDir: File)
