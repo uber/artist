@@ -57,6 +57,7 @@ class KotlinTypeNames {
   class Java {
     companion object {
       val Map: ClassName = java.util.Map::class.asClassName()
+      val Object: ClassName = java.lang.Object::class.asClassName()
       val String: ClassName = java.lang.String::class.asClassName()
     }
   }

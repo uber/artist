@@ -3,6 +3,7 @@ include ':artist'
 include ':artist-api'
 include ':artist-core'
 include ':artist-traits'
+include ':artist-traits-kotlin'
 include ':artist-traits-rx'
 
 include ':sample:providers'
