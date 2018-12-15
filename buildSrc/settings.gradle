@@ -7,3 +7,4 @@ include ':artist-traits-kotlin'
 include ':artist-traits-rx'
 
 include ':sample:providers'
+include ':sample:providers-kotlin'
