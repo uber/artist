@@ -25,9 +25,6 @@ import com.uber.artist.traits.kotlin.ForegroundTrait
 import com.uber.artist.traits.kotlin.SuppressNullabilityInitializerTrait
 import com.uber.artist.traits.kotlin.VisibilityTrait
 
-import java.util.Arrays
-import java.util.LinkedHashSet
-
 /**
  * Sample ViewStencil provider.
  */
@@ -35,7 +32,7 @@ import java.util.LinkedHashSet
 class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
 
   override fun stencils(): Set<KotlinViewStencil> {
-    return LinkedHashSet(Arrays.asList(
+    return linkedSetOf(
         KotlinViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
         KotlinViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
             "android.R.attr.editTextStyle"/*, TextInputTrait::class.java*/),
@@ -44,7 +41,7 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
         KotlinViewStencil("androidx.core.widget.NestedScrollView", 3, null/*, ScrollableTrait::class.java*/),
         KotlinViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         SwitchStencil()
-    ))
+    )
   }
 
   override fun globalTraits(): Set<Class<out KotlinTrait>> = setOf(
