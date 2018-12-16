@@ -22,9 +22,7 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.JavaTrait
-import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
-import com.uber.artist.traits.rx.config.ArtistRxConfigService
 import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
@@ -44,8 +42,8 @@ open class ViewTrait : JavaTrait {
     }
 
     open fun clicks(type: TypeSpec.Builder, sourceType: String) {
-        addRxBindingApiForSettable(type, SettableApi(
-                RxBindingInfo(RxTypeNames.Rx.RxView,
+        addRxBindingApiForSettable(type, JavaSettableApi(
+                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
                         "clicks",
                         """@return an Observable of click events. The emitted value is unspecified and should only be used as notification.
     """),
@@ -61,8 +59,8 @@ open class ViewTrait : JavaTrait {
     }
 
     open fun longClicks(type: TypeSpec.Builder, sourceType: String) {
-        addRxBindingApiForSettable(type, SettableApi(
-                RxBindingInfo(RxTypeNames.Rx.RxView,
+        addRxBindingApiForSettable(type, JavaSettableApi(
+                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
                         "longClicks",
                         """@return an Observable of longclick events. The emitted value is unspecified and should only be used as notification.
     """),
@@ -79,9 +77,9 @@ open class ViewTrait : JavaTrait {
 
     open fun layoutChanges(type: TypeSpec.Builder) {
         // Attach state changes observable
-        addRxBindingApiForAdditive(type, AdditiveApi(
-                RxBindingInfo(
-                        RxTypeNames.Rx.RxView,
+        addRxBindingApiForAdditive(type, JavaAdditiveApi(
+                JavaRxBindingInfo(
+                        JavaRxTypeNames.Rx.RxView,
                         "layoutChanges",
                         "@return an observable which emits on layout changes. The emitted value is " +
                                 "unspecified and should only be used as notification."),

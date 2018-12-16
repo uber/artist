@@ -24,7 +24,6 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.JavaTrait
-import com.uber.artist.api.Trait
 import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
@@ -40,19 +39,19 @@ class CheckableTrait : JavaTrait {
 
         if (isTextView) {
             type.addField(
-                    ParameterizedTypeName.get(RxTypeNames.Rx.BehaviorRelay, TypeName.BOOLEAN.box()), "checkedChanges",
+                    ParameterizedTypeName.get(JavaRxTypeNames.Rx.BehaviorRelay, TypeName.BOOLEAN.box()), "checkedChanges",
                     Modifier.PRIVATE)
             type.addMethod(MethodSpec.methodBuilder("ensureCheckedChanges")
                     .addModifiers(Modifier.PRIVATE)
                     .beginControlFlow("if (checkedChanges == null)")
-                    .addStatement("checkedChanges = \$T.create()", RxTypeNames.Rx.BehaviorRelay)
+                    .addStatement("checkedChanges = \$T.create()", JavaRxTypeNames.Rx.BehaviorRelay)
                     .endControlFlow()
                     .build())
             type.addMethod(MethodSpec.methodBuilder("checkedChanges")
                     .addJavadoc("""@return an observable of booleans representing the checked state of this view.
     """)
                     .addModifiers(Modifier.PUBLIC)
-                    .returns(ParameterizedTypeName.get(RxTypeNames.Rx.Observable, TypeName.BOOLEAN.box()))
+                    .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, TypeName.BOOLEAN.box()))
                     .addStatement("ensureCheckedChanges()")
                     .addStatement("return checkedChanges.hide()")
                     .build())
@@ -65,8 +64,8 @@ class CheckableTrait : JavaTrait {
                     .addStatement("checkedChanges.accept(val)")
                     .build())
         } else {
-            addRxBindingApiForSettable(type, SettableApi(
-                    RxBindingInfo(RxTypeNames.Rx.RxCompoundButton,
+            addRxBindingApiForSettable(type, JavaSettableApi(
+                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxCompoundButton,
                             "checkedChanges",
                             """@return an observable of booleans representing the checked state of this view.
     """),
@@ -78,7 +77,7 @@ class CheckableTrait : JavaTrait {
                             .addParameter(TypeName.BOOLEAN.box(), "isChecked")
                             .addStatement("l.onCheckedChanged($baseType.this, isChecked)"),
                     true,
-                    CodeBlock.of("\$T.createDefault(isChecked())", RxTypeNames.Rx.BehaviorRelay),
+                    CodeBlock.of("\$T.createDefault(isChecked())", JavaRxTypeNames.Rx.BehaviorRelay),
                     setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
             ))
         }
