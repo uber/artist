@@ -24,6 +24,10 @@ import com.uber.artist.myproviders.trait.KotlinSampleTrait
 import com.uber.artist.traits.kotlin.ForegroundTrait
 import com.uber.artist.traits.kotlin.SuppressNullabilityInitializerTrait
 import com.uber.artist.traits.kotlin.VisibilityTrait
+import com.uber.artist.traits.rx.kotlin.CheckableTrait
+import com.uber.artist.traits.rx.kotlin.ScrollableTrait
+import com.uber.artist.traits.rx.kotlin.TextInputTrait
+import com.uber.artist.traits.rx.kotlin.ViewTrait
 
 /**
  * Sample ViewStencil provider.
@@ -35,10 +39,10 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
     return linkedSetOf(
         KotlinViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
         KotlinViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
-            "android.R.attr.editTextStyle"/*, TextInputTrait::class.java*/),
+            "android.R.attr.editTextStyle", TextInputTrait::class.java),
         KotlinViewStencil("android.widget.LinearLayout", 4, null),
         KotlinViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
-        KotlinViewStencil("androidx.core.widget.NestedScrollView", 3, null/*, ScrollableTrait::class.java*/),
+        KotlinViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait::class.java),
         KotlinViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         SwitchStencil()
     )
@@ -48,11 +52,11 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
     KotlinSampleTrait::class.java,
     VisibilityTrait::class.java,
     ForegroundTrait::class.java,
-    SuppressNullabilityInitializerTrait::class.java
-//    ,ViewTrait::class.java
+    SuppressNullabilityInitializerTrait::class.java,
+    ViewTrait::class.java
   )
 
-  private class SwitchStencil : KotlinViewStencil("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle"/*, CheckableTrait::class.java*/) {
+  private class SwitchStencil : KotlinViewStencil("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", CheckableTrait::class.java) {
 
     override fun name(): String {
       return "MySwitch"
