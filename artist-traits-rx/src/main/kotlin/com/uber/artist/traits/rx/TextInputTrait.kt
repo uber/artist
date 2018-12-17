@@ -21,7 +21,6 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.JavaTrait
-import com.uber.artist.api.Trait
 
 @AutoService(JavaTrait::class)
 class TextInputTrait : JavaTrait {
@@ -32,8 +31,8 @@ class TextInputTrait : JavaTrait {
             sourceType: String) {
 
         // TextChanges
-        addRxBindingApiForAdditive(type, AdditiveApi(
-                RxBindingInfo(RxTypeNames.Rx.RxTextView,
+        addRxBindingApiForAdditive(type, JavaAdditiveApi(
+                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxTextView,
                         "textChanges",
                         """@return an observable of character sequences for text changes on this TextView."""),
                 ClassName.get(CharSequence::class.java)))
