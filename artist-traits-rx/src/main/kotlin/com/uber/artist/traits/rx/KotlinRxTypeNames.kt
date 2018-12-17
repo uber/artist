@@ -16,21 +16,27 @@
 
 package com.uber.artist.traits.rx
 
+import com.jakewharton.rxrelay2.BehaviorRelay
+import com.jakewharton.rxrelay2.PublishRelay
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.asClassName
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import io.reactivex.functions.Function
 
 class KotlinRxTypeNames {
     class Rx {
         companion object {
             // Rx
-            val Consumer = io.reactivex.functions.Consumer::class.asClassName()
-            val Disposable = io.reactivex.disposables.Disposable::class.asClassName()
-            val Function = io.reactivex.functions.Function::class.asClassName()
-            val Observable = io.reactivex.Observable::class.asClassName()
+            val Consumer = Consumer::class.asClassName()
+            val Disposable = Disposable::class.asClassName()
+            val Function = Function::class.asClassName()
+            val Observable = Observable::class.asClassName()
 
             // RxRelay
-            val BehaviorRelay = com.jakewharton.rxrelay2.BehaviorRelay::class.asClassName()
-            val PublishRelay = com.jakewharton.rxrelay2.PublishRelay::class.asClassName()
+            val BehaviorRelay = BehaviorRelay::class.asClassName()
+            val PublishRelay = PublishRelay::class.asClassName()
 
             // RxBinding
             val RecyclerViewScrollEvent = ClassName("com.jakewharton.rxbinding2.support.v7.widget", "RecyclerViewScrollEvent")
