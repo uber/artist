@@ -55,6 +55,7 @@ class ForegroundTrait : KotlinTrait {
 
     // The field
     type.addProperty(PropertySpec.builder("foreground", KotlinTypeNames.Android.Drawable.copy(nullable = true), KModifier.PRIVATE)
+        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
         .initializer("null")
         .mutable()
         .build())
@@ -147,19 +148,18 @@ class ForegroundTrait : KotlinTrait {
           .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC)
           .addParameter("foregroundGravity", INT)
           .beginControlFlow("if (this.foregroundGravity != foregroundGravity)")
-          .beginControlFlow("if ((foregroundGravity & %T.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0)",
+          .beginControlFlow("if ((foregroundGravity and %T.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0)",
               KotlinTypeNames.Android.Gravity)
-          .addStatement("foregroundGravity |= %T.START", KotlinTypeNames.Android.GravityCompat)
+          .addStatement("this.foregroundGravity = foregroundGravity.or(%T.START)", KotlinTypeNames.Android.GravityCompat)
           .endControlFlow()
-          .beginControlFlow("if ((foregroundGravity & %T.VERTICAL_GRAVITY_MASK) == 0)",
+          .beginControlFlow("if ((foregroundGravity and %T.VERTICAL_GRAVITY_MASK) == 0)",
               KotlinTypeNames.Android.Gravity)
-          .addStatement("foregroundGravity |= %T.TOP", KotlinTypeNames.Android.Gravity)
+          .addStatement("this.foregroundGravity = foregroundGravity.or(%T.TOP)", KotlinTypeNames.Android.Gravity)
           .endControlFlow()
-          .addStatement("this.foregroundGravity = foregroundGravity")
           .beginControlFlow("if (this.foregroundGravity == %T.FILL && foreground != null)",
               KotlinTypeNames.Android.Gravity)
           .addStatement("val padding = %T()", KotlinTypeNames.Android.Rect)
-          .addStatement("foreground.getPadding(padding)")
+          .addStatement("foreground?.getPadding(padding)")
           .endControlFlow()
           .addStatement("requestLayout()")
           .endControlFlow()
@@ -198,7 +198,7 @@ class ForegroundTrait : KotlinTrait {
     """)
         .addAnnotation(AnnotationSpec.builder(SuppressWarnings::class.java).addMember("%S", "MissingOverride").build())
         .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC)
-        .returns(KotlinTypeNames.Android.Drawable)
+        .returns(KotlinTypeNames.Android.Drawable.copy(nullable = true))
         .addStatement("return foreground")
         .build())
 
@@ -215,7 +215,7 @@ class ForegroundTrait : KotlinTrait {
             .addMember("%S", "NewApi")
             .build())
         .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC)
-        .addParameter("drawable", KotlinTypeNames.Android.Drawable)
+        .addParameter("drawable", KotlinTypeNames.Android.Drawable.copy(nullable = true))
         .beginControlFlow("if (foreground != drawable)")
         .beginControlFlow("if (foreground != null)")
         .addStatement("foreground?.setCallback(null)")
@@ -236,7 +236,7 @@ class ForegroundTrait : KotlinTrait {
 
     if (isLayout) {
       setForegroundMethod.beginControlFlow("if (foregroundGravity == %T.FILL)", KotlinTypeNames.Android.Gravity)
-      setForegroundMethod.addStatement("%T padding = new %T()", KotlinTypeNames.Android.Rect, KotlinTypeNames.Android.Rect)
+      setForegroundMethod.addStatement("val padding = %T()", KotlinTypeNames.Android.Rect)
       setForegroundMethod.addStatement("drawable.getPadding(padding)")
       setForegroundMethod.endControlFlow()
     }
@@ -277,8 +277,8 @@ class ForegroundTrait : KotlinTrait {
 
     if (isLayout) {
       drawMethod
-          .beginControlFlow("if (foreground != null)")
-          .addStatement("val localForeground: %T = foreground", KotlinTypeNames.Android.Drawable)
+          .beginControlFlow("foreground?.let")
+          .addStatement("val localForeground = it")
           .beginControlFlow("if (foregroundBoundsChanged)")
           .addStatement("foregroundBoundsChanged = false")
           .addStatement("val localSelfBounds: %T = selfBounds", KotlinTypeNames.Android.Rect)

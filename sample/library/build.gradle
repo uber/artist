@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: "org.jetbrains.kotlin.android"
 if (project.rootProject.name != 'buildSrc') {
     apply plugin: 'com.uber.artist'
 }
@@ -52,6 +53,7 @@ check.dependsOn 'checkstyle'
 
 dependencies {
     api deps.androidx.appcompat
+    api deps.kotlin.stdLibJdk7
     api deps.external.rxbinding
     api deps.external.rxbindingAppCompat
     api deps.external.rxbindingDesign

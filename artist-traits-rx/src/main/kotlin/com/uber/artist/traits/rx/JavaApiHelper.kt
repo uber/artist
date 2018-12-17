@@ -28,14 +28,14 @@ import com.uber.artist.api.TypeNames
 import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
-data class RxBindingInfo(
+data class JavaRxBindingInfo(
         val className: ClassName,
         val methodName: String,
         val methodDoc: String
 )
 
-data class SettableApi(
-        val rxBindingInfo: RxBindingInfo,
+data class JavaSettableApi(
+        val rxBindingInfo: JavaRxBindingInfo,
         val listenerType: TypeName,
         val listenerMethod: String,
         val observableType: TypeName,
@@ -46,18 +46,18 @@ data class SettableApi(
         val isUViewOverride: Boolean = false,
         val setListenerMethodAnnotations: List<ClassName> = emptyList())
 
-data class AdditiveApi(
-        val rxBindingInfo: RxBindingInfo,
+data class JavaAdditiveApi(
+        val rxBindingInfo: JavaRxBindingInfo,
         val observableType: TypeName,
         val isUViewOverride: Boolean = false
 )
 
-fun TypeName.irrelevantIfObject(): TypeName {
+private fun TypeName.irrelevantIfObject(): TypeName {
     val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     return if (this == TypeName.OBJECT.box()) artistRxConfig.rxBindingSignalEventTypeName() else this
 }
 
-fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
+fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: JavaAdditiveApi) {
     val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     type.addMethod(MethodSpec.methodBuilder(api.rxBindingInfo.methodName)
             .addJavadoc("${api.rxBindingInfo.methodDoc}\n")
@@ -67,7 +67,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
                 }
             }
             .addModifiers(Modifier.PUBLIC)
-            .returns(ParameterizedTypeName.get(RxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
+            .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
             .addCode(CodeBlock.builder()
                     .add("return \$T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
                     .apply {
@@ -84,7 +84,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: AdditiveApi) {
             .build())
 }
 
-fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: SettableApi, isDebug: Boolean = true) {
+fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: JavaSettableApi, isDebug: Boolean = true) {
     val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
     val rxBindingClassName = api.rxBindingInfo.className
     val rxBindingMethod = api.rxBindingInfo.methodName
@@ -97,16 +97,16 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: SettableApi, isDebug
 
     // internal relay
     type.addField(
-            FieldSpec.builder(ParameterizedTypeName.get(if (api.isStateful) RxTypeNames.Rx.BehaviorRelay else RxTypeNames.Rx.PublishRelay,
+            FieldSpec.builder(ParameterizedTypeName.get(if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay,
                     api.observableType.irrelevantIfObject()),
             rxBindingMethod,
             Modifier.PRIVATE)
             .addAnnotation(TypeNames.Annotations.Nullable).build())
 
-    type.addField(FieldSpec.builder(RxTypeNames.Rx.Disposable, disposable, Modifier.PRIVATE).addAnnotation(TypeNames.Annotations.Nullable).build())
+    type.addField(FieldSpec.builder(JavaRxTypeNames.Rx.Disposable, disposable, Modifier.PRIVATE).addAnnotation(TypeNames.Annotations.Nullable).build())
 
     val consumer = TypeSpec.anonymousClassBuilder("")
-            .addSuperinterface(ParameterizedTypeName.get(RxTypeNames.Rx.Consumer, api.observableType.irrelevantIfObject()))
+            .addSuperinterface(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Consumer, api.observableType.irrelevantIfObject()))
             .addMethod(api.listenerImpl.addAnnotation(Override::class.java).build())
             .build()
 
@@ -153,17 +153,17 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: SettableApi, isDebug
                 }
             }
             .addModifiers(Modifier.PUBLIC)
-            .returns(ParameterizedTypeName.get(RxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
+            .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
             .beginControlFlow("if ($rxBindingMethod == null)")
             .addStatement("$isInitting = true")
             .apply {
                 if (api.relayInitializer != null) {
-                    addCode("$rxBindingMethod = ", RxTypeNames.Rx.BehaviorRelay)
+                    addCode("$rxBindingMethod = ", JavaRxTypeNames.Rx.BehaviorRelay)
                     addCode(api.relayInitializer)
                     addCode(";\n")
                 } else {
                     addStatement("$rxBindingMethod = \$T.create()",
-                            if (api.isStateful) RxTypeNames.Rx.BehaviorRelay else RxTypeNames.Rx.PublishRelay)
+                            if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay)
                 }
             }
             .addCode(CodeBlock.builder()

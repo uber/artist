@@ -5,5 +5,7 @@ include ':artist-core'
 include ':artist-traits'
 include ':artist-traits-kotlin'
 include ':artist-traits-rx'
+include ':artist-traits-rx-kotlin'
 
 include ':sample:providers'
+include ':sample:providers-kotlin'

@@ -21,7 +21,6 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.JavaTrait
-import com.uber.artist.api.Trait
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
@@ -34,27 +33,27 @@ class ScrollableTrait : JavaTrait {
 
         // ScrollView overrides
         if (sourceType.contains("ScrollView")) {
-            addRxBindingApiForSettable(type, SettableApi(
-                    RxBindingInfo(RxTypeNames.Rx.RxNestedScrollView,
+            addRxBindingApiForSettable(type, JavaSettableApi(
+                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxNestedScrollView,
                             "scrollChangeEvents",
                             """@return an observable of scroll-change events for this NestedScrollView.
     """),
                     ClassName.bestGuess("OnScrollChangeListener"),
                     "setOnScrollChangeListener",
-                    RxTypeNames.Rx.ViewScrollChangeEvent,
+                    JavaRxTypeNames.Rx.ViewScrollChangeEvent,
                     MethodSpec.methodBuilder("accept")
                             .addModifiers(Modifier.PUBLIC)
-                            .addParameter(RxTypeNames.Rx.ViewScrollChangeEvent, "event")
+                            .addParameter(JavaRxTypeNames.Rx.ViewScrollChangeEvent, "event")
                             .addStatement("l.onScrollChange($sourceType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
         }
 
         // RecyclerView overrides
         if (sourceType.contains("RecyclerView")) {
-            addRxBindingApiForAdditive(type, AdditiveApi(
-                    RxBindingInfo(RxTypeNames.Rx.RxRecyclerView,
+            addRxBindingApiForAdditive(type, JavaAdditiveApi(
+                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxRecyclerView,
                             "scrollEvents",
                             "@return an observable of scroll events on this RecyclerView"),
-                    RxTypeNames.Rx.RecyclerViewScrollEvent))
+                    JavaRxTypeNames.Rx.RecyclerViewScrollEvent))
         }
     }
 }
