@@ -100,7 +100,14 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
         .build()
     val paramDefStyleAttr = ParameterSpec.builder("defStyleAttr", INT)
         .addAnnotation(KotlinTypeNames.Annotations.AttrRes)
-        .defaultValue(stencil.defaultAttrRes?.let { CodeBlock.of("%T.attr.$it", rClass) } ?: CodeBlock.of("0"))
+        .defaultValue(stencil.defaultAttrRes?.let {
+            if ("." in it) {
+              CodeBlock.of(it)
+            } else {
+              CodeBlock.of("%T.attr.$it", rClass)
+            }
+          } ?: CodeBlock.of("0")
+        )
         .build()
     val paramDefStyleRes = ParameterSpec.builder("defStyleRes", INT)
         .addAnnotation(KotlinTypeNames.Annotations.StyleRes)

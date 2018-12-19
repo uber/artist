@@ -27,6 +27,7 @@ import com.uber.artist.api.KotlinTrait
 import com.uber.artist.api.KotlinTypeNames
 
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
 import com.uber.artist.traits.rx.KotlinRxBindingInfo
 import com.uber.artist.traits.rx.KotlinRxTypeNames
 import com.uber.artist.traits.rx.KotlinSettableApi
@@ -43,10 +44,14 @@ class CheckableTrait : KotlinTrait {
         val isTextView = baseType.endsWith("TextView")
 
         if (isTextView) {
-            type.addProperty(
+            type.addProperty(PropertySpec.builder(
                     "checkedChanges",
-                    KotlinRxTypeNames.Rx.BehaviorRelay.parameterizedBy(BOOLEAN),
+                    KotlinRxTypeNames.Rx.BehaviorRelay.parameterizedBy(BOOLEAN).copy(nullable = true),
                     KModifier.PRIVATE)
+                    .addAnnotation(KotlinTypeNames.Annotations.Nullable)
+                    .mutable()
+                    .initializer("null")
+                    .build())
             type.addFunction(FunSpec.builder("ensureCheckedChanges")
                     .addModifiers(KModifier.PRIVATE)
                     .beginControlFlow("if (checkedChanges == null)")
@@ -59,15 +64,15 @@ class CheckableTrait : KotlinTrait {
                     .addModifiers(KModifier.PUBLIC)
                     .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(BOOLEAN))
                     .addStatement("ensureCheckedChanges()")
-                    .addStatement("return checkedChanges.hide()")
+                    .addStatement("return checkedChanges!!.hide()")
                     .build())
             type.addFunction(FunSpec.builder("setChecked")
-                    .addModifiers(KModifier.PUBLIC)
+                    .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC)
                     .addAnnotation(Override::class.java)
-                    .addParameter("val", BOOLEAN)
-                    .addStatement("super.setChecked(val)")
+                    .addParameter("value", BOOLEAN)
+                    .addStatement("super.setChecked(value)")
                     .addStatement("ensureCheckedChanges()")
-                    .addStatement("checkedChanges.accept(val)")
+                    .addStatement("checkedChanges!!.accept(value)")
                     .build())
         } else {
           addRxBindingApiForSettable(type, KotlinSettableApi(

@@ -65,6 +65,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
             .addKdoc("${api.rxBindingInfo.methodDoc}\n")
             .apply {
                 if (api.isUViewOverride) {
+                    addModifiers(KModifier.OVERRIDE)
                     addAnnotation(Override::class.java)
                 }
             }
@@ -80,8 +81,8 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
                             // Safe to call, otherwise it'd be a recursive stack overflow
                             artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject())
                         }
-
                     }
+                    .add("\n")
                     .build())
             .build())
 }
@@ -148,7 +149,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             .beginControlFlow("if (l != null)")
             .addCode(CodeBlock.builder()
                     .add("$disposable = $rxBindingMethod()")
-                    .add(".subscribe($consumer)")
+                    .add(".subscribe($consumer)\n")
                     .build())
             .endControlFlow()
             .endControlFlow()
@@ -159,6 +160,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             .apply {
                 if (api.isUViewOverride) {
                     addAnnotation(Override::class.java)
+                    addModifiers(KModifier.OVERRIDE)
                 }
             }
             .addModifiers(KModifier.PUBLIC)
