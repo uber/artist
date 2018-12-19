@@ -24,7 +24,7 @@ import com.uber.artist.api.JavaTrait
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
-class ScrollableTrait : JavaTrait {
+class JavaScrollableTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

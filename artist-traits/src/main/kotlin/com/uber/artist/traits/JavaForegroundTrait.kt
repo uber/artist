@@ -42,7 +42,7 @@ import javax.lang.model.element.Modifier
  * </resources>
  */
 @AutoService(JavaTrait::class)
-class ForegroundTrait : JavaTrait {
+class JavaForegroundTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

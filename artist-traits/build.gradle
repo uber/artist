@@ -9,7 +9,6 @@ dependencies {
     kapt deps.apt.autoService
     compileOnly deps.apt.autoService
 
-    api deps.apt.javapoet
     api project(":artist-api")
 
     implementation deps.kotlin.stdLibJdk7

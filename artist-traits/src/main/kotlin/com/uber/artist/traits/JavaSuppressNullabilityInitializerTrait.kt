@@ -9,7 +9,7 @@ import com.uber.artist.api.JavaTrait
 import com.uber.artist.api.Trait
 
 @AutoService(JavaTrait::class)
-class SuppressNullabilityInitializerTrait : JavaTrait {
+class JavaSuppressNullabilityInitializerTrait : JavaTrait {
   override fun generateFor(
       type: Builder,
       initMethod: MethodSpec.Builder,

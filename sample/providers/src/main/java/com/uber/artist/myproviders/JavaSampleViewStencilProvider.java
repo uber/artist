@@ -21,12 +21,12 @@ import com.uber.artist.api.JavaTrait;
 import com.uber.artist.api.JavaViewStencil;
 import com.uber.artist.api.JavaViewStencilProvider;
 import com.uber.artist.myproviders.trait.JavaSampleTrait;
-import com.uber.artist.traits.ForegroundTrait;
-import com.uber.artist.traits.VisibilityTrait;
-import com.uber.artist.traits.rx.CheckableTrait;
-import com.uber.artist.traits.rx.ScrollableTrait;
-import com.uber.artist.traits.rx.TextInputTrait;
-import com.uber.artist.traits.rx.ViewTrait;
+import com.uber.artist.traits.JavaForegroundTrait;
+import com.uber.artist.traits.JavaVisibilityTrait;
+import com.uber.artist.traits.rx.JavaCheckableTrait;
+import com.uber.artist.traits.rx.JavaScrollableTrait;
+import com.uber.artist.traits.rx.JavaTextInputTrait;
+import com.uber.artist.traits.rx.JavaViewTrait;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -43,10 +43,10 @@ public class JavaSampleViewStencilProvider implements JavaViewStencilProvider {
     return new LinkedHashSet<>(Arrays.asList(
         new JavaViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
         new JavaViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
-            "android.R.attr.editTextStyle", TextInputTrait.class),
+            "android.R.attr.editTextStyle", JavaTextInputTrait.class),
         new JavaViewStencil("android.widget.LinearLayout", 3, null),
         new JavaViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
-        new JavaViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait.class),
+        new JavaViewStencil("androidx.core.widget.NestedScrollView", 3, null, JavaScrollableTrait.class),
         new JavaViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         new SwitchStencil()
     ));
@@ -56,15 +56,15 @@ public class JavaSampleViewStencilProvider implements JavaViewStencilProvider {
   public Set<Class<? extends JavaTrait>> globalTraits() {
     return new LinkedHashSet<>(Arrays.asList(
         JavaSampleTrait.class,
-        VisibilityTrait.class,
-        ForegroundTrait.class,
-        ViewTrait.class
+        JavaVisibilityTrait.class,
+        JavaForegroundTrait.class,
+        JavaViewTrait.class
     ));
   }
 
   private static class SwitchStencil extends JavaViewStencil {
     public SwitchStencil() {
-      super("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", CheckableTrait.class);
+      super("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", JavaCheckableTrait.class);
     }
 
     @Override

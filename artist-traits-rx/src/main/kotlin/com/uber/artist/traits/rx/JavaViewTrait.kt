@@ -27,7 +27,7 @@ import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
-open class ViewTrait : JavaTrait {
+open class JavaViewTrait : JavaTrait {
     private val artistRxConfig by lazy { JavaArtistRxConfigService.newInstance().getArtistRxConfig() }
 
     override fun generateFor(

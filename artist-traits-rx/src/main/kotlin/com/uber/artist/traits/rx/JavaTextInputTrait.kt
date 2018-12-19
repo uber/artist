@@ -23,7 +23,7 @@ import com.squareup.javapoet.TypeSpec
 import com.uber.artist.api.JavaTrait
 
 @AutoService(JavaTrait::class)
-class TextInputTrait : JavaTrait {
+class JavaTextInputTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.rx.kotlin
+package com.uber.artist.traits.rx
 
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.BOOLEAN
@@ -28,13 +28,9 @@ import com.uber.artist.api.KotlinTypeNames
 
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
-import com.uber.artist.traits.rx.KotlinRxBindingInfo
-import com.uber.artist.traits.rx.KotlinRxTypeNames
-import com.uber.artist.traits.rx.KotlinSettableApi
-import com.uber.artist.traits.rx.addRxBindingApiForSettable
 
 @AutoService(KotlinTrait::class)
-class CheckableTrait : KotlinTrait {
+class KotlinCheckableTrait : KotlinTrait {
     override fun generateFor(
         type: TypeSpec.Builder,
         initMethod: FunSpec.Builder,

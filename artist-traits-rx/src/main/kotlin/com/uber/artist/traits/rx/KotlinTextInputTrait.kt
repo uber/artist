@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.rx.kotlin
+package com.uber.artist.traits.rx
 
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.ClassName
@@ -28,7 +28,7 @@ import com.uber.artist.traits.rx.KotlinRxTypeNames
 import com.uber.artist.traits.rx.addRxBindingApiForAdditive
 
 @AutoService(KotlinTrait::class)
-class TextInputTrait : KotlinTrait {
+class KotlinTextInputTrait : KotlinTrait {
   override fun generateFor(
       type: TypeSpec.Builder,
       initMethod: FunSpec.Builder,

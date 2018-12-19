@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.rx.kotlin
+package com.uber.artist.traits.rx
 
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.ClassName
@@ -22,15 +22,9 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeSpec
 import com.uber.artist.api.KotlinTrait
-import com.uber.artist.traits.rx.KotlinAdditiveApi
-import com.uber.artist.traits.rx.KotlinRxBindingInfo
-import com.uber.artist.traits.rx.KotlinRxTypeNames
-import com.uber.artist.traits.rx.KotlinSettableApi
-import com.uber.artist.traits.rx.addRxBindingApiForAdditive
-import com.uber.artist.traits.rx.addRxBindingApiForSettable
 
 @AutoService(KotlinTrait::class)
-class ScrollableTrait : KotlinTrait {
+class KotlinScrollableTrait : KotlinTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: FunSpec.Builder,

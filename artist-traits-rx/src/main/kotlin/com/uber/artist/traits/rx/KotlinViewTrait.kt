@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.rx.kotlin
+package com.uber.artist.traits.rx
 
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.ClassName
@@ -32,7 +32,7 @@ import com.uber.artist.traits.rx.addRxBindingApiForSettable
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
 @AutoService(KotlinTrait::class)
-open class ViewTrait : KotlinTrait {
+open class KotlinViewTrait : KotlinTrait {
     private val artistRxConfig by lazy { KotlinArtistRxConfigService.newInstance().getArtistRxConfig() }
 
     override fun generateFor(

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.uber.artist.traits.kotlin
+package com.uber.artist.traits
 
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.AnnotationSpec
@@ -44,7 +44,7 @@ import com.uber.artist.api.Trait
  * </resources>
  */
 @AutoService(KotlinTrait::class)
-class ForegroundTrait : KotlinTrait {
+class KotlinForegroundTrait : KotlinTrait {
   override fun generateFor(
       type: TypeSpec.Builder,
       initMethod: FunSpec.Builder,

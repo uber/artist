@@ -11,7 +11,7 @@ import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
-class VisibilityTrait : JavaTrait {
+class JavaVisibilityTrait : JavaTrait {
     override fun generateFor(
         type: Builder,
         initMethod: MethodSpec.Builder,

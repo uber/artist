@@ -28,7 +28,7 @@ import com.uber.artist.api.TypeNames
 import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
-class CheckableTrait : JavaTrait {
+class JavaCheckableTrait : JavaTrait {
     override fun generateFor(
             type: TypeSpec.Builder,
             initMethod: MethodSpec.Builder,

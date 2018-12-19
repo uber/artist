@@ -21,13 +21,13 @@ import com.uber.artist.api.KotlinTrait
 import com.uber.artist.api.KotlinViewStencil
 import com.uber.artist.api.KotlinViewStencilProvider
 import com.uber.artist.myproviders.trait.KotlinSampleTrait
-import com.uber.artist.traits.kotlin.ForegroundTrait
-import com.uber.artist.traits.kotlin.SuppressNullabilityInitializerTrait
-import com.uber.artist.traits.kotlin.VisibilityTrait
-import com.uber.artist.traits.rx.kotlin.CheckableTrait
-import com.uber.artist.traits.rx.kotlin.ScrollableTrait
-import com.uber.artist.traits.rx.kotlin.TextInputTrait
-import com.uber.artist.traits.rx.kotlin.ViewTrait
+import com.uber.artist.traits.KotlinForegroundTrait
+import com.uber.artist.traits.KotlinSuppressNullabilityInitializerTrait
+import com.uber.artist.traits.KotlinVisibilityTrait
+import com.uber.artist.traits.rx.KotlinCheckableTrait
+import com.uber.artist.traits.rx.KotlinScrollableTrait
+import com.uber.artist.traits.rx.KotlinTextInputTrait
+import com.uber.artist.traits.rx.KotlinViewTrait
 
 /**
  * Sample ViewStencil provider.
@@ -39,10 +39,10 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
     return linkedSetOf(
         KotlinViewStencil("androidx.appcompat.widget.AppCompatButton", 3, "buttonStyle"),
         KotlinViewStencil("androidx.appcompat.widget.AppCompatEditText", 3,
-            "android.R.attr.editTextStyle", TextInputTrait::class.java),
+            "android.R.attr.editTextStyle", KotlinTextInputTrait::class.java),
         KotlinViewStencil("android.widget.LinearLayout", 4, null),
         KotlinViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
-        KotlinViewStencil("androidx.core.widget.NestedScrollView", 3, null, ScrollableTrait::class.java),
+        KotlinViewStencil("androidx.core.widget.NestedScrollView", 3, null, KotlinScrollableTrait::class.java),
         KotlinViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         SwitchStencil()
     )
@@ -50,13 +50,13 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
 
   override fun globalTraits(): Set<Class<out KotlinTrait>> = setOf(
     KotlinSampleTrait::class.java,
-    VisibilityTrait::class.java,
-    ForegroundTrait::class.java,
-    SuppressNullabilityInitializerTrait::class.java,
-    ViewTrait::class.java
+    KotlinVisibilityTrait::class.java,
+    KotlinForegroundTrait::class.java,
+    KotlinSuppressNullabilityInitializerTrait::class.java,
+    KotlinViewTrait::class.java
   )
 
-  private class SwitchStencil : KotlinViewStencil("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", CheckableTrait::class.java) {
+  private class SwitchStencil : KotlinViewStencil("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", KotlinCheckableTrait::class.java) {
 
     override fun name(): String {
       return "MySwitch"
