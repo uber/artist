@@ -1,13 +1,14 @@
 Changelog
 =========
 
-Version 0.4.0
+Version 0.4.5
 -------------
 
-_2018-12-16_
+_2018-12-19_
 
 * **Breaking change:** API classes renamed with "Java" prefixes. Class names and AutoService annotations will need to be updated
-* Added `artist-traits-kotlin` and `artist-traits-rx-kotlin` modules
+* Added Kotlin-prefixed API classes modules for generating Kotlin views
+
 
 Version 0.3.0
 -------------
