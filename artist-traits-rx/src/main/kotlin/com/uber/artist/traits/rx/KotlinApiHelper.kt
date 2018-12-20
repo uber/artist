@@ -69,7 +69,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
                     addAnnotation(Override::class.java)
                 }
             }
-            .addModifiers(KModifier.PUBLIC)
+            .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .addCode(CodeBlock.builder()
                     .add("return %T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
@@ -163,7 +163,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                     addModifiers(KModifier.OVERRIDE)
                 }
             }
-            .addModifiers(KModifier.PUBLIC)
+            .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .beginControlFlow("if ($rxBindingMethod == null)")
             .addStatement("$isInitting = true")

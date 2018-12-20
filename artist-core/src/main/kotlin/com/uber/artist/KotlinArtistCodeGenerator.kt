@@ -53,7 +53,7 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder {
     val rClass = ClassName(rPackageName, "R")
     val typeBuilder = TypeSpec.classBuilder(stencil.name())
-        .addModifiers(KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN)
         .superclass(stencil.sourceType)
 
     superinterfaceClassName?.let { typeBuilder.addSuperinterface(superinterface(superinterfaceClassName)) }
@@ -74,7 +74,7 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder {
     return FunSpec.builder("init")
         .addAnnotation(KotlinTypeNames.Annotations.CallSuper)
-        .addModifiers(KModifier.PROTECTED)
+        .addModifiers(KModifier.OPEN, KModifier.PROTECTED)
         .addParameter(ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
             .build())
         .addParameter(ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))
