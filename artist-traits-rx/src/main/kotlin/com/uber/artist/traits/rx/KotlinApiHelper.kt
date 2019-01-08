@@ -17,6 +17,8 @@
 package com.uber.artist.traits.rx
 
 import com.squareup.kotlinpoet.BOOLEAN
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
@@ -129,10 +131,14 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                     append(api.setterCaveats)
                     append("\n\n")
                 }
-            }.append("@deprecated Use {@link #$rxBindingMethod()}\n").toString())
+            }.append("@deprecated Use [$rxBindingMethod]\n").toString())
             .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC, KModifier.FINAL)
             .addAnnotation(Override::class.java)
-            .addAnnotation(java.lang.Deprecated::class.java)
+            .addAnnotation(AnnotationSpec.builder(Deprecated::class.java)
+                .addMember("message = %S", "Use [#$rxBindingMethod()]")
+                .addMember("replaceWith = %T(%S)", ReplaceWith::class.asClassName(), "$rxBindingMethod()")
+                .addMember("level = %T.ERROR", DeprecationLevel::class.asClassName())
+                .build())
             .addParameter(
                 ParameterSpec.builder("l", api.listenerType.copy(nullable = true)).apply {
                     api.setListenerMethodAnnotations.forEach {
