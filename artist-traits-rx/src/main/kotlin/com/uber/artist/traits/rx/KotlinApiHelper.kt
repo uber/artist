@@ -70,7 +70,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
                     addModifiers(KModifier.OVERRIDE)
                 }
             }
-            .addModifiers(KModifier.PUBLIC, KModifier.OPEN)
+            .addModifiers(KModifier.OPEN)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .addCode(CodeBlock.builder()
                     .add("return %T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
@@ -131,7 +131,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                     append("\n\n")
                 }
             }.append("@deprecated Use [$rxBindingMethod]\n").toString())
-            .addModifiers(KModifier.PUBLIC, KModifier.FINAL, KModifier.OVERRIDE)
+            .addModifiers(KModifier.FINAL, KModifier.OVERRIDE)
             .addAnnotation(AnnotationSpec.builder(Deprecated::class.java)
                 .addMember("message = %S", "Use [$rxBindingMethod()]")
                 .addMember("replaceWith = %T(%S)", ReplaceWith::class.asClassName(), "$rxBindingMethod()")
@@ -166,7 +166,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                     addModifiers(KModifier.OVERRIDE)
                 }
             }
-            .addModifiers(KModifier.PUBLIC, KModifier.OPEN)
+            .addModifiers(KModifier.OPEN)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .beginControlFlow("if ($rxBindingMethod == null)")
             .addStatement("$isInitting = true")

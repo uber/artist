@@ -56,7 +56,6 @@ open class KotlinViewTrait : KotlinTrait {
           "setOnClickListener",
           KotlinTypeNames.Java.Object,
           FunSpec.builder("accept")
-              .addModifiers(KModifier.PUBLIC)
               .addParameter("ignored", artistRxConfig.rxBindingSignalEventTypeName())
               .addStatement("l.onClick(this@$sourceType)"),
           setListenerMethodAnnotations = listOf(KotlinTypeNames.Annotations.Nullable)
@@ -73,7 +72,6 @@ open class KotlinViewTrait : KotlinTrait {
           "setOnLongClickListener",
           KotlinTypeNames.Java.Object,
           FunSpec.builder("accept")
-              .addModifiers(KModifier.PUBLIC)
               .addParameter("ignored", artistRxConfig.rxBindingSignalEventTypeName())
               .addStatement("l.onLongClick(this@$sourceType)"),
           setListenerMethodAnnotations = listOf(KotlinTypeNames.Annotations.Nullable)

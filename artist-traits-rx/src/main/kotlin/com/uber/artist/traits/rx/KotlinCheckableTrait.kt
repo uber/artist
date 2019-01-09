@@ -57,13 +57,13 @@ class KotlinCheckableTrait : KotlinTrait {
             type.addFunction(FunSpec.builder("checkedChanges")
                     .addKdoc("""@return an observable of booleans representing the checked state of this view.
     """)
-                    .addModifiers(KModifier.PUBLIC, KModifier.OPEN)
+                    .addModifiers(KModifier.OPEN)
                     .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(BOOLEAN))
                     .addStatement("ensureCheckedChanges()")
                     .addStatement("return checkedChanges!!.hide()")
                     .build())
             type.addFunction(FunSpec.builder("setChecked")
-                    .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
+                    .addModifiers(KModifier.OPEN, KModifier.OVERRIDE)
                     .addParameter("value", BOOLEAN)
                     .addStatement("super.setChecked(value)")
                     .addStatement("ensureCheckedChanges()")
@@ -79,7 +79,6 @@ class KotlinCheckableTrait : KotlinTrait {
               "setOnCheckedChangeListener",
               BOOLEAN,
               FunSpec.builder("accept")
-                  .addModifiers(KModifier.PUBLIC)
                   .addParameter("isChecked", BOOLEAN)
                   .addStatement("l.onCheckedChanged(this@$baseType, isChecked)"),
               true,
