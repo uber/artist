@@ -107,13 +107,11 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
     type.addProperty(
             PropertySpec.builder(rxBindingMethod, internalRelayTypeName.parameterizedBy(api.observableType.irrelevantIfObject()).copy(nullable = true),
             KModifier.PRIVATE)
-            .addAnnotation(KotlinTypeNames.Annotations.Nullable)
             .mutable()
             .initializer("null")
             .build())
 
     type.addProperty(PropertySpec.builder(disposable, KotlinRxTypeNames.Rx.Disposable.copy(nullable = true), KModifier.PRIVATE)
-        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
         .mutable()
         .initializer("null")
         .build())

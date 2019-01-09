@@ -47,7 +47,6 @@ class KotlinTypeNames {
       val AttrRes: ClassName = ClassName("androidx.annotation", "AttrRes")
       val CallSuper: ClassName = ClassName("androidx.annotation", "CallSuper")
       val IdRes: ClassName = ClassName("androidx.annotation", "IdRes")
-      val Nullable: ClassName = ClassName("androidx.annotation", "Nullable")
       val StyleRes: ClassName = ClassName("androidx.annotation", "StyleRes")
       val TargetApi: ClassName = ClassName("android.annotation", "TargetApi")
       val VisibleForTesting: ClassName = ClassName("androidx.annotation", "VisibleForTesting")

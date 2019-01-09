@@ -55,7 +55,6 @@ class KotlinForegroundTrait : KotlinTrait {
 
     // The field
     type.addProperty(PropertySpec.builder("foreground", KotlinTypeNames.Android.Drawable.copy(nullable = true), KModifier.PRIVATE)
-        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
         .initializer("null")
         .mutable()
         .build())

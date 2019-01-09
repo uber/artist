@@ -44,7 +44,6 @@ class KotlinCheckableTrait : KotlinTrait {
                     "checkedChanges",
                     KotlinRxTypeNames.Rx.BehaviorRelay.parameterizedBy(BOOLEAN).copy(nullable = true),
                     KModifier.PRIVATE)
-                    .addAnnotation(KotlinTypeNames.Annotations.Nullable)
                     .mutable()
                     .initializer("null")
                     .build())
@@ -82,8 +81,7 @@ class KotlinCheckableTrait : KotlinTrait {
                   .addParameter("isChecked", BOOLEAN)
                   .addStatement("l.onCheckedChanged(this@$baseType, isChecked)"),
               true,
-              CodeBlock.of("%T.createDefault(isChecked())\n", KotlinRxTypeNames.Rx.BehaviorRelay),
-              setListenerMethodAnnotations = listOf(KotlinTypeNames.Annotations.Nullable)
+              CodeBlock.of("%T.createDefault(isChecked())\n", KotlinRxTypeNames.Rx.BehaviorRelay)
           ))
         }
     }
