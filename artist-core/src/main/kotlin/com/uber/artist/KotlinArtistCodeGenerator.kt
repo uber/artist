@@ -74,7 +74,7 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder {
     return FunSpec.builder("init")
         .addAnnotation(KotlinTypeNames.Annotations.CallSuper)
-        .addModifiers(KModifier.OPEN, KModifier.PROTECTED)
+        .addModifiers(KModifier.PROTECTED, KModifier.OPEN)
         .addParameter(ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
             .build())
         .addParameter(ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))

@@ -100,7 +100,7 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     val onSizeChangedMethod = FunSpec.builder("onSizeChanged")
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
+        .addModifiers(KModifier.PROTECTED, KModifier.OPEN, KModifier.OVERRIDE)
         .addParameter("w", INT)
         .addParameter("h", INT)
         .addParameter("oldw", INT)
@@ -117,7 +117,7 @@ class KotlinForegroundTrait : KotlinTrait {
 
     if (sourceType.endsWith("ImageView")) {
       type.addFunction(FunSpec.builder("hasOverlappingRendering")
-          .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+          .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
           .returns(BOOLEAN)
           .addStatement("return false")
           .build())
@@ -131,7 +131,7 @@ class KotlinForegroundTrait : KotlinTrait {
     @see #setForegroundGravity(int)
     """)
           .addAnnotation(AnnotationSpec.builder(SuppressWarnings::class.java).addMember("%S", "MissingOverride").build())
-          .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+          .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
           .returns(INT)
           .addStatement("return foregroundGravity")
           .build())
@@ -143,7 +143,7 @@ class KotlinForegroundTrait : KotlinTrait {
     @see #getForegroundGravity()
     """)
           .addAnnotation(AnnotationSpec.builder(SuppressWarnings::class.java).addMember("%S", "MissingOverride").build())
-          .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+          .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
           .addParameter("foregroundGravity", INT)
           .beginControlFlow("if (this.foregroundGravity != foregroundGravity)")
           .beginControlFlow("if ((foregroundGravity and %T.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0)",
@@ -165,20 +165,20 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     type.addFunction(FunSpec.builder("verifyDrawable")
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
+        .addModifiers(KModifier.PROTECTED, KModifier.OPEN, KModifier.OVERRIDE)
         .returns(BOOLEAN)
         .addParameter("who", KotlinTypeNames.Android.Drawable)
         .addStatement("return super.verifyDrawable(who) || (who == foreground)")
         .build())
 
     type.addFunction(FunSpec.builder("jumpDrawablesToCurrentState")
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
         .addStatement("super.jumpDrawablesToCurrentState()")
         .addStatement("foreground?.jumpToCurrentState()")
         .build())
 
     type.addFunction(FunSpec.builder("drawableStateChanged")
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
+        .addModifiers(KModifier.PROTECTED, KModifier.OPEN, KModifier.OVERRIDE)
         .addStatement("super.drawableStateChanged()")
         .beginControlFlow("if (foreground?.isStateful() ?: false)")
         .addStatement("foreground?.setState(getDrawableState())")
@@ -192,7 +192,7 @@ class KotlinForegroundTrait : KotlinTrait {
     @return A Drawable or null if no foreground was set.
     """)
         .addAnnotation(AnnotationSpec.builder(SuppressWarnings::class.java).addMember("%S", "MissingOverride").build())
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
         .returns(KotlinTypeNames.Android.Drawable.copy(nullable = true))
         .addStatement("return foreground")
         .build())
@@ -209,7 +209,7 @@ class KotlinForegroundTrait : KotlinTrait {
         .addAnnotation(AnnotationSpec.builder(ClassName("android.annotation", "SuppressLint"))
             .addMember("%S", "NewApi")
             .build())
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
         .addParameter("drawable", KotlinTypeNames.Android.Drawable.copy(nullable = true))
         .beginControlFlow("if (foreground != drawable)")
         .beginControlFlow("if (foreground != null)")
@@ -250,7 +250,7 @@ class KotlinForegroundTrait : KotlinTrait {
 
     if (isLayout) {
       type.addFunction(FunSpec.builder("onLayout")
-          .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
+          .addModifiers(KModifier.PROTECTED, KModifier.OPEN, KModifier.OVERRIDE)
           .addParameter("changed", BOOLEAN)
           .addParameter("left", INT)
           .addParameter("top", INT)
@@ -264,7 +264,7 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     val drawMethod = FunSpec.builder("draw")
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
         .addParameter("canvas", KotlinTypeNames.Android.Canvas)
         .addStatement("super.draw(canvas)")
 
@@ -299,7 +299,7 @@ class KotlinForegroundTrait : KotlinTrait {
         .addAnnotation(AnnotationSpec.builder(KotlinTypeNames.Annotations.TargetApi)
             .addMember("%T.VERSION_CODES.LOLLIPOP", ClassName("android.os", "Build"))
             .build())
-        .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
+        .addModifiers(KModifier.PUBLIC, KModifier.OPEN, KModifier.OVERRIDE)
         .addParameter("x", FLOAT)
         .addParameter("y", FLOAT)
         .addStatement("super.drawableHotspotChanged(x, y)")
