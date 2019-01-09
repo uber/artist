@@ -42,7 +42,6 @@ class KotlinScrollableTrait : KotlinTrait {
               "setOnScrollChangeListener",
               KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
               FunSpec.builder("accept")
-                  .addModifiers(KModifier.PUBLIC)
                   .addParameter("event", KotlinRxTypeNames.Rx.ViewScrollChangeEvent)
                   .addStatement("l.onScrollChange(this@$sourceType, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
         }

@@ -44,7 +44,6 @@ class KotlinCheckableTrait : KotlinTrait {
                     "checkedChanges",
                     KotlinRxTypeNames.Rx.BehaviorRelay.parameterizedBy(BOOLEAN).copy(nullable = true),
                     KModifier.PRIVATE)
-                    .addAnnotation(KotlinTypeNames.Annotations.Nullable)
                     .mutable()
                     .initializer("null")
                     .build())
@@ -57,14 +56,13 @@ class KotlinCheckableTrait : KotlinTrait {
             type.addFunction(FunSpec.builder("checkedChanges")
                     .addKdoc("""@return an observable of booleans representing the checked state of this view.
     """)
-                    .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
+                    .addModifiers(KModifier.OPEN)
                     .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(BOOLEAN))
                     .addStatement("ensureCheckedChanges()")
                     .addStatement("return checkedChanges!!.hide()")
                     .build())
             type.addFunction(FunSpec.builder("setChecked")
-                    .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
-                    .addAnnotation(Override::class.java)
+                    .addModifiers(KModifier.OPEN, KModifier.OVERRIDE)
                     .addParameter("value", BOOLEAN)
                     .addStatement("super.setChecked(value)")
                     .addStatement("ensureCheckedChanges()")
@@ -80,12 +78,10 @@ class KotlinCheckableTrait : KotlinTrait {
               "setOnCheckedChangeListener",
               BOOLEAN,
               FunSpec.builder("accept")
-                  .addModifiers(KModifier.PUBLIC)
                   .addParameter("isChecked", BOOLEAN)
                   .addStatement("l.onCheckedChanged(this@$baseType, isChecked)"),
               true,
-              CodeBlock.of("%T.createDefault(isChecked())\n", KotlinRxTypeNames.Rx.BehaviorRelay),
-              setListenerMethodAnnotations = listOf(KotlinTypeNames.Annotations.Nullable)
+              CodeBlock.of("%T.createDefault(isChecked())\n", KotlinRxTypeNames.Rx.BehaviorRelay)
           ))
         }
     }

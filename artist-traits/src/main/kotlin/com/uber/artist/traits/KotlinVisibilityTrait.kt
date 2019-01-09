@@ -40,7 +40,7 @@ class KotlinVisibilityTrait : KotlinTrait {
 
   private fun createVisibilityConvenienceMethod(type: String): FunSpec {
     return FunSpec.builder("is${type.capitalize()}")
-        .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
+        .addModifiers(KModifier.OPEN)
         .returns(BOOLEAN)
         .addStatement("return getVisibility() == %T.${type.toUpperCase()}", KotlinTypeNames.Android.View)
         .build()

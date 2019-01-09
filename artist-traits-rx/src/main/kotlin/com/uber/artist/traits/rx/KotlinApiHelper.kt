@@ -17,6 +17,8 @@
 package com.uber.artist.traits.rx
 
 import com.squareup.kotlinpoet.BOOLEAN
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
@@ -66,10 +68,9 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
             .apply {
                 if (api.isUViewOverride) {
                     addModifiers(KModifier.OVERRIDE)
-                    addAnnotation(Override::class.java)
                 }
             }
-            .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
+            .addModifiers(KModifier.OPEN)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .addCode(CodeBlock.builder()
                     .add("return %T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
@@ -106,20 +107,18 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
     type.addProperty(
             PropertySpec.builder(rxBindingMethod, internalRelayTypeName.parameterizedBy(api.observableType.irrelevantIfObject()).copy(nullable = true),
             KModifier.PRIVATE)
-            .addAnnotation(KotlinTypeNames.Annotations.Nullable)
             .mutable()
             .initializer("null")
             .build())
 
     type.addProperty(PropertySpec.builder(disposable, KotlinRxTypeNames.Rx.Disposable.copy(nullable = true), KModifier.PRIVATE)
-        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
         .mutable()
         .initializer("null")
         .build())
 
     val consumer = TypeSpec.anonymousClassBuilder()
             .addSuperinterface(KotlinRxTypeNames.Rx.Consumer.parameterizedBy(api.observableType.irrelevantIfObject()))
-            .addFunction(api.listenerImpl.addAnnotation(Override::class.java).addModifiers(KModifier.OVERRIDE).build())
+            .addFunction(api.listenerImpl.addModifiers(KModifier.OVERRIDE).build())
             .build()
 
     // Overridden and deprecated setOnClickListener method
@@ -129,10 +128,13 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                     append(api.setterCaveats)
                     append("\n\n")
                 }
-            }.append("@deprecated Use {@link #$rxBindingMethod()}\n").toString())
-            .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC, KModifier.FINAL)
-            .addAnnotation(Override::class.java)
-            .addAnnotation(java.lang.Deprecated::class.java)
+            }.append("@deprecated Use [$rxBindingMethod]\n").toString())
+            .addModifiers(KModifier.FINAL, KModifier.OVERRIDE)
+            .addAnnotation(AnnotationSpec.builder(Deprecated::class.java)
+                .addMember("message = %S", "Use $rxBindingMethod()")
+                .addMember("replaceWith = %T(%S)", ReplaceWith::class.asClassName(), "$rxBindingMethod()")
+                .addMember("level = %T.ERROR", DeprecationLevel::class.asClassName())
+                .build())
             .addParameter(
                 ParameterSpec.builder("l", api.listenerType.copy(nullable = true)).apply {
                     api.setListenerMethodAnnotations.forEach {
@@ -159,11 +161,10 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             .addKdoc(rxBindingMethodDoc)
             .apply {
                 if (api.isUViewOverride) {
-                    addAnnotation(Override::class.java)
                     addModifiers(KModifier.OVERRIDE)
                 }
             }
-            .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
+            .addModifiers(KModifier.OPEN)
             .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
             .beginControlFlow("if ($rxBindingMethod == null)")
             .addStatement("$isInitting = true")

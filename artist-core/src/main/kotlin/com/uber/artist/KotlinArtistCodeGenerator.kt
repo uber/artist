@@ -53,7 +53,7 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder {
     val rClass = ClassName(rPackageName, "R")
     val typeBuilder = TypeSpec.classBuilder(stencil.name())
-        .addModifiers(KModifier.PUBLIC, KModifier.OPEN)
+        .addModifiers(KModifier.OPEN)
         .superclass(stencil.sourceType)
 
     superinterfaceClassName?.let { typeBuilder.addSuperinterface(superinterface(superinterfaceClassName)) }
@@ -74,11 +74,10 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder {
     return FunSpec.builder("init")
         .addAnnotation(KotlinTypeNames.Annotations.CallSuper)
-        .addModifiers(KModifier.OPEN, KModifier.PROTECTED)
+        .addModifiers(KModifier.PROTECTED, KModifier.OPEN)
         .addParameter(ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
             .build())
         .addParameter(ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))
-            .addAnnotation(KotlinTypeNames.Annotations.Nullable)
             .build())
         .addParameter(ParameterSpec.builder("defStyleAttr", INT)
             .addAnnotation(KotlinTypeNames.Annotations.AttrRes)
@@ -95,7 +94,6 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
     val paramContext = ParameterSpec.builder("context", KotlinTypeNames.Android.Context)
         .build()
     val paramAttrs = ParameterSpec.builder("attrs", KotlinTypeNames.Android.AttributeSet.copy(nullable = true))
-        .addAnnotation(KotlinTypeNames.Annotations.Nullable)
         .defaultValue("null")
         .build()
     val paramDefStyleAttr = ParameterSpec.builder("defStyleAttr", INT)
@@ -120,7 +118,6 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
     val ctorOverloadsCount = stencil.constructorCount.coerceAtMost(3)
     val overloadsConstructor = FunSpec.constructorBuilder()
         .addAnnotation(JvmOverloads::class)
-        .addModifiers(KModifier.PUBLIC)
         .addParameters(params.subList(0, ctorOverloadsCount))
         .callSuperConstructor(*superConstructorArgs.subList(0, ctorOverloadsCount).toTypedArray())
         .addStatement(initStatement(ctorOverloadsCount))
@@ -130,7 +127,6 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
         .addAnnotation(AnnotationSpec.builder(KotlinTypeNames.Annotations.TargetApi)
             .addMember("%T.VERSION_CODES.LOLLIPOP", ClassName("android.os", "Build"))
             .build())
-        .addModifiers(KModifier.PUBLIC)
         .addParameters(params)
         .callSuperConstructor(*superConstructorArgs.toTypedArray())
         .addStatement(initStatement(4))
