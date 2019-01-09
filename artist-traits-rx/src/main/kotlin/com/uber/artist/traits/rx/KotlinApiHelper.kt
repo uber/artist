@@ -133,7 +133,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             }.append("@deprecated Use [$rxBindingMethod]\n").toString())
             .addModifiers(KModifier.FINAL, KModifier.OVERRIDE)
             .addAnnotation(AnnotationSpec.builder(Deprecated::class.java)
-                .addMember("message = %S", "Use [$rxBindingMethod()]")
+                .addMember("message = %S", "Use $rxBindingMethod()")
                 .addMember("replaceWith = %T(%S)", ReplaceWith::class.asClassName(), "$rxBindingMethod()")
                 .addMember("level = %T.ERROR", DeprecationLevel::class.asClassName())
                 .build())
