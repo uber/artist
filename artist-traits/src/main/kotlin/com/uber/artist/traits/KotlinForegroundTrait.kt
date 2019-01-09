@@ -100,7 +100,6 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     val onSizeChangedMethod = FunSpec.builder("onSizeChanged")
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
         .addParameter("w", INT)
         .addParameter("h", INT)
@@ -118,7 +117,6 @@ class KotlinForegroundTrait : KotlinTrait {
 
     if (sourceType.endsWith("ImageView")) {
       type.addFunction(FunSpec.builder("hasOverlappingRendering")
-          .addAnnotation(Override::class.java)
           .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
           .returns(BOOLEAN)
           .addStatement("return false")
@@ -167,7 +165,6 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     type.addFunction(FunSpec.builder("verifyDrawable")
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
         .returns(BOOLEAN)
         .addParameter("who", KotlinTypeNames.Android.Drawable)
@@ -175,14 +172,12 @@ class KotlinForegroundTrait : KotlinTrait {
         .build())
 
     type.addFunction(FunSpec.builder("jumpDrawablesToCurrentState")
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
         .addStatement("super.jumpDrawablesToCurrentState()")
         .addStatement("foreground?.jumpToCurrentState()")
         .build())
 
     type.addFunction(FunSpec.builder("drawableStateChanged")
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
         .addStatement("super.drawableStateChanged()")
         .beginControlFlow("if (foreground?.isStateful() ?: false)")
@@ -255,7 +250,6 @@ class KotlinForegroundTrait : KotlinTrait {
 
     if (isLayout) {
       type.addFunction(FunSpec.builder("onLayout")
-          .addAnnotation(Override::class.java)
           .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PROTECTED)
           .addParameter("changed", BOOLEAN)
           .addParameter("left", INT)
@@ -270,7 +264,6 @@ class KotlinForegroundTrait : KotlinTrait {
     }
 
     val drawMethod = FunSpec.builder("draw")
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
         .addParameter("canvas", KotlinTypeNames.Android.Canvas)
         .addStatement("super.draw(canvas)")
@@ -306,7 +299,6 @@ class KotlinForegroundTrait : KotlinTrait {
         .addAnnotation(AnnotationSpec.builder(KotlinTypeNames.Annotations.TargetApi)
             .addMember("%T.VERSION_CODES.LOLLIPOP", ClassName("android.os", "Build"))
             .build())
-        .addAnnotation(Override::class.java)
         .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
         .addParameter("x", FLOAT)
         .addParameter("y", FLOAT)

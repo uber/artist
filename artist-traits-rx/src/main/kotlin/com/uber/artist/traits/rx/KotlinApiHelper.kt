@@ -68,7 +68,6 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
             .apply {
                 if (api.isUViewOverride) {
                     addModifiers(KModifier.OVERRIDE)
-                    addAnnotation(Override::class.java)
                 }
             }
             .addModifiers(KModifier.OPEN, KModifier.PUBLIC)
@@ -121,7 +120,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
 
     val consumer = TypeSpec.anonymousClassBuilder()
             .addSuperinterface(KotlinRxTypeNames.Rx.Consumer.parameterizedBy(api.observableType.irrelevantIfObject()))
-            .addFunction(api.listenerImpl.addAnnotation(Override::class.java).addModifiers(KModifier.OVERRIDE).build())
+            .addFunction(api.listenerImpl.addModifiers(KModifier.OVERRIDE).build())
             .build()
 
     // Overridden and deprecated setOnClickListener method
@@ -133,7 +132,6 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
                 }
             }.append("@deprecated Use [$rxBindingMethod]\n").toString())
             .addModifiers(KModifier.OVERRIDE, KModifier.PUBLIC, KModifier.FINAL)
-            .addAnnotation(Override::class.java)
             .addAnnotation(AnnotationSpec.builder(Deprecated::class.java)
                 .addMember("message = %S", "Use [$rxBindingMethod()]")
                 .addMember("replaceWith = %T(%S)", ReplaceWith::class.asClassName(), "$rxBindingMethod()")
@@ -165,7 +163,6 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             .addKdoc(rxBindingMethodDoc)
             .apply {
                 if (api.isUViewOverride) {
-                    addAnnotation(Override::class.java)
                     addModifiers(KModifier.OVERRIDE)
                 }
             }

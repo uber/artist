@@ -64,7 +64,6 @@ class KotlinCheckableTrait : KotlinTrait {
                     .build())
             type.addFunction(FunSpec.builder("setChecked")
                     .addModifiers(KModifier.OPEN, KModifier.OVERRIDE, KModifier.PUBLIC)
-                    .addAnnotation(Override::class.java)
                     .addParameter("value", BOOLEAN)
                     .addStatement("super.setChecked(value)")
                     .addStatement("ensureCheckedChanges()")
