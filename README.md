@@ -158,7 +158,7 @@ subprojects { subproject ->
 ```
 
 #### Use the Generated Views
-The [generated views](https://github.com/uber/artist/tree/master/sample/library/build/generated/source/artist/release/com/uber/artist/mylibrary) will be added to the library's source files. They can then be consumed as regular views. To add even more consistency, you can write a lint rule or ErrorProne check to ensure that all `View` subclasses use your Artist-generated views.
+The [generated views](https://github.com/uber/artist/tree/master/sample/demo/java) will be added to the library's source files. They can then be consumed as regular views. To add even more consistency, you can write a lint rule or ErrorProne check to ensure that all `View` subclasses use your Artist-generated views.
 
 ## Further examples
 
