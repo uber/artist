@@ -23,46 +23,46 @@ abstract class ViewStencil<OutputType, FunType, ClassName, CodeBlock>(
     protected val addedTraits: Set<Class<out Trait<*, *, *>>>
 ) {
 
-    val globalTraits = mutableSetOf<Class<out Trait<*, *, *>>>()
-    var namePrefix: String = ""
+  val globalTraits = mutableSetOf<Class<out Trait<*, *, *>>>()
+  var namePrefix: String = ""
 
-    open fun traits(): Set<Class<out Trait<*, *, *>>> = globalTraits.plus(addedTraits)
+  open fun traits(): Set<Class<out Trait<*, *, *>>> = globalTraits.plus(addedTraits)
 
-    /**
-     * The name of the view class.
-     */
-    open fun name(): String {
-      val sourceName = extendedType.split('.').last()
-      return "$namePrefix${sourceName.removePrefix("AppCompat")}"
-    }
+  /**
+   * The name of the view class.
+   */
+  open fun name(): String {
+    val sourceName = extendedType.split('.').last()
+    return "$namePrefix${sourceName.removePrefix("AppCompat")}"
+  }
 
-    /**
-     * Hook for when attributes are being pulled out of the attribute set.
-     * Can safely assume the following values exist:
-     *   - context: Context
-     *   - attrs: AttributeSet
-     *   - defStyleAttr: int
-     *   - a: TypedArray
-     *
-     * Should *not* recycle `a`. Safe to assume `a` is null-checked before code would execute.
-     */
-    abstract fun attrsHook(type: OutputType, initMethod: FunType): CodeBlock?
+  /**
+   * Hook for when attributes are being pulled out of the attribute set.
+   * Can safely assume the following values exist:
+   *   - context: Context
+   *   - attrs: AttributeSet
+   *   - defStyleAttr: int
+   *   - a: TypedArray
+   *
+   * Should *not* recycle `a`. Safe to assume `a` is null-checked before code would execute.
+   */
+  abstract fun attrsHook(type: OutputType, initMethod: FunType): CodeBlock?
 
-    /**
-     * Hook for implementing the `init()` method.
-     */
-    abstract fun initMethodHook(type: OutputType, initMethod: FunType)
+  /**
+   * Hook for implementing the `init()` method.
+   */
+  abstract fun initMethodHook(type: OutputType, initMethod: FunType)
 
-    /**
-     * Hook for the type builder implementation.
-     */
-    abstract fun typeHook(type: OutputType)
+  /**
+   * Hook for the type builder implementation.
+   */
+  abstract fun typeHook(type: OutputType)
 
-    fun setGlobalTraits(traits: Set<Class<out Trait<*, *, *>>>) {
-      globalTraits.addAll(traits)
-    }
+  fun setGlobalTraits(traits: Set<Class<out Trait<*, *, *>>>) {
+    globalTraits.addAll(traits)
+  }
 
-    fun setPrefix(namePrefix: String) {
-      this.namePrefix = namePrefix
-    }
+  fun setPrefix(namePrefix: String) {
+    this.namePrefix = namePrefix
+  }
 }

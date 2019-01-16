@@ -24,26 +24,33 @@ import java.io.File
 
 open class ArtistTask : DefaultTask() {
 
-    @Input
-    lateinit var outputDirectory: File
+  @Input
+  lateinit var outputDirectory: File
 
-    @Input
-    lateinit var viewPackageName: String
+  @Input
+  lateinit var viewPackageName: String
 
-    @Input
-    lateinit var rPackageName: String
+  @Input
+  lateinit var rPackageName: String
 
-    @Input
-    var superinterfaceClassName: String? = null
+  @Input
+  var superinterfaceClassName: String? = null
 
-    @Input
-    var viewNamePrefix: String = ""
+  @Input
+  var viewNamePrefix: String = ""
 
-    @Input
-    var formatSource: Boolean = true
+  @Input
+  var formatSource: Boolean = true
 
-    @TaskAction
-    fun execute(inputs: IncrementalTaskInputs) {
-        generateViewsFor(outputDirectory, viewPackageName, rPackageName, superinterfaceClassName, viewNamePrefix, formatSource)
-    }
+  @TaskAction
+  fun execute(inputs: IncrementalTaskInputs) {
+    generateViewsFor(
+        outputDirectory,
+        viewPackageName,
+        rPackageName,
+        superinterfaceClassName,
+        viewNamePrefix,
+        formatSource
+    )
+  }
 }

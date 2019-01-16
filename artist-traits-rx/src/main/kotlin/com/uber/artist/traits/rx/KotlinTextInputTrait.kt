@@ -22,10 +22,6 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTrait
-import com.uber.artist.traits.rx.KotlinAdditiveApi
-import com.uber.artist.traits.rx.KotlinRxBindingInfo
-import com.uber.artist.traits.rx.KotlinRxTypeNames
-import com.uber.artist.traits.rx.addRxBindingApiForAdditive
 
 @AutoService(KotlinTrait::class)
 class KotlinTextInputTrait : KotlinTrait {

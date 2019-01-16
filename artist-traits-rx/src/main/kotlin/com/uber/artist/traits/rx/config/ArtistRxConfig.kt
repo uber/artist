@@ -16,41 +16,40 @@
 
 package com.uber.artist.traits.rx.config
 
-
 /**
  * This configuration object describes various plugin points for rx-based traits.
  */
 interface ArtistRxConfig<CodeBlockType, TypeNameType> {
 
-    /**
-     * Plugin point for generating additional code to invoke when a view has been tapped.
-     */
-    fun processTap(codeBlockBuilder: CodeBlockType) { }
+  /**
+   * Plugin point for generating additional code to invoke when a view has been tapped.
+   */
+  fun processTap(codeBlockBuilder: CodeBlockType) {}
 
-    /**
-     * Plugin point for generating additional code to invoke when a view has attached to the window.
-     */
-    fun processImpression(codeBlockBuilder: CodeBlockType) { }
+  /**
+   * Plugin point for generating additional code to invoke when a view has attached to the window.
+   */
+  fun processImpression(codeBlockBuilder: CodeBlockType) {}
 
-    /**
-     * Plugin point for generating additional code to invoke when a view has changed visibility.
-     */
-    fun processVisibilityChanges(codeBlockBuilder: CodeBlockType) { }
+  /**
+   * Plugin point for generating additional code to invoke when a view has changed visibility.
+   */
+  fun processVisibilityChanges(codeBlockBuilder: CodeBlockType) {}
 
-    /**
-     * Plugin point for generating additional code to modify an RxBinding stream.
-     */
-    fun processRxBindingStream(codeBlockBuilder: CodeBlockType, streamTypeName: TypeNameType) { }
+  /**
+   * Plugin point for generating additional code to modify an RxBinding stream.
+   */
+  fun processRxBindingStream(codeBlockBuilder: CodeBlockType, streamTypeName: TypeNameType) {}
 
-    /**
-     * Plugin point for generating additional code to modify an RxBinding stream which notifies that something occurred.
-     * This can be used along with rxBindingSignalEventTypeName() to map signal events to a different type.
-     */
-    fun processRxBindingSignalEvent(codeBlockBuilder: CodeBlockType) { }
+  /**
+   * Plugin point for generating additional code to modify an RxBinding stream which notifies that something occurred.
+   * This can be used along with rxBindingSignalEventTypeName() to map signal events to a different type.
+   */
+  fun processRxBindingSignalEvent(codeBlockBuilder: CodeBlockType) {}
 
-    /**
-     * This defines the type to be used for RxBinding event signals. It can be changed if processRxBindingSignalEvent()
-     * has been overridden to map the signal events to a new type. The default type is Object.
-     */
-    fun rxBindingSignalEventTypeName(): TypeNameType
+  /**
+   * This defines the type to be used for RxBinding event signals. It can be changed if processRxBindingSignalEvent()
+   * has been overridden to map the signal events to a new type. The default type is Object.
+   */
+  fun rxBindingSignalEventTypeName(): TypeNameType
 }

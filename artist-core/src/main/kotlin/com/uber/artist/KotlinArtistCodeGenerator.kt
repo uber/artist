@@ -45,7 +45,8 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
 
   override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
     val typeSpec = typeSpecBuilder.build()
-    return FileSpec.builder(viewPackageName, typeSpec.name ?: throw IllegalStateException("No name for type: $typeSpec"))
+    return FileSpec.builder(viewPackageName, typeSpec.name
+        ?: throw IllegalStateException("No name for type: $typeSpec"))
         .addType(typeSpec)
         .build()
   }
@@ -69,7 +70,6 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
     stencil.typeHook(typeBuilder)
     return typeBuilder
   }
-
 
   override fun createInitBuilderFor(stencil: KotlinViewStencil, type: TypeSpec.Builder): FunSpec.Builder {
     return FunSpec.builder("init")
@@ -99,12 +99,12 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
     val paramDefStyleAttr = ParameterSpec.builder("defStyleAttr", INT)
         .addAnnotation(KotlinTypeNames.Annotations.AttrRes)
         .defaultValue(stencil.defaultAttrRes?.let {
-            if ("." in it) {
-              CodeBlock.of(it)
-            } else {
-              CodeBlock.of("%T.attr.$it", rClass)
-            }
-          } ?: CodeBlock.of("0")
+          if ("." in it) {
+            CodeBlock.of(it)
+          } else {
+            CodeBlock.of("%T.attr.$it", rClass)
+          }
+        } ?: CodeBlock.of("0")
         )
         .build()
     val paramDefStyleRes = ParameterSpec.builder("defStyleRes", INT)

@@ -6,7 +6,6 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec.Builder
 import com.uber.artist.api.JavaTrait
-import com.uber.artist.api.Trait
 
 @AutoService(JavaTrait::class)
 class JavaSuppressNullabilityInitializerTrait : JavaTrait {

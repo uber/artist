@@ -18,17 +18,17 @@ package com.uber.artist.api
 
 interface ViewStencilService<ViewStencilType, TraitType> {
 
-    /**
-     * Gets the [ViewStencil] implementations loaded.
-     *
-     * @return The located [ViewStencil]s.
-     */
-    fun getStencils(): Set<ViewStencilType>
+  /**
+   * Gets the [ViewStencil] implementations loaded.
+   *
+   * @return The located [ViewStencil]s.
+   */
+  fun getStencils(): Set<ViewStencilType>
 
-    /**
-     * Gets the [Trait] implementations that should be applied to every [ViewStencil].
-     *
-     * @return The located global [Trait]s.
-     */
-    fun getGlobalTraits(): Set<Class<out TraitType>>
+  /**
+   * Gets the [Trait] implementations that should be applied to every [ViewStencil].
+   *
+   * @return The located global [Trait]s.
+   */
+  fun getGlobalTraits(): Set<Class<out TraitType>>
 }

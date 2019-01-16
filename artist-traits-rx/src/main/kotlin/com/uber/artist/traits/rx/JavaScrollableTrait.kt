@@ -25,35 +25,35 @@ import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
 class JavaScrollableTrait : JavaTrait {
-    override fun generateFor(
-            type: TypeSpec.Builder,
-            initMethod: MethodSpec.Builder,
-            rClass: ClassName,
-            sourceType: String) {
+  override fun generateFor(
+      type: TypeSpec.Builder,
+      initMethod: MethodSpec.Builder,
+      rClass: ClassName,
+      sourceType: String) {
 
-        // ScrollView overrides
-        if (sourceType.contains("ScrollView")) {
-            addRxBindingApiForSettable(type, JavaSettableApi(
-                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxNestedScrollView,
-                            "scrollChangeEvents",
-                            """@return an observable of scroll-change events for this NestedScrollView.
+    // ScrollView overrides
+    if (sourceType.contains("ScrollView")) {
+      addRxBindingApiForSettable(type, JavaSettableApi(
+          JavaRxBindingInfo(JavaRxTypeNames.Rx.RxNestedScrollView,
+              "scrollChangeEvents",
+              """@return an observable of scroll-change events for this NestedScrollView.
     """),
-                    ClassName.bestGuess("OnScrollChangeListener"),
-                    "setOnScrollChangeListener",
-                    JavaRxTypeNames.Rx.ViewScrollChangeEvent,
-                    MethodSpec.methodBuilder("accept")
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameter(JavaRxTypeNames.Rx.ViewScrollChangeEvent, "event")
-                            .addStatement("l.onScrollChange($sourceType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
-        }
-
-        // RecyclerView overrides
-        if (sourceType.contains("RecyclerView")) {
-            addRxBindingApiForAdditive(type, JavaAdditiveApi(
-                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxRecyclerView,
-                            "scrollEvents",
-                            "@return an observable of scroll events on this RecyclerView"),
-                    JavaRxTypeNames.Rx.RecyclerViewScrollEvent))
-        }
+          ClassName.bestGuess("OnScrollChangeListener"),
+          "setOnScrollChangeListener",
+          JavaRxTypeNames.Rx.ViewScrollChangeEvent,
+          MethodSpec.methodBuilder("accept")
+              .addModifiers(Modifier.PUBLIC)
+              .addParameter(JavaRxTypeNames.Rx.ViewScrollChangeEvent, "event")
+              .addStatement("l.onScrollChange($sourceType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
     }
+
+    // RecyclerView overrides
+    if (sourceType.contains("RecyclerView")) {
+      addRxBindingApiForAdditive(type, JavaAdditiveApi(
+          JavaRxBindingInfo(JavaRxTypeNames.Rx.RxRecyclerView,
+              "scrollEvents",
+              "@return an observable of scroll events on this RecyclerView"),
+          JavaRxTypeNames.Rx.RecyclerViewScrollEvent))
+    }
+  }
 }

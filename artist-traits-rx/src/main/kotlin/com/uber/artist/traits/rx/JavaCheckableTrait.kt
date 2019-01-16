@@ -29,57 +29,57 @@ import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
 class JavaCheckableTrait : JavaTrait {
-    override fun generateFor(
-            type: TypeSpec.Builder,
-            initMethod: MethodSpec.Builder,
-            rClass: ClassName,
-            baseType: String) {
+  override fun generateFor(
+      type: TypeSpec.Builder,
+      initMethod: MethodSpec.Builder,
+      rClass: ClassName,
+      baseType: String) {
 
-        val isTextView = baseType.endsWith("TextView")
+    val isTextView = baseType.endsWith("TextView")
 
-        if (isTextView) {
-            type.addField(
-                    ParameterizedTypeName.get(JavaRxTypeNames.Rx.BehaviorRelay, TypeName.BOOLEAN.box()), "checkedChanges",
-                    Modifier.PRIVATE)
-            type.addMethod(MethodSpec.methodBuilder("ensureCheckedChanges")
-                    .addModifiers(Modifier.PRIVATE)
-                    .beginControlFlow("if (checkedChanges == null)")
-                    .addStatement("checkedChanges = \$T.create()", JavaRxTypeNames.Rx.BehaviorRelay)
-                    .endControlFlow()
-                    .build())
-            type.addMethod(MethodSpec.methodBuilder("checkedChanges")
-                    .addJavadoc("""@return an observable of booleans representing the checked state of this view.
+    if (isTextView) {
+      type.addField(
+          ParameterizedTypeName.get(JavaRxTypeNames.Rx.BehaviorRelay, TypeName.BOOLEAN.box()), "checkedChanges",
+          Modifier.PRIVATE)
+      type.addMethod(MethodSpec.methodBuilder("ensureCheckedChanges")
+          .addModifiers(Modifier.PRIVATE)
+          .beginControlFlow("if (checkedChanges == null)")
+          .addStatement("checkedChanges = \$T.create()", JavaRxTypeNames.Rx.BehaviorRelay)
+          .endControlFlow()
+          .build())
+      type.addMethod(MethodSpec.methodBuilder("checkedChanges")
+          .addJavadoc("""@return an observable of booleans representing the checked state of this view.
     """)
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, TypeName.BOOLEAN.box()))
-                    .addStatement("ensureCheckedChanges()")
-                    .addStatement("return checkedChanges.hide()")
-                    .build())
-            type.addMethod(MethodSpec.methodBuilder("setChecked")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addAnnotation(Override::class.java)
-                    .addParameter(TypeName.BOOLEAN, "val")
-                    .addStatement("super.setChecked(val)")
-                    .addStatement("ensureCheckedChanges()")
-                    .addStatement("checkedChanges.accept(val)")
-                    .build())
-        } else {
-            addRxBindingApiForSettable(type, JavaSettableApi(
-                    JavaRxBindingInfo(JavaRxTypeNames.Rx.RxCompoundButton,
-                            "checkedChanges",
-                            """@return an observable of booleans representing the checked state of this view.
+          .addModifiers(Modifier.PUBLIC)
+          .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, TypeName.BOOLEAN.box()))
+          .addStatement("ensureCheckedChanges()")
+          .addStatement("return checkedChanges.hide()")
+          .build())
+      type.addMethod(MethodSpec.methodBuilder("setChecked")
+          .addModifiers(Modifier.PUBLIC)
+          .addAnnotation(Override::class.java)
+          .addParameter(TypeName.BOOLEAN, "val")
+          .addStatement("super.setChecked(val)")
+          .addStatement("ensureCheckedChanges()")
+          .addStatement("checkedChanges.accept(val)")
+          .build())
+    } else {
+      addRxBindingApiForSettable(type, JavaSettableApi(
+          JavaRxBindingInfo(JavaRxTypeNames.Rx.RxCompoundButton,
+              "checkedChanges",
+              """@return an observable of booleans representing the checked state of this view.
     """),
-                    ClassName.bestGuess("OnCheckedChangeListener"),
-                    "setOnCheckedChangeListener",
-                    TypeName.BOOLEAN.box(),
-                    MethodSpec.methodBuilder("accept")
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameter(TypeName.BOOLEAN.box(), "isChecked")
-                            .addStatement("l.onCheckedChanged($baseType.this, isChecked)"),
-                    true,
-                    CodeBlock.of("\$T.createDefault(isChecked())", JavaRxTypeNames.Rx.BehaviorRelay),
-                    setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
-            ))
-        }
+          ClassName.bestGuess("OnCheckedChangeListener"),
+          "setOnCheckedChangeListener",
+          TypeName.BOOLEAN.box(),
+          MethodSpec.methodBuilder("accept")
+              .addModifiers(Modifier.PUBLIC)
+              .addParameter(TypeName.BOOLEAN.box(), "isChecked")
+              .addStatement("l.onCheckedChanged($baseType.this, isChecked)"),
+          true,
+          CodeBlock.of("\$T.createDefault(isChecked())", JavaRxTypeNames.Rx.BehaviorRelay),
+          setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
+      ))
     }
+  }
 }

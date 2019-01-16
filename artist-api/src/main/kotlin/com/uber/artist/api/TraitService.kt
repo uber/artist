@@ -18,10 +18,10 @@ package com.uber.artist.api
 
 interface TraitService<TraitType> {
 
-    /**
-     * Gets the [Trait] implementations loaded.
-     *
-     * @return The located [Trait]s.
-     */
-    fun get(): Set<TraitType>
+  /**
+   * Gets the [Trait] implementations loaded.
+   *
+   * @return The located [Trait]s.
+   */
+  fun get(): Set<TraitType>
 }

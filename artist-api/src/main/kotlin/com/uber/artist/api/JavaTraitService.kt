@@ -17,9 +17,6 @@
 package com.uber.artist.api
 
 import java.util.ServiceLoader
-import kotlin.collections.LinkedHashSet
-import kotlin.collections.Set
-import kotlin.collections.forEach
 
 class JavaTraitService private constructor() : TraitService<JavaTrait> {
 
