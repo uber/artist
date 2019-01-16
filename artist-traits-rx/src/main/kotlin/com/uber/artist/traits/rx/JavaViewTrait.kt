@@ -28,61 +28,61 @@ import javax.lang.model.element.Modifier
 
 @AutoService(JavaTrait::class)
 open class JavaViewTrait : JavaTrait {
-    private val artistRxConfig by lazy { JavaArtistRxConfigService.newInstance().getArtistRxConfig() }
+  private val artistRxConfig by lazy { JavaArtistRxConfigService.newInstance().getArtistRxConfig() }
 
-    override fun generateFor(
-            type: TypeSpec.Builder,
-            initMethod: MethodSpec.Builder,
-            rClass: ClassName,
-            sourceType: String) {
+  override fun generateFor(
+      type: TypeSpec.Builder,
+      initMethod: MethodSpec.Builder,
+      rClass: ClassName,
+      sourceType: String) {
 
-        clicks(type, sourceType)
-        longClicks(type, sourceType)
-        layoutChanges(type)
-    }
+    clicks(type, sourceType)
+    longClicks(type, sourceType)
+    layoutChanges(type)
+  }
 
-    open fun clicks(type: TypeSpec.Builder, sourceType: String) {
-        addRxBindingApiForSettable(type, JavaSettableApi(
-                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
-                        "clicks",
-                        """@return an Observable of click events. The emitted value is unspecified and should only be used as notification.
+  open fun clicks(type: TypeSpec.Builder, sourceType: String) {
+    addRxBindingApiForSettable(type, JavaSettableApi(
+        JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
+            "clicks",
+            """@return an Observable of click events. The emitted value is unspecified and should only be used as notification.
     """),
-                ClassName.bestGuess("OnClickListener"),
-                "setOnClickListener",
-                TypeName.OBJECT.box(),
-                MethodSpec.methodBuilder("accept")
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
-                        .addStatement("l.onClick($sourceType.this)"),
-                setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
-        ))
-    }
+        ClassName.bestGuess("OnClickListener"),
+        "setOnClickListener",
+        TypeName.OBJECT.box(),
+        MethodSpec.methodBuilder("accept")
+            .addModifiers(Modifier.PUBLIC)
+            .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
+            .addStatement("l.onClick($sourceType.this)"),
+        setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
+    ))
+  }
 
-    open fun longClicks(type: TypeSpec.Builder, sourceType: String) {
-        addRxBindingApiForSettable(type, JavaSettableApi(
-                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
-                        "longClicks",
-                        """@return an Observable of longclick events. The emitted value is unspecified and should only be used as notification.
+  open fun longClicks(type: TypeSpec.Builder, sourceType: String) {
+    addRxBindingApiForSettable(type, JavaSettableApi(
+        JavaRxBindingInfo(JavaRxTypeNames.Rx.RxView,
+            "longClicks",
+            """@return an Observable of longclick events. The emitted value is unspecified and should only be used as notification.
     """),
-                ClassName.bestGuess("OnLongClickListener"),
-                "setOnLongClickListener",
-                TypeName.OBJECT.box(),
-                MethodSpec.methodBuilder("accept")
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
-                        .addStatement("l.onLongClick($sourceType.this)"),
-                setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
-        ))
-    }
+        ClassName.bestGuess("OnLongClickListener"),
+        "setOnLongClickListener",
+        TypeName.OBJECT.box(),
+        MethodSpec.methodBuilder("accept")
+            .addModifiers(Modifier.PUBLIC)
+            .addParameter(artistRxConfig.rxBindingSignalEventTypeName(), "ignored")
+            .addStatement("l.onLongClick($sourceType.this)"),
+        setListenerMethodAnnotations = listOf(TypeNames.Annotations.Nullable)
+    ))
+  }
 
-    open fun layoutChanges(type: TypeSpec.Builder) {
-        // Attach state changes observable
-        addRxBindingApiForAdditive(type, JavaAdditiveApi(
-                JavaRxBindingInfo(
-                        JavaRxTypeNames.Rx.RxView,
-                        "layoutChanges",
-                        "@return an observable which emits on layout changes. The emitted value is " +
-                                "unspecified and should only be used as notification."),
-                TypeName.OBJECT.box()))
-    }
+  open fun layoutChanges(type: TypeSpec.Builder) {
+    // Attach state changes observable
+    addRxBindingApiForAdditive(type, JavaAdditiveApi(
+        JavaRxBindingInfo(
+            JavaRxTypeNames.Rx.RxView,
+            "layoutChanges",
+            "@return an observable which emits on layout changes. The emitted value is " +
+                "unspecified and should only be used as notification."),
+        TypeName.OBJECT.box()))
+  }
 }

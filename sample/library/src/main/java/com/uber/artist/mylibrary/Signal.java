@@ -16,7 +16,9 @@
 
 package com.uber.artist.mylibrary;
 
-/** Enum useful for Rx streams that are just notifications with no actual values. */
+/**
+ * Enum useful for Rx streams that are just notifications with no actual values.
+ */
 public enum Signal {
   INSTANCE;
 

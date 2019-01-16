@@ -24,17 +24,17 @@ import com.uber.artist.api.JavaTrait
 
 @AutoService(JavaTrait::class)
 class JavaTextInputTrait : JavaTrait {
-    override fun generateFor(
-            type: TypeSpec.Builder,
-            initMethod: MethodSpec.Builder,
-            rClass: ClassName,
-            sourceType: String) {
+  override fun generateFor(
+      type: TypeSpec.Builder,
+      initMethod: MethodSpec.Builder,
+      rClass: ClassName,
+      sourceType: String) {
 
-        // TextChanges
-        addRxBindingApiForAdditive(type, JavaAdditiveApi(
-                JavaRxBindingInfo(JavaRxTypeNames.Rx.RxTextView,
-                        "textChanges",
-                        """@return an observable of character sequences for text changes on this TextView."""),
-                ClassName.get(CharSequence::class.java)))
-    }
+    // TextChanges
+    addRxBindingApiForAdditive(type, JavaAdditiveApi(
+        JavaRxBindingInfo(JavaRxTypeNames.Rx.RxTextView,
+            "textChanges",
+            """@return an observable of character sequences for text changes on this TextView."""),
+        ClassName.get(CharSequence::class.java)))
+  }
 }

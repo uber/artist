@@ -29,50 +29,50 @@ import org.gradle.api.Project
 
 class ArtistPlugin : Plugin<Project> {
 
-    companion object {
-        private const val ARTIST = "artist"
-    }
+  companion object {
+    private const val ARTIST = "artist"
+  }
 
-    private val artistExtension = ArtistExtension()
+  private val artistExtension = ArtistExtension()
 
-    override fun apply(project: Project) {
-        project.extensions.add(ARTIST, artistExtension)
-        project.afterEvaluate {
-            project.plugins.all {
-                when (it) {
-                    is AppPlugin -> with(project.extensions.getByType(AppExtension::class.java)) {
-                        configureAndroid(project, applicationVariants)
-                    }
-                    is LibraryPlugin -> with(project.extensions.getByType(LibraryExtension::class.java)) {
-                        configureAndroid(project, libraryVariants)
-                    }
-                }
-            }
+  override fun apply(project: Project) {
+    project.extensions.add(ARTIST, artistExtension)
+    project.afterEvaluate {
+      project.plugins.all {
+        when (it) {
+          is AppPlugin -> with(project.extensions.getByType(AppExtension::class.java)) {
+            configureAndroid(project, applicationVariants)
+          }
+          is LibraryPlugin -> with(project.extensions.getByType(LibraryExtension::class.java)) {
+            configureAndroid(project, libraryVariants)
+          }
         }
+      }
     }
+  }
 
-    private fun <T : BaseVariant> configureAndroid(
-            project: Project,
-            variants: DomainObjectSet<T>) {
-        val generateViews = project.task("generateViews")
-        variants.all { variant ->
-            val outputDir = resolveVariantOutputDir(project, variant, ARTIST)
-            val artistTask = project.tasks.create(
-                    "generate${variant.name.capitalize()}Views", ArtistTask::class.java)
-                    .apply {
-                        group = ARTIST
-                        outputDirectory = outputDir
-                        description = "Generate ${variant.name} base views."
-                        viewPackageName = artistExtension.viewPackageName ?: variant.applicationId
-                        rPackageName = artistExtension.rPackageName ?: (artistExtension.viewPackageName ?: variant.applicationId)
-                        superinterfaceClassName = artistExtension.interfaceClassName
-                        viewNamePrefix = artistExtension.viewNamePrefix
-                        formatSource = artistExtension.formatSource
-                    }
-            artistTask.outputs.dir(outputDir)
-            generateViews.dependsOn(artistTask)
+  private fun <T : BaseVariant> configureAndroid(
+      project: Project,
+      variants: DomainObjectSet<T>) {
+    val generateViews = project.task("generateViews")
+    variants.all { variant ->
+      val outputDir = resolveVariantOutputDir(project, variant, ARTIST)
+      val artistTask = project.tasks.create(
+          "generate${variant.name.capitalize()}Views", ArtistTask::class.java)
+          .apply {
+            group = ARTIST
+            outputDirectory = outputDir
+            description = "Generate ${variant.name} base views."
+            viewPackageName = artistExtension.viewPackageName ?: variant.applicationId
+            rPackageName = artistExtension.rPackageName ?: (artistExtension.viewPackageName ?: variant.applicationId)
+            superinterfaceClassName = artistExtension.interfaceClassName
+            viewNamePrefix = artistExtension.viewNamePrefix
+            formatSource = artistExtension.formatSource
+          }
+      artistTask.outputs.dir(outputDir)
+      generateViews.dependsOn(artistTask)
 
-            variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
-        }
+      variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
     }
+  }
 }

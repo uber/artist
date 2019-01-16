@@ -26,7 +26,8 @@ import io.reactivex.functions.Function;
  */
 public final class MyUtils {
 
-  private MyUtils() { }
+  private MyUtils() {
+  }
 
   /**
    * A static factory method that creates the Consumer that processes the tap. In this case we

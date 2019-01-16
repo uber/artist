@@ -29,160 +29,160 @@ import com.uber.artist.traits.rx.config.JavaArtistRxConfigService
 import javax.lang.model.element.Modifier
 
 data class JavaRxBindingInfo(
-        val className: ClassName,
-        val methodName: String,
-        val methodDoc: String
+    val className: ClassName,
+    val methodName: String,
+    val methodDoc: String
 )
 
 data class JavaSettableApi(
-        val rxBindingInfo: JavaRxBindingInfo,
-        val listenerType: TypeName,
-        val listenerMethod: String,
-        val observableType: TypeName,
-        val listenerImpl: MethodSpec.Builder,
-        val isStateful: Boolean = false,
-        val relayInitializer: CodeBlock? = null,
-        val setterCaveats: String? = null,
-        val isUViewOverride: Boolean = false,
-        val setListenerMethodAnnotations: List<ClassName> = emptyList())
+    val rxBindingInfo: JavaRxBindingInfo,
+    val listenerType: TypeName,
+    val listenerMethod: String,
+    val observableType: TypeName,
+    val listenerImpl: MethodSpec.Builder,
+    val isStateful: Boolean = false,
+    val relayInitializer: CodeBlock? = null,
+    val setterCaveats: String? = null,
+    val isUViewOverride: Boolean = false,
+    val setListenerMethodAnnotations: List<ClassName> = emptyList())
 
 data class JavaAdditiveApi(
-        val rxBindingInfo: JavaRxBindingInfo,
-        val observableType: TypeName,
-        val isUViewOverride: Boolean = false
+    val rxBindingInfo: JavaRxBindingInfo,
+    val observableType: TypeName,
+    val isUViewOverride: Boolean = false
 )
 
 private fun TypeName.irrelevantIfObject(): TypeName {
-    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
-    return if (this == TypeName.OBJECT.box()) artistRxConfig.rxBindingSignalEventTypeName() else this
+  val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
+  return if (this == TypeName.OBJECT.box()) artistRxConfig.rxBindingSignalEventTypeName() else this
 }
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: JavaAdditiveApi) {
-    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
-    type.addMethod(MethodSpec.methodBuilder(api.rxBindingInfo.methodName)
-            .addJavadoc("${api.rxBindingInfo.methodDoc}\n")
-            .apply {
-                if (api.isUViewOverride) {
-                    addAnnotation(Override::class.java)
-                }
+  val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
+  type.addMethod(MethodSpec.methodBuilder(api.rxBindingInfo.methodName)
+      .addJavadoc("${api.rxBindingInfo.methodDoc}\n")
+      .apply {
+        if (api.isUViewOverride) {
+          addAnnotation(Override::class.java)
+        }
+      }
+      .addModifiers(Modifier.PUBLIC)
+      .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
+      .addCode(CodeBlock.builder()
+          .add("return \$T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
+          .apply {
+            if (api.observableType == TypeName.OBJECT.box()) {
+              artistRxConfig.processRxBindingSignalEvent(this)
             }
-            .addModifiers(Modifier.PUBLIC)
-            .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
-            .addCode(CodeBlock.builder()
-                    .add("return \$T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
-                    .apply {
-                        if (api.observableType == TypeName.OBJECT.box()) {
-                            artistRxConfig.processRxBindingSignalEvent(this)
-                        }
-                        if (api.rxBindingInfo.methodName != "attachEvents") {
-                            // Safe to call, otherwise it'd be a recursive stack overflow
-                            artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject())
-                        }
-                        add(";")
-                    }
-                    .build())
-            .build())
+            if (api.rxBindingInfo.methodName != "attachEvents") {
+              // Safe to call, otherwise it'd be a recursive stack overflow
+              artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject())
+            }
+            add(";")
+          }
+          .build())
+      .build())
 }
 
 fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: JavaSettableApi, isDebug: Boolean = true) {
-    val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
-    val rxBindingClassName = api.rxBindingInfo.className
-    val rxBindingMethod = api.rxBindingInfo.methodName
-    val rxBindingMethodDoc = api.rxBindingInfo.methodDoc
-    val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
-    val disposable = "${api.rxBindingInfo.methodName}Disposable"
+  val artistRxConfig = JavaArtistRxConfigService.newInstance().getArtistRxConfig()
+  val rxBindingClassName = api.rxBindingInfo.className
+  val rxBindingMethod = api.rxBindingInfo.methodName
+  val rxBindingMethodDoc = api.rxBindingInfo.methodDoc
+  val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
+  val disposable = "${api.rxBindingInfo.methodName}Disposable"
 
-    // clicksInitting
-    type.addField(TypeName.BOOLEAN, isInitting, Modifier.PRIVATE)
+  // clicksInitting
+  type.addField(TypeName.BOOLEAN, isInitting, Modifier.PRIVATE)
 
-    // internal relay
-    type.addField(
-            FieldSpec.builder(ParameterizedTypeName.get(if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay,
-                    api.observableType.irrelevantIfObject()),
-            rxBindingMethod,
-            Modifier.PRIVATE)
-            .addAnnotation(TypeNames.Annotations.Nullable).build())
+  // internal relay
+  type.addField(
+      FieldSpec.builder(ParameterizedTypeName.get(if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay,
+          api.observableType.irrelevantIfObject()),
+          rxBindingMethod,
+          Modifier.PRIVATE)
+          .addAnnotation(TypeNames.Annotations.Nullable).build())
 
-    type.addField(FieldSpec.builder(JavaRxTypeNames.Rx.Disposable, disposable, Modifier.PRIVATE).addAnnotation(TypeNames.Annotations.Nullable).build())
+  type.addField(FieldSpec.builder(JavaRxTypeNames.Rx.Disposable, disposable, Modifier.PRIVATE).addAnnotation(TypeNames.Annotations.Nullable).build())
 
-    val consumer = TypeSpec.anonymousClassBuilder("")
-            .addSuperinterface(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Consumer, api.observableType.irrelevantIfObject()))
-            .addMethod(api.listenerImpl.addAnnotation(Override::class.java).build())
-            .build()
+  val consumer = TypeSpec.anonymousClassBuilder("")
+      .addSuperinterface(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Consumer, api.observableType.irrelevantIfObject()))
+      .addMethod(api.listenerImpl.addAnnotation(Override::class.java).build())
+      .build()
 
-    // Overridden and deprecated setOnClickListener method
-    type.addMethod(MethodSpec.methodBuilder(api.listenerMethod)
-            .addJavadoc(StringBuilder().apply {
-                if (api.setterCaveats != null) {
-                    append(api.setterCaveats)
-                    append("\n\n")
-                }
-            }.append("@deprecated Use {@link #$rxBindingMethod()}\n").toString())
-            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-            .addAnnotation(Override::class.java)
-            .addAnnotation(java.lang.Deprecated::class.java)
-            .addParameter(
-                ParameterSpec.builder(api.listenerType, "l", Modifier.FINAL).apply {
-                    api.setListenerMethodAnnotations.forEach {
-                        addAnnotation(it)
-                    }
-                }.build()
-            )
-            .beginControlFlow("if ($isInitting)")
-            .addStatement("$isInitting = false")
-            .addStatement("super.${api.listenerMethod}(l)")
-            .nextControlFlow("else")
-            .beginControlFlow("if ($disposable != null)")
-            .addStatement("$disposable.dispose()")
-            .addStatement("$disposable = null")
-            .endControlFlow()
-            .beginControlFlow("if (l != null)")
-            .addCode(CodeBlock.builder()
-                    .add("$disposable = $rxBindingMethod()")
-                    .add(".subscribe(\$L);", consumer)
-                    .build())
-            .endControlFlow()
-            .endControlFlow()
-            .build())
-
-    type.addMethod(MethodSpec.methodBuilder(rxBindingMethod)
-            .addJavadoc(rxBindingMethodDoc)
-            .apply {
-                if (api.isUViewOverride) {
-                    addAnnotation(Override::class.java)
-                }
+  // Overridden and deprecated setOnClickListener method
+  type.addMethod(MethodSpec.methodBuilder(api.listenerMethod)
+      .addJavadoc(StringBuilder().apply {
+        if (api.setterCaveats != null) {
+          append(api.setterCaveats)
+          append("\n\n")
+        }
+      }.append("@deprecated Use {@link #$rxBindingMethod()}\n").toString())
+      .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+      .addAnnotation(Override::class.java)
+      .addAnnotation(java.lang.Deprecated::class.java)
+      .addParameter(
+          ParameterSpec.builder(api.listenerType, "l", Modifier.FINAL).apply {
+            api.setListenerMethodAnnotations.forEach {
+              addAnnotation(it)
             }
-            .addModifiers(Modifier.PUBLIC)
-            .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
-            .beginControlFlow("if ($rxBindingMethod == null)")
-            .addStatement("$isInitting = true")
-            .apply {
-                if (api.relayInitializer != null) {
-                    addCode("$rxBindingMethod = ", JavaRxTypeNames.Rx.BehaviorRelay)
-                    addCode(api.relayInitializer)
-                    addCode(";\n")
-                } else {
-                    addStatement("$rxBindingMethod = \$T.create()",
-                            if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay)
-                }
+          }.build()
+      )
+      .beginControlFlow("if ($isInitting)")
+      .addStatement("$isInitting = false")
+      .addStatement("super.${api.listenerMethod}(l)")
+      .nextControlFlow("else")
+      .beginControlFlow("if ($disposable != null)")
+      .addStatement("$disposable.dispose()")
+      .addStatement("$disposable = null")
+      .endControlFlow()
+      .beginControlFlow("if (l != null)")
+      .addCode(CodeBlock.builder()
+          .add("$disposable = $rxBindingMethod()")
+          .add(".subscribe(\$L);", consumer)
+          .build())
+      .endControlFlow()
+      .endControlFlow()
+      .build())
+
+  type.addMethod(MethodSpec.methodBuilder(rxBindingMethod)
+      .addJavadoc(rxBindingMethodDoc)
+      .apply {
+        if (api.isUViewOverride) {
+          addAnnotation(Override::class.java)
+        }
+      }
+      .addModifiers(Modifier.PUBLIC)
+      .returns(ParameterizedTypeName.get(JavaRxTypeNames.Rx.Observable, api.observableType.irrelevantIfObject()))
+      .beginControlFlow("if ($rxBindingMethod == null)")
+      .addStatement("$isInitting = true")
+      .apply {
+        if (api.relayInitializer != null) {
+          addCode("$rxBindingMethod = ", JavaRxTypeNames.Rx.BehaviorRelay)
+          addCode(api.relayInitializer)
+          addCode(";\n")
+        } else {
+          addStatement("$rxBindingMethod = \$T.create()",
+              if (api.isStateful) JavaRxTypeNames.Rx.BehaviorRelay else JavaRxTypeNames.Rx.PublishRelay)
+        }
+      }
+      .addCode(CodeBlock.builder()
+          .add("\$T.$rxBindingMethod(this)", rxBindingClassName)
+          .apply {
+            if (api.observableType == TypeName.OBJECT.box()) {
+              artistRxConfig.processRxBindingSignalEvent(this)
             }
-            .addCode(CodeBlock.builder()
-                    .add("\$T.$rxBindingMethod(this)", rxBindingClassName)
-                    .apply {
-                        if (api.observableType == TypeName.OBJECT.box()) {
-                            artistRxConfig.processRxBindingSignalEvent(this)
-                        }
-                        if (rxBindingMethod.contains("click", true)) {
-                            artistRxConfig.processTap(this)
-                        }
-                    }
-                    .addStatement("\n\t.subscribe($rxBindingMethod)")
-                    .build())
-            .endControlFlow()
-            .addCode(CodeBlock.builder()
-                    .add("return $rxBindingMethod.hide()")
-                    .apply { artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject()) }
-                    .add(";")
-                    .build())
-            .build())
+            if (rxBindingMethod.contains("click", true)) {
+              artistRxConfig.processTap(this)
+            }
+          }
+          .addStatement("\n\t.subscribe($rxBindingMethod)")
+          .build())
+      .endControlFlow()
+      .addCode(CodeBlock.builder()
+          .add("return $rxBindingMethod.hide()")
+          .apply { artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject()) }
+          .add(";")
+          .build())
+      .build())
 }

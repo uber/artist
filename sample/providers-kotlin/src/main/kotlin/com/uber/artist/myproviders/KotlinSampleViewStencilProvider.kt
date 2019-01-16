@@ -49,11 +49,11 @@ class KotlinSampleViewStencilProvider : KotlinViewStencilProvider {
   }
 
   override fun globalTraits(): Set<Class<out KotlinTrait>> = setOf(
-    KotlinSampleTrait::class.java,
-    KotlinVisibilityTrait::class.java,
-    KotlinForegroundTrait::class.java,
-    KotlinSuppressNullabilityInitializerTrait::class.java,
-    KotlinViewTrait::class.java
+      KotlinSampleTrait::class.java,
+      KotlinVisibilityTrait::class.java,
+      KotlinForegroundTrait::class.java,
+      KotlinSuppressNullabilityInitializerTrait::class.java,
+      KotlinViewTrait::class.java
   )
 
   private class SwitchStencil : KotlinViewStencil("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", KotlinCheckableTrait::class.java) {

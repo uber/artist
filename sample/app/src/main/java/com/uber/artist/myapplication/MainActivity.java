@@ -17,7 +17,6 @@
 package com.uber.artist.myapplication;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.ViewScrollChangeEvent;
@@ -31,6 +30,7 @@ import com.uber.artist.mylibrary.Signal;
 
 import java.util.concurrent.TimeUnit;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 

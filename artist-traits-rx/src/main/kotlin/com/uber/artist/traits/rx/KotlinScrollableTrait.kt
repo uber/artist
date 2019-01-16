@@ -19,40 +19,39 @@ package com.uber.artist.traits.rx
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeSpec
 import com.uber.artist.api.KotlinTrait
 
 @AutoService(KotlinTrait::class)
 class KotlinScrollableTrait : KotlinTrait {
-    override fun generateFor(
-            type: TypeSpec.Builder,
-            initMethod: FunSpec.Builder,
-            rClass: ClassName,
-            sourceType: String) {
+  override fun generateFor(
+      type: TypeSpec.Builder,
+      initMethod: FunSpec.Builder,
+      rClass: ClassName,
+      sourceType: String) {
 
-        // ScrollView overrides
-        if (sourceType.contains("ScrollView")) {
-          addRxBindingApiForSettable(type, KotlinSettableApi(
-              KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxNestedScrollView,
-                  "scrollChangeEvents",
-                  """@return an observable of scroll-change events for this NestedScrollView.
+    // ScrollView overrides
+    if (sourceType.contains("ScrollView")) {
+      addRxBindingApiForSettable(type, KotlinSettableApi(
+          KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxNestedScrollView,
+              "scrollChangeEvents",
+              """@return an observable of scroll-change events for this NestedScrollView.
     """),
-              ClassName.bestGuess("OnScrollChangeListener"),
-              "setOnScrollChangeListener",
-              KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
-              FunSpec.builder("accept")
-                  .addParameter("event", KotlinRxTypeNames.Rx.ViewScrollChangeEvent)
-                  .addStatement("l.onScrollChange(this@$sourceType, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
-        }
-
-        // RecyclerView overrides
-        if (sourceType.contains("RecyclerView")) {
-          addRxBindingApiForAdditive(type, KotlinAdditiveApi(
-              KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxRecyclerView,
-                  "scrollEvents",
-                  "@return an observable of scroll events on this RecyclerView"),
-              KotlinRxTypeNames.Rx.RecyclerViewScrollEvent))
-        }
+          ClassName.bestGuess("OnScrollChangeListener"),
+          "setOnScrollChangeListener",
+          KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
+          FunSpec.builder("accept")
+              .addParameter("event", KotlinRxTypeNames.Rx.ViewScrollChangeEvent)
+              .addStatement("l.onScrollChange(this@$sourceType, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
     }
+
+    // RecyclerView overrides
+    if (sourceType.contains("RecyclerView")) {
+      addRxBindingApiForAdditive(type, KotlinAdditiveApi(
+          KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxRecyclerView,
+              "scrollEvents",
+              "@return an observable of scroll events on this RecyclerView"),
+          KotlinRxTypeNames.Rx.RecyclerViewScrollEvent))
+    }
+  }
 }

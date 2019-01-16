@@ -22,9 +22,11 @@ import com.squareup.javapoet.ClassName;
  * Sample TypeNames.
  */
 public final class JavaSampleTypeNames {
+
   public static final ClassName MY_UTILS = ClassName.get("com.uber.artist.mylibrary", "MyUtils");
   public static final ClassName SIGNAL = ClassName.get("com.uber.artist.mylibrary", "Signal");
   public static final ClassName VIEW = ClassName.get("android.view", "View");
 
-  private JavaSampleTypeNames() { }
+  private JavaSampleTypeNames() {
+  }
 }

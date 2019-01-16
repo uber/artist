@@ -23,5 +23,5 @@ package com.uber.artist.api
  * [ViewStencil]’s code gen process that are called during each [ViewStencil]’s generation.
  */
 interface Trait<OutputType, FunType, ClassType> {
-    fun generateFor(type: OutputType, initMethod: FunType, rClass: ClassType, sourceType: String)
+  fun generateFor(type: OutputType, initMethod: FunType, rClass: ClassType, sourceType: String)
 }

@@ -18,17 +18,17 @@ package com.uber.artist.api
 
 interface ViewStencilProvider<ViewStencilType, TraitType> {
 
-    /**
-     * Provide a set of [ViewStencil]s to be used during code generation.
-     *
-     * @return The set of [ViewStencil]s.
-     */
-    fun stencils(): Set<ViewStencilType>
+  /**
+   * Provide a set of [ViewStencil]s to be used during code generation.
+   *
+   * @return The set of [ViewStencil]s.
+   */
+  fun stencils(): Set<ViewStencilType>
 
-    /**
-     * Provide a set of [Trait] classes that should be applied to all [ViewStencil]s.
-     *
-     * @return The set of [Trait] classes.
-     */
-    fun globalTraits(): Set<Class<out TraitType>>
+  /**
+   * Provide a set of [Trait] classes that should be applied to all [ViewStencil]s.
+   *
+   * @return The set of [Trait] classes.
+   */
+  fun globalTraits(): Set<Class<out TraitType>>
 }

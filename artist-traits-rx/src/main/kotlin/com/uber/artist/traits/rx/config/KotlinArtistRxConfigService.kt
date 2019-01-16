@@ -20,18 +20,18 @@ import java.util.ServiceLoader
 
 class KotlinArtistRxConfigService private constructor() : ArtistRxConfigService<KotlinArtistRxConfig> {
 
-    private val serviceLoader = ServiceLoader.load(KotlinArtistRxConfig::class.java)
+  private val serviceLoader = ServiceLoader.load(KotlinArtistRxConfig::class.java)
 
-    /**
-     * Gets the optionally overridden [ArtistRxConfig] implementation or the default.
-     *
-     * @return The located [ArtistRxConfig] or a default config if not provided.
-     */
-    override fun getArtistRxConfig(): KotlinArtistRxConfig = serviceLoader.asIterable().firstOrNull() ?: DEFAULT_CONFIG
+  /**
+   * Gets the optionally overridden [ArtistRxConfig] implementation or the default.
+   *
+   * @return The located [ArtistRxConfig] or a default config if not provided.
+   */
+  override fun getArtistRxConfig(): KotlinArtistRxConfig = serviceLoader.asIterable().firstOrNull() ?: DEFAULT_CONFIG
 
-    companion object {
-        private val DEFAULT_CONFIG: KotlinArtistRxConfig = KotlinDefaultArtistRxConfig()
+  companion object {
+    private val DEFAULT_CONFIG: KotlinArtistRxConfig = KotlinDefaultArtistRxConfig()
 
-        fun newInstance(): KotlinArtistRxConfigService = KotlinArtistRxConfigService()
-    }
+    fun newInstance(): KotlinArtistRxConfigService = KotlinArtistRxConfigService()
+  }
 }

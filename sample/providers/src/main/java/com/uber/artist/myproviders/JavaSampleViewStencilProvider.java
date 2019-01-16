@@ -46,7 +46,8 @@ public class JavaSampleViewStencilProvider implements JavaViewStencilProvider {
             "android.R.attr.editTextStyle", JavaTextInputTrait.class),
         new JavaViewStencil("android.widget.LinearLayout", 3, null),
         new JavaViewStencil("androidx.appcompat.widget.AppCompatImageView", 3, null),
-        new JavaViewStencil("androidx.core.widget.NestedScrollView", 3, null, JavaScrollableTrait.class),
+        new JavaViewStencil("androidx.core.widget.NestedScrollView", 3, null,
+            JavaScrollableTrait.class),
         new JavaViewStencil("android.widget.TextView", 3, "android.R.attr.textViewStyle"),
         new SwitchStencil()
     ));
@@ -63,6 +64,7 @@ public class JavaSampleViewStencilProvider implements JavaViewStencilProvider {
   }
 
   private static class SwitchStencil extends JavaViewStencil {
+
     public SwitchStencil() {
       super("androidx.appcompat.widget.SwitchCompat", 3, "switchStyle", JavaCheckableTrait.class);
     }

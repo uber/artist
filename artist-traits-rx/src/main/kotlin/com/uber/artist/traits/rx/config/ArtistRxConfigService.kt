@@ -18,10 +18,10 @@ package com.uber.artist.traits.rx.config
 
 interface ArtistRxConfigService<ArtistRxConfig> {
 
-    /**
-     * Gets the optionally overridden [ArtistRxConfig] implementation or the default.
-     *
-     * @return The located [ArtistRxConfig] or a default config if not provided.
-     */
-    fun getArtistRxConfig(): ArtistRxConfig
+  /**
+   * Gets the optionally overridden [ArtistRxConfig] implementation or the default.
+   *
+   * @return The located [ArtistRxConfig] or a default config if not provided.
+   */
+  fun getArtistRxConfig(): ArtistRxConfig
 }

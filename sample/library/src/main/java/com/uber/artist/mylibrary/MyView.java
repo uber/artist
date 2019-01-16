@@ -19,4 +19,6 @@ package com.uber.artist.mylibrary;
 /**
  * A common interface amongst all of the Artist-generated View types.
  */
-public interface MyView { }
+public interface MyView {
+
+}
