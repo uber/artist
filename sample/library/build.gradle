@@ -67,5 +67,6 @@ if (project.rootProject.name != 'buildSrc') {
     artist {
         interfaceClassName = "com.uber.artist.mylibrary.MyView"
         viewNamePrefix = "My"
+        generateKotlin = false
     }
 }

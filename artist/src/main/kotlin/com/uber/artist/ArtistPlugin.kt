@@ -68,6 +68,7 @@ class ArtistPlugin : Plugin<Project> {
             superinterfaceClassName = artistExtension.interfaceClassName
             viewNamePrefix = artistExtension.viewNamePrefix
             formatSource = artistExtension.formatSource
+            generateKotlin = artistExtension.generateKotlin
           }
       artistTask.outputs.dir(outputDir)
       generateViews.dependsOn(artistTask)
