@@ -72,7 +72,7 @@ class KotlinCheckableTrait : KotlinTrait {
               "checkedChanges",
               """@return an observable of booleans representing the checked state of this view.
     """),
-          ClassName.bestGuess("OnCheckedChangeListener"),
+          ClassName.bestGuess("android.widget.CompoundButton.OnCheckedChangeListener"),
           "setOnCheckedChangeListener",
           BOOLEAN,
           FunSpec.builder("accept")

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 0.4.6
+-------------
+
+_2019-09-04_
+
+* Change uses of `ClassName.bestGuess()` to use FQCN to [support latest version of KotlinPoet](https://github.com/square/kotlinpoet/issues/645).
+
+
 Version 0.4.5
 -------------
 
