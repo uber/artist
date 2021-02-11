@@ -24,6 +24,7 @@ import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.api.BaseVariant
 import com.uber.artist.internal.util.resolveVariantOutputDir
 import org.gradle.api.DomainObjectSet
+import org.gradle.api.file.SourceDirectorySet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -70,6 +71,13 @@ class ArtistPlugin : Plugin<Project> {
             generateKotlin = artistExtension.generateKotlin
           }
       artistTask.outputs.dir(outputDir)
+
+      if (artistExtension.generateKotlin) {
+        val kotlinCompileTask = project.tasks.findByName("compile${variant.name.capitalize()}Kotlin")
+        if (kotlinCompileTask != null) {
+          generateViews.dependsOn(kotlinCompileTask)
+        }
+      }
 
       variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
     }
