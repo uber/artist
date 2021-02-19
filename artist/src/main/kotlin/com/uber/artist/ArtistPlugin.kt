@@ -71,6 +71,13 @@ class ArtistPlugin : Plugin<Project> {
           }
       artistTask.outputs.dir(outputDir)
 
+      if (artistExtension.generateKotlin) {
+        val kotlinCompileTask = project.tasks.findByName("compile${variant.name.capitalize()}Kotlin")
+        if (kotlinCompileTask != null) {
+          kotlinCompileTask.dependsOn(artistTask)
+        }
+      }
+
       variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
     }
   }
