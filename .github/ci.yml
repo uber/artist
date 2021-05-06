@@ -27,6 +27,8 @@ jobs:
     run: ./gradlew assemble --stacktrace
   - name: Run tests
     run: ./gradlew test --stacktrace
+  - name: Gradle Check
+    run: ./gradlew check --stacktrace
   - name: Upload snapshot (main only)
     run: ./gradlew uploadArchives -PSONATYPE_NEXUS_USERNAME="$SONATYPE_NEXUS_USERNAME" -PSONATYPE_NEXUS_PASSWORD="$SONATYPE_NEXUS_PASSWORD"
     env:
