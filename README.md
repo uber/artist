@@ -1,5 +1,6 @@
 # Artist [![Build Status](https://travis-ci.org/uber/artist.svg?branch=master)](https://travis-ci.org/uber/artist)
 
+
 As Android apps grow, providing common features and consistent functionality across Views becomes challenging. Typically, this results in copy-pasting features across views, monolithic classes, or complicated inheritance trees. Artist is a highly-extensible platform for creating and maintaining an app’s base set of Android views.
 
 ## Overview
