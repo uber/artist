@@ -13,7 +13,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.core.widget.NestedScrollView;
-import com.jakewharton.rxbinding3.support.v4.widget.RxNestedScrollView;
+import com.jakewharton.rxbinding3.core.RxNestedScrollView;
 import com.jakewharton.rxbinding3.view.RxView;
 import com.jakewharton.rxbinding3.view.ViewScrollChangeEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
