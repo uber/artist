@@ -44,7 +44,9 @@ class JavaScrollableTrait : JavaTrait {
           MethodSpec.methodBuilder("accept")
               .addModifiers(Modifier.PUBLIC)
               .addParameter(JavaRxTypeNames.Rx.ViewScrollChangeEvent, "event")
-              .addStatement("l.onScrollChange($sourceType.this, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
+              .addStatement("l.onScrollChange($sourceType.this, event.getScrollX(), event" +
+                  ".getScrollY" +
+                  "(), event.getOldScrollX(), event.getOldScrollY())")))
     }
 
     // RecyclerView overrides
