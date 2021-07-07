@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 0.4.7
+-------------
+
+_2021-02-06_
+
+* Add support for AndroidX
+
 Version 0.4.6
 -------------
 
