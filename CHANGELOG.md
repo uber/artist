@@ -13,7 +13,6 @@ Version 0.4.6
 
 _2021-02-08_
 
-* Add `generateKotlin` to plugin extension to parameterize whether Java or Kotlin should be generated
 
 Version 0.4.5
 -------------

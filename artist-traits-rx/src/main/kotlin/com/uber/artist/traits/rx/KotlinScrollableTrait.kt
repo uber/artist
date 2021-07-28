@@ -37,7 +37,7 @@ class KotlinScrollableTrait : KotlinTrait {
               "scrollChangeEvents",
               """@return an observable of scroll-change events for this NestedScrollView.
     """),
-          ClassName.bestGuess("OnScrollChangeListener"),
+          ClassName.bestGuess("androidx.core.widget.NestedScrollView.OnScrollChangeListener"),
           "setOnScrollChangeListener",
           KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
           FunSpec.builder("accept")
