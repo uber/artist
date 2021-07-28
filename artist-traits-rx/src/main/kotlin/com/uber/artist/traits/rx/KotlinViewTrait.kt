@@ -45,7 +45,7 @@ open class KotlinViewTrait : KotlinTrait {
             "clicks",
             """@return an Observable of click events. The emitted value is unspecified and should only be used as notification.
     """),
-        ClassName.bestGuess("OnClickListener"),
+        ClassName.bestGuess("android.view.View.OnClickListener"),
         "setOnClickListener",
         KotlinTypeNames.Java.Object,
         FunSpec.builder("accept")
@@ -60,7 +60,7 @@ open class KotlinViewTrait : KotlinTrait {
             "longClicks",
             """@return an Observable of longclick events. The emitted value is unspecified and should only be used as notification.
     """),
-        ClassName.bestGuess("OnLongClickListener"),
+        ClassName.bestGuess("android.view.View.OnLongClickListener"),
         "setOnLongClickListener",
         KotlinTypeNames.Java.Object,
         FunSpec.builder("accept")

@@ -29,6 +29,7 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTypeNames
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxView
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
 data class KotlinRxBindingInfo(
@@ -72,7 +73,7 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
       .addModifiers(KModifier.OPEN)
       .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
       .addCode(CodeBlock.builder()
-          .add("return %T.${api.rxBindingInfo.methodName}(this)", api.rxBindingInfo.className)
+          .add("return ${api.rxBindingInfo.methodName}()", api.rxBindingInfo.className)
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
@@ -177,7 +178,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
         }
       }
       .addCode(CodeBlock.builder()
-          .add("%T.$rxBindingMethod(this)", rxBindingClassName)
+          .add("$rxBindingMethod()")
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)

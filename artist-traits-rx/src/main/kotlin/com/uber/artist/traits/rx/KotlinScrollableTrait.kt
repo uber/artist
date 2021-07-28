@@ -37,12 +37,12 @@ class KotlinScrollableTrait : KotlinTrait {
               "scrollChangeEvents",
               """@return an observable of scroll-change events for this NestedScrollView.
     """),
-          ClassName.bestGuess("OnScrollChangeListener"),
+          ClassName.bestGuess("androidx.core.widget.NestedScrollView.OnScrollChangeListener"),
           "setOnScrollChangeListener",
           KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
           FunSpec.builder("accept")
               .addParameter("event", KotlinRxTypeNames.Rx.ViewScrollChangeEvent)
-              .addStatement("l.onScrollChange(this@$sourceType, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
+              .addStatement("l.onScrollChange(this@$sourceType, event.scrollX, event.scrollY, event.oldScrollX, event.oldScrollY)")))
     }
 
     // RecyclerView overrides
