@@ -43,4 +43,8 @@ class ArtistExtension {
    */
   var formatSource: Boolean = true
 
+  /**
+   * Optional setting to control whether the source is generated in Java or Kotlin. Defaults to false for Java.
+   */
+  var generateKotlin: Boolean = false
 }

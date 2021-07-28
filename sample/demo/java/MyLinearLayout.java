@@ -16,7 +16,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.core.view.GravityCompat;
-import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.jakewharton.rxrelay2.PublishRelay;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;

@@ -15,62 +15,60 @@
  */
 
 def versions = [
-    kotlin    : "1.3.0",
-    rxBinding : "2.2.0"
+        kotlin   : "1.3.0",
+        rxBinding: "3.1.0"
 ]
 
 def androidx = [
-    annotations : "androidx.annotation:annotation:1.0.0",
-    appcompat   : "androidx.appcompat:appcompat:1.0.2"
+        annotations: "androidx.annotation:annotation:1.0.0",
+        appcompat  : "androidx.appcompat:appcompat:1.0.2"
 ]
 
 def apt = [
-    autoService : "com.google.auto.service:auto-service:1.0-rc4",
-    javapoet : "com.squareup:javapoet:1.9.0",
-    kotlinPoet : "com.squareup:kotlinpoet:1.0.1"
+        autoService: "com.google.auto.service:auto-service:1.0-rc4",
+        javapoet   : "com.squareup:javapoet:1.9.0",
+        kotlinPoet : "com.squareup:kotlinpoet:1.0.1"
 ]
 
 def build = [
-    androidPlugin       : "com.android.tools.build:gradle:3.2.0",
-    buildToolsVersion   : "28.0.3",
-    compileSdkVersion   : 28,
-    ci: 'true' == System.getenv('CI'),
-    googleJavaFormatter : "com.google.googlejavaformat:google-java-format:1.4",
-    gradleAptPlugin     : "net.ltgt.gradle:gradle-apt-plugin:0.15",
-    gradlePluginsUrl    : "https://plugins.gradle.org/m2/",
-    minSdkVersion       : 16,
-    targetSdkVersion    : 28
+        androidPlugin      : "com.android.tools.build:gradle:3.2.0",
+        buildToolsVersion  : "28.0.3",
+        compileSdkVersion  : 28,
+        ci                 : 'true' == System.getenv('CI'),
+        googleJavaFormatter: "com.google.googlejavaformat:google-java-format:1.4",
+        gradleAptPlugin    : "net.ltgt.gradle:gradle-apt-plugin:0.15",
+        gradlePluginsUrl   : "https://plugins.gradle.org/m2/",
+        minSdkVersion      : 16,
+        targetSdkVersion   : 28
 ]
 
 def external = [
-    rxbinding             : "com.jakewharton.rxbinding2:rxbinding:${versions.rxBinding}",
-    rxbindingAppCompat    : "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${versions.rxBinding}",
-    rxbindingDesign       : "com.jakewharton.rxbinding2:rxbinding-design:${versions.rxBinding}",
-    rxbindingRecyclerView : "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${versions.rxBinding}",
-    rxbindingSupportV4    : "com.jakewharton.rxbinding2:rxbinding-support-v4:${versions.rxBinding}",
-    rxjava2               : "io.reactivex.rxjava2:rxjava:2.2.3",
-    rxrelay2              : "com.jakewharton.rxrelay2:rxrelay:2.1.0",
+        rxbinding            : "com.jakewharton.rxbinding3:rxbinding-core:${versions.rxBinding}",
+        rxbindingAppCompat   : "com.jakewharton.rxbinding3:rxbinding-appcompat:${versions.rxBinding}",
+        rxbindingRecyclerView: "com.jakewharton.rxbinding3:rxbinding-recyclerview:${versions.rxBinding}",
+        rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",
+        rxrelay2             : "com.jakewharton.rxrelay2:rxrelay:2.1.0",
 ]
 
 def kotlin = [
-    gradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
-    stdLibJdk7   : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+        gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+        stdLibJdk7  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 ]
 
 def test = [
-    compileTesting : "com.google.testing.compile:compile-testing:0.15",
-    junit          : 'junit:junit:4.12',
-    robolectric    : "org.robolectric:android-all:8.1.0-robolectric-4402310",
-    truth          : "com.google.truth:truth:0.42"
+        compileTesting: "com.google.testing.compile:compile-testing:0.15",
+        junit         : 'junit:junit:4.12',
+        robolectric   : "org.robolectric:android-all:8.1.0-robolectric-4402310",
+        truth         : "com.google.truth:truth:0.42"
 ]
 
 ext.deps = [
-    "androidx" : androidx,
-    "apt"      : apt,
-    "build"    : build,
-    "external" : external,
-    "kotlin"   : kotlin,
-    "test"     : test,
-    "versions" : versions
+        "androidx": androidx,
+        "apt"     : apt,
+        "build"   : build,
+        "external": external,
+        "kotlin"  : kotlin,
+        "test"    : test,
+        "versions": versions
 ]
 

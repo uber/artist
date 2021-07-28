@@ -54,7 +54,6 @@ class ArtistPlugin : Plugin<Project> {
   private fun <T : BaseVariant> configureAndroid(
       project: Project,
       variants: DomainObjectSet<T>) {
-    val generateViews = project.task("generateViews")
     variants.all { variant ->
       val outputDir = resolveVariantOutputDir(project, variant, ARTIST)
       val artistTask = project.tasks.create(
@@ -68,9 +67,16 @@ class ArtistPlugin : Plugin<Project> {
             superinterfaceClassName = artistExtension.interfaceClassName
             viewNamePrefix = artistExtension.viewNamePrefix
             formatSource = artistExtension.formatSource
+            generateKotlin = artistExtension.generateKotlin
           }
       artistTask.outputs.dir(outputDir)
-      generateViews.dependsOn(artistTask)
+
+      if (artistExtension.generateKotlin) {
+        val kotlinCompileTask = project.tasks.findByName("compile${variant.name.capitalize()}Kotlin")
+        if (kotlinCompileTask != null) {
+          kotlinCompileTask.dependsOn(artistTask)
+        }
+      }
 
       variant.registerJavaGeneratingTask(artistTask, artistTask.outputDirectory)
     }

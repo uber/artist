@@ -43,11 +43,11 @@ android {
 
 // This is required to run checkstyle on an android app/library.
 task checkstyle(type: Checkstyle) {
-   source 'src'
-   include '**/*.java'
-   exclude '**/gen/**'
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
 
-   classpath = files()
+    classpath = files()
 }
 check.dependsOn 'checkstyle'
 
@@ -56,9 +56,7 @@ dependencies {
     api deps.kotlin.stdLibJdk7
     api deps.external.rxbinding
     api deps.external.rxbindingAppCompat
-    api deps.external.rxbindingDesign
     api deps.external.rxbindingRecyclerView
-    api deps.external.rxbindingSupportV4
     api deps.external.rxjava2
     api deps.external.rxrelay2
 }
@@ -67,5 +65,6 @@ if (project.rootProject.name != 'buildSrc') {
     artist {
         interfaceClassName = "com.uber.artist.mylibrary.MyView"
         viewNamePrefix = "My"
+        generateKotlin = false
     }
 }

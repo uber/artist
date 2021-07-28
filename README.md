@@ -1,5 +1,6 @@
 # Artist [![Build Status](https://travis-ci.org/uber/artist.svg?branch=master)](https://travis-ci.org/uber/artist)
 
+
 As Android apps grow, providing common features and consistent functionality across Views becomes challenging. Typically, this results in copy-pasting features across views, monolithic classes, or complicated inheritance trees. Artist is a highly-extensible platform for creating and maintaining an app’s base set of Android views.
 
 ## Overview
@@ -168,22 +169,22 @@ The set of `JavaViewStencil`s that Artist should process are provided via the `J
 
 Artist Plugin [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist)
 ```gradle
-classpath 'com.uber.artist:artist:0.4.5'
+classpath 'com.uber.artist:artist:0.4.7'
 ```
 
 Artist API [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-api.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-api)
 ```gradle
-classpath 'com.uber.artist:artist-api:0.4.5'
+classpath 'com.uber.artist:artist-api:0.4.7'
 ```
 
 Artist Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits)
 ```gradle
-classpath 'com.uber.artist:artist-traits:0.4.5'
+classpath 'com.uber.artist:artist-traits:0.4.7'
 ```
 
 Artist Rx Traits [![Maven Central](https://img.shields.io/maven-central/v/com.uber.artist/artist-traits-rx.svg)](https://mvnrepository.com/artifact/com.uber.artist/artist-traits-rx)
 ```gradle
-classpath 'com.uber.artist:artist-traits-rx:0.4.5'
+classpath 'com.uber.artist:artist-traits-rx:0.4.7'
 ```
 
 ## License

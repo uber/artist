@@ -42,6 +42,9 @@ open class ArtistTask : DefaultTask() {
   @Input
   var formatSource: Boolean = true
 
+  @Input
+  var generateKotlin: Boolean = false
+
   @TaskAction
   fun execute(inputs: IncrementalTaskInputs) {
     generateViewsFor(
@@ -50,7 +53,8 @@ open class ArtistTask : DefaultTask() {
         rPackageName,
         superinterfaceClassName,
         viewNamePrefix,
-        formatSource
+        formatSource,
+        generateKotlin
     )
   }
 }

@@ -1,12 +1,17 @@
 Changelog
 =========
 
+Version 0.4.7
+-------------
+
+_2021-02-06_
+
+* Add support for AndroidX
+
 Version 0.4.6
 -------------
 
-_2019-09-04_
-
-* Change uses of `ClassName.bestGuess()` to use FQCN to [support latest version of KotlinPoet](https://github.com/square/kotlinpoet/issues/645).
+_2021-02-08_
 
 
 Version 0.4.5
