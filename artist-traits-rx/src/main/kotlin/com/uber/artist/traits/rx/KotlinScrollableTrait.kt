@@ -42,7 +42,7 @@ class KotlinScrollableTrait : KotlinTrait {
           KotlinRxTypeNames.Rx.ViewScrollChangeEvent,
           FunSpec.builder("accept")
               .addParameter("event", KotlinRxTypeNames.Rx.ViewScrollChangeEvent)
-              .addStatement("l.onScrollChange(this@$sourceType, event.scrollX(), event.scrollY(), event.oldScrollX(), event.oldScrollY())")))
+              .addStatement("l.onScrollChange(this@$sourceType, event.scrollX, event.scrollY, event.oldScrollX, event.oldScrollY)")))
     }
 
     // RecyclerView overrides
