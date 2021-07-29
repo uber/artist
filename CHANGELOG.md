@@ -1,10 +1,17 @@
 Changelog
 =========
 
+Version 0.4.8
+-------------
+
+_2021-07-29_
+
+* Tool will now generate RxBinding3 support for Kotlin modules.
+
 Version 0.4.7
 -------------
 
-_2021-02-06_
+_2021-07-06_
 
 * Add support for AndroidX
 
