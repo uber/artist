@@ -17,12 +17,20 @@
 package com.uber.artist.traits.rx
 
 import com.google.auto.service.AutoService
+import com.squareup.javapoet.ParameterizedTypeName
+import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTrait
 import com.uber.artist.api.KotlinTypeNames
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
+import io.reactivex.Observable
+import java.lang.reflect.Type
 
 @AutoService(KotlinTrait::class)
 open class KotlinViewTrait : KotlinTrait {
@@ -37,6 +45,7 @@ open class KotlinViewTrait : KotlinTrait {
     clicks(type, sourceType)
     longClicks(type, sourceType)
     layoutChanges(type)
+
   }
 
   open fun clicks(type: TypeSpec.Builder, sourceType: String) {
@@ -71,7 +80,7 @@ open class KotlinViewTrait : KotlinTrait {
 
   open fun layoutChanges(type: TypeSpec.Builder) {
     // Attach state changes observable
-    addRxBindingApiForAdditive(type, KotlinAdditiveApi(
+    addRxBindingApiForExtension(type, KotlinAdditiveApi(
         KotlinRxBindingInfo(
             KotlinRxTypeNames.Rx.RxView,
             "layoutChanges",

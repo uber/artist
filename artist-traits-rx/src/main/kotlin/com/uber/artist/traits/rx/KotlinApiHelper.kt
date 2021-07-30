@@ -25,6 +25,7 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeAliasSpec
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
@@ -59,6 +60,16 @@ data class KotlinAdditiveApi(
 private fun TypeName.irrelevantIfObject(): TypeName {
   val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
   return if (this == KotlinTypeNames.Java.Object) artistRxConfig.rxBindingSignalEventTypeName() else this
+}
+
+fun addRxBindingApiForExtension(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
+  type.addFunction(
+      FunSpec.builder("layoutChanges")
+          .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(
+              KotlinTypeNames.Java.Object.irrelevantIfObject()))
+          .addStatement("return layoutChanges2()")
+          .build()
+  )
 }
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {

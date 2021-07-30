@@ -24,6 +24,7 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.INT
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.TypeAliasSpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.uber.artist.api.KotlinTrait
 import com.uber.artist.api.KotlinTraitService
@@ -45,9 +46,11 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
 
   override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
     val typeSpec = typeSpecBuilder.build()
+    val c = ClassName("com.jakewharton.rxbinding3.view", "layoutChanges")
     return FileSpec.builder(viewPackageName, typeSpec.name
         ?: throw IllegalStateException("No name for type: $typeSpec"))
         .addType(typeSpec)
+        .addAliasedImport(c, "", "layoutChanges2")
         .build()
   }
 
