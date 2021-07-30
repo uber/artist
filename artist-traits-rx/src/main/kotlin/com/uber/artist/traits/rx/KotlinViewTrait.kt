@@ -80,12 +80,7 @@ open class KotlinViewTrait : KotlinTrait {
 
   open fun layoutChanges(type: TypeSpec.Builder) {
     // Attach state changes observable
-    addRxBindingApiForExtension(type, KotlinAdditiveApi(
-        KotlinRxBindingInfo(
-            KotlinRxTypeNames.Rx.RxView,
-            "layoutChanges",
-            "@return an observable which emits on layout changes. The emitted value is " +
-                "unspecified and should only be used as notification."),
-        KotlinTypeNames.Java.Object))
+    val aliasApi = KotlinAliasApi("layoutChanges", "layoutChanges2", Object::class.asClassName())
+    addRxBindingApiForExtension(type, aliasApi)
   }
 }

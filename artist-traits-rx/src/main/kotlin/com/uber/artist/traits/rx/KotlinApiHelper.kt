@@ -57,17 +57,23 @@ data class KotlinAdditiveApi(
     val isUViewOverride: Boolean = false
 )
 
+data class KotlinAliasApi(
+    val functionName: String,
+    val aliasedFunctionName: String,
+    val observableType: TypeName
+)
+
 private fun TypeName.irrelevantIfObject(): TypeName {
   val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
   return if (this == KotlinTypeNames.Java.Object) artistRxConfig.rxBindingSignalEventTypeName() else this
 }
 
-fun addRxBindingApiForExtension(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
+fun addRxBindingApiForExtension(type: TypeSpec.Builder, api: KotlinAliasApi) {
   type.addFunction(
-      FunSpec.builder("layoutChanges")
+      FunSpec.builder(api.functionName)
           .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(
-              KotlinTypeNames.Java.Object.irrelevantIfObject()))
-          .addStatement("return layoutChanges2()")
+              api.observableType.irrelevantIfObject()))
+          .addStatement("return ${api.aliasedFunctionName}()")
           .build()
   )
 }

@@ -32,10 +32,17 @@ class KotlinTextInputTrait : KotlinTrait {
       sourceType: String) {
 
     // TextChanges
-    addRxBindingApiForAdditive(type, KotlinAdditiveApi(
+
+   /* open fun textChanges(): Observable<CharSequence> =
+        textChanges().compose(Transformers.transformerFor(this))*/
+    val alias = KotlinAliasApi("textChanges","textChanges2", CharSequence::class.asClassName())
+    addRxBindingApiForExtension(type, alias)
+    /*
+     addRxBindingApiForAdditive(type, KotlinAdditiveApi(
         KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxTextView,
             "textChanges",
             """@return an observable of character sequences for text changes on this TextView."""),
         CharSequence::class.asClassName()))
+     */
   }
 }

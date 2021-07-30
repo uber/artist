@@ -17,6 +17,7 @@
 package com.uber.artist
 
 import com.google.common.annotations.VisibleForTesting
+import com.squareup.kotlinpoet.TypeAliasSpec
 import com.uber.artist.api.Trait
 import com.uber.artist.api.ViewStencil
 import java.io.File

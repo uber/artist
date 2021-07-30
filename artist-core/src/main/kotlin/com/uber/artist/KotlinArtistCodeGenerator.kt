@@ -44,13 +44,17 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override val globalTraits: Set<Class<out KotlinTrait>>
     get() = KotlinViewStencilService.newInstance().getGlobalTraits()
 
-  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
+  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder):
+      FileSpec {
     val typeSpec = typeSpecBuilder.build()
+
     val c = ClassName("com.jakewharton.rxbinding3.view", "layoutChanges")
+    val d = ClassName("com.jakewharton.rxbinding3.widget", "textChanges")
     return FileSpec.builder(viewPackageName, typeSpec.name
         ?: throw IllegalStateException("No name for type: $typeSpec"))
         .addType(typeSpec)
         .addAliasedImport(c, "", "layoutChanges2")
+        .addAliasedImport(d, "", "textChanges2")
         .build()
   }
 
