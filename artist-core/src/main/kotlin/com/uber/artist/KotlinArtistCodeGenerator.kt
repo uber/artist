@@ -50,10 +50,12 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
 
     val c = ClassName("com.jakewharton.rxbinding3.view", "layoutChanges")
     val d = ClassName("com.jakewharton.rxbinding3.widget", "textChanges")
+    val e = ClassName("com.jakewharton.rxbinding3.view", "clicks")
     return FileSpec.builder(viewPackageName, typeSpec.name
         ?: throw IllegalStateException("No name for type: $typeSpec"))
         .addType(typeSpec)
         .addAliasedImport(c, "", "layoutChanges2")
+        .addAliasedImport(e, "", "clicks2")
         .addAliasedImport(d, "", "textChanges2")
         .build()
   }

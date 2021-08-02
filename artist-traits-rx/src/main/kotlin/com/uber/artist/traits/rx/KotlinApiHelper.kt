@@ -69,11 +69,24 @@ private fun TypeName.irrelevantIfObject(): TypeName {
 }
 
 fun addRxBindingApiForExtension(type: TypeSpec.Builder, api: KotlinAliasApi) {
+  val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
   type.addFunction(
       FunSpec.builder(api.functionName)
           .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(
               api.observableType.irrelevantIfObject()))
-          .addStatement("return ${api.aliasedFunctionName}()")
+          .addCode(CodeBlock.builder()
+              .add("return ${api.aliasedFunctionName}()")
+              .apply {
+                if (api.observableType == KotlinTypeNames.Java.Object) {
+                  artistRxConfig.processRxBindingSignalEvent(this)
+                }
+                if (api.functionName != "attachEvents") {
+                  // Safe to call, otherwise it'd be a recursive stack overflow
+                  artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject())
+                }
+              }
+              .add("\n")
+              .build())
           .build()
   )
 }

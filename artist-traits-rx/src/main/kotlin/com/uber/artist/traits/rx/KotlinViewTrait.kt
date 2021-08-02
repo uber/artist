@@ -49,7 +49,7 @@ open class KotlinViewTrait : KotlinTrait {
   }
 
   open fun clicks(type: TypeSpec.Builder, sourceType: String) {
-    addRxBindingApiForSettable(type, KotlinSettableApi(
+    /*addRxBindingApiForSettable(type, KotlinSettableApi(
         KotlinRxBindingInfo(KotlinRxTypeNames.Rx.RxView,
             "clicks",
             """@return an Observable of click events. The emitted value is unspecified and should only be used as notification.
@@ -60,7 +60,11 @@ open class KotlinViewTrait : KotlinTrait {
         FunSpec.builder("accept")
             .addParameter("ignored", artistRxConfig.rxBindingSignalEventTypeName())
             .addStatement("l.onClick(this@$sourceType)")
-    ))
+    ))*/
+
+    // Attach state changes observable
+    val aliasApi = KotlinAliasApi("clicks", "clicks2", Object::class.asClassName())
+    addRxBindingApiForExtension(type, aliasApi)
   }
 
   open fun longClicks(type: TypeSpec.Builder, sourceType: String) {
