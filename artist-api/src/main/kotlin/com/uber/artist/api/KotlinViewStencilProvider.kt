@@ -31,4 +31,5 @@ interface KotlinViewStencilProvider : ViewStencilProvider<KotlinViewStencil, Kot
    * @return The set of [Trait] classes.
    */
   override fun globalTraits(): Set<Class<out KotlinTrait>>
+
 }

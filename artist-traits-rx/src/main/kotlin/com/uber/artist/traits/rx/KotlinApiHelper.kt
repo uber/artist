@@ -16,6 +16,7 @@
 
 package com.uber.artist.traits.rx
 
+import AliasTypeNames.Rx.Companion.map2_to_alias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.ClassName
@@ -29,6 +30,12 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTypeNames
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxCompoundButton
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSearchView
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSeekBar
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSwipeRefreshLayout
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxTabLayout
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxToolbar
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxView
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
@@ -95,6 +102,17 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
   val rxBindingMethodDoc = api.rxBindingInfo.methodDoc
   val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
   val disposable = "${api.rxBindingInfo.methodName}Disposable"
+
+  val alias_keys = map2_to_alias.filter {
+    it.key.methodName == rxBindingMethod && it.key
+        .className == rxBindingClassName
+  }.keys.toList()
+
+  val alias_2 = if (alias_keys.size > 0) {
+    map2_to_alias[alias_keys[0]]
+  } else {
+    null
+  }
 
   // clicksInitting
   type.addProperty(PropertySpec.builder(isInitting, BOOLEAN, KModifier.PRIVATE)
@@ -178,7 +196,13 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
         }
       }
       .addCode(CodeBlock.builder()
-          .add("$rxBindingMethod()")
+          .apply {
+            if (alias_2 != null) {
+              add("$alias_2()")
+            } else {
+              add("%T.$rxBindingMethod(this)", rxBindingClassName)
+            }
+          }
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
