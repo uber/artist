@@ -52,7 +52,7 @@ class KotlinRxTypeNames {
       val RxSwipeRefreshLayout = ClassName("com.jakewharton.rxbinding3.swiperefreshlayout", "RxSwipeRefreshLayout")
       val RxTabLayout = ClassName("com.jakewharton.rxbinding3.material", "RxTabLayout")
       val RxTextView = ClassName("com.jakewharton.rxbinding3.widget", "RxTextView")
-      val RxToolbar = ClassName("com.jakewharton.rxbinding3.widget", "RxToolbar")
+      val RxToolbar = ClassName("com.jakewharton.rxbinding3.appcompat", "RxToolbar")
       val RxViewPager = ClassName("com.jakewharton.rxbinding3.viewpager", "RxViewPager")
       val RxViewAttachEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachEvent")
       val RxViewAttachAttachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachAttachedEvent")

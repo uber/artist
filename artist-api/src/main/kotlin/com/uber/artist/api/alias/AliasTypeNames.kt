@@ -25,12 +25,12 @@ class AliasTypeNames {
       val RxSwipeRefreshLayout = ClassName("com.jakewharton.rxbinding3.swiperefreshlayout", "RxSwipeRefreshLayout")
       val RxTabLayout = ClassName("com.jakewharton.rxbinding3.material", "RxTabLayout")
       val RxTextView = ClassName("com.jakewharton.rxbinding3.widget", "RxTextView")
-      val RxToolbar = ClassName("com.jakewharton.rxbinding3.widget", "RxToolbar")
+      val RxToolbar = ClassName("com.jakewharton.rxbinding3.appcompat", "RxToolbar")
       val RxViewPager = ClassName("com.jakewharton.rxbinding3.viewpager", "RxViewPager")
       val RxViewAttachEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachEvent")
       val RxViewAttachAttachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachAttachedEvent")
       val RxViewAttachDetachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachDetachedEvent")
-      val SearchViewQueryTextEvent = ClassName("com.jakewharton.rxbinding3.widget", "SearchViewQueryTextEvent")
+      val SearchViewQueryTextEvent = ClassName("com.jakewharton.rxbinding3.appcompat", "SearchViewQueryTextEvent")
       val ViewScrollChangeEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewScrollChangeEvent")
 
       data class ExtensionFunctionAlias(
@@ -57,7 +57,7 @@ class AliasTypeNames {
       )
 
       val map2_to_alias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
-          .methodName }.toMap()
+          .methodName.dropLast(4) }.toMap()
     }
   }
 }

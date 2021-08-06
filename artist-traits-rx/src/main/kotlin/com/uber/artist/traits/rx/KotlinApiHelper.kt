@@ -16,6 +16,8 @@
 
 package com.uber.artist.traits.rx
 
+import AliasTypeNames.Rx.Companion.SearchViewQueryTextEvent
+import AliasTypeNames.Rx.Companion.SeekBarChangeEvent
 import AliasTypeNames.Rx.Companion.map2_to_alias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.BOOLEAN
@@ -30,6 +32,7 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTypeNames
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.Consumer
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxCompoundButton
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSearchView
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSeekBar
@@ -37,6 +40,7 @@ import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSwipeRefreshLa
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxTabLayout
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxToolbar
 import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxView
+import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.ViewScrollChangeEvent
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
 data class KotlinRxBindingInfo(
@@ -175,6 +179,8 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       .endControlFlow()
       .build())
 
+  val class_cast = api.observableType
+
   type.addFunction(FunSpec.builder(rxBindingMethod)
       .addKdoc(rxBindingMethodDoc)
       .apply {
@@ -198,7 +204,12 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       .addCode(CodeBlock.builder()
           .apply {
             if (alias_2 != null) {
-              add("$alias_2()")
+              if(rxBindingClassName == RxToolbar){
+                val toolbarClassName = ClassName("androidx.appcompat.widget", "Toolbar")
+                add("(this as %T).$alias_2()", toolbarClassName)
+              } else {
+                add("$alias_2()")
+              }
             } else {
               add("%T.$rxBindingMethod(this)", rxBindingClassName)
             }
@@ -211,7 +222,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               artistRxConfig.processTap(this)
             }
           }
-          .addStatement("\n\t.subscribe($rxBindingMethod)")
+          .addStatement(".subscribe($rxBindingMethod as %T)", Consumer.parameterizedBy(class_cast))
           .build())
       .endControlFlow()
       .addCode(CodeBlock.builder()
