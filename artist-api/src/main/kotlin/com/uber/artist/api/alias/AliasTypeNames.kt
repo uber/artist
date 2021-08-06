@@ -2,7 +2,7 @@ import com.squareup.kotlinpoet.ClassName
 
 class AliasTypeNames {
 
-  class Rx {
+  open class Rx {
     companion object {
 
       // As a consequence of RxBinding2 migrating to RxBinding3 and replacing its static calls
@@ -52,7 +52,9 @@ class AliasTypeNames {
           ExtensionFunctionAlias(RxSeekBar, "changeEvents"),
           ExtensionFunctionAlias(RxTabLayout, "selections"),
           ExtensionFunctionAlias(RxSearchView, "queryTextChangeEvents"),
-          ExtensionFunctionAlias(RxTabLayout, "selections")
+          ExtensionFunctionAlias(RxTabLayout, "selections"),
+          ExtensionFunctionAlias(RxRecyclerView, "scrollEvents"),
+          ExtensionFunctionAlias(RxTextView, "textChanges")
 
       )
 

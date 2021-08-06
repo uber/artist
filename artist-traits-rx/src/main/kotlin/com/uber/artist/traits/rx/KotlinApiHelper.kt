@@ -49,6 +49,23 @@ data class KotlinRxBindingInfo(
     val methodDoc: String
 )
 
+fun KotlinRxBindingInfo.getRxAlias(): String? {
+
+  val rxBindingClassName = className
+  val rxBindingMethod = methodName
+  val alias_keys = map2_to_alias.filter {
+    it.key.methodName == rxBindingMethod && it.key
+        .className == rxBindingClassName
+  }.keys.toList()
+
+  val alias_2 = if (alias_keys.size > 0) {
+    map2_to_alias[alias_keys[0]]
+  } else {
+    null
+  }
+  return alias_2
+}
+
 data class KotlinSettableApi(
     val rxBindingInfo: KotlinRxBindingInfo,
     val listenerType: TypeName,
@@ -74,6 +91,7 @@ private fun TypeName.irrelevantIfObject(): TypeName {
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
   val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
+  val alias_2 = api.rxBindingInfo.getRxAlias()
   type.addFunction(FunSpec.builder(api.rxBindingInfo.methodName)
       .addKdoc("${api.rxBindingInfo.methodDoc}\n")
       .apply {
@@ -84,7 +102,13 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
       .addModifiers(KModifier.OPEN)
       .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
       .addCode(CodeBlock.builder()
-          .add("return ${api.rxBindingInfo.methodName}()", api.rxBindingInfo.className)
+          .apply {
+            if (alias_2 != null) {
+              add("return ${alias_2}()")
+            } else {
+              add("return ${api.rxBindingInfo.methodName}()")
+            }
+          }
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
@@ -107,16 +131,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
   val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
   val disposable = "${api.rxBindingInfo.methodName}Disposable"
 
-  val alias_keys = map2_to_alias.filter {
-    it.key.methodName == rxBindingMethod && it.key
-        .className == rxBindingClassName
-  }.keys.toList()
-
-  val alias_2 = if (alias_keys.size > 0) {
-    map2_to_alias[alias_keys[0]]
-  } else {
-    null
-  }
+  val alias_2 = api.rxBindingInfo.getRxAlias()
 
   // clicksInitting
   type.addProperty(PropertySpec.builder(isInitting, BOOLEAN, KModifier.PRIVATE)
@@ -204,10 +219,10 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       .addCode(CodeBlock.builder()
           .apply {
             if (alias_2 != null) {
-              if(rxBindingClassName == RxToolbar){
+              if (rxBindingClassName == RxToolbar) {
                 val toolbarClassName = ClassName("androidx.appcompat.widget", "Toolbar")
                 add("(this as %T).$alias_2()", toolbarClassName)
-              } else if(rxBindingClassName == RxSearchView){
+              } else if (rxBindingClassName == RxSearchView) {
                 val toolbarClassName = ClassName("androidx.appcompat.widget", "SearchView")
                 add("(this as %T).$alias_2()", toolbarClassName)
               } else {
