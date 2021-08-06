@@ -57,7 +57,7 @@ class KotlinRxTypeNames {
       val RxViewAttachEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachEvent")
       val RxViewAttachAttachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachAttachedEvent")
       val RxViewAttachDetachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachDetachedEvent")
-      val SearchViewQueryTextEvent = ClassName("com.jakewharton.rxbinding3.widget", "SearchViewQueryTextEvent")
+      val SearchViewQueryTextEvent = ClassName("com.jakewharton.rxbinding3.appcompat", "SearchViewQueryTextEvent")
       val ViewScrollChangeEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewScrollChangeEvent")
     }
   }

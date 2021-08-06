@@ -207,6 +207,9 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               if(rxBindingClassName == RxToolbar){
                 val toolbarClassName = ClassName("androidx.appcompat.widget", "Toolbar")
                 add("(this as %T).$alias_2()", toolbarClassName)
+              } else if(rxBindingClassName == RxSearchView){
+                val toolbarClassName = ClassName("androidx.appcompat.widget", "SearchView")
+                add("(this as %T).$alias_2()", toolbarClassName)
               } else {
                 add("$alias_2()")
               }
