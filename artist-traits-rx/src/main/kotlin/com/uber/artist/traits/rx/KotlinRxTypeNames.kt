@@ -28,8 +28,6 @@ import io.reactivex.functions.Function
 class KotlinRxTypeNames {
   class Rx {
     companion object {
-      val f = AliasTypeNames.Rx.RecyclerViewScrollEvent
-
       // Rx
       val Consumer = Consumer::class.asClassName()
       val Disposable = Disposable::class.asClassName()
@@ -39,6 +37,14 @@ class KotlinRxTypeNames {
       // RxRelay
       val BehaviorRelay = BehaviorRelay::class.asClassName()
       val PublishRelay = PublishRelay::class.asClassName()
+
+      // As a consequence of RxBinding2 migrating to RxBinding3 and replacing its static calls
+      // with equivalent extension functions, its important that we do not interrupt any existing
+      // code that was created with RxBinding2 in mind, namely the function names. This can mean
+      // that function names share the same name as the extension function which is being used in
+      // lieu of the original static function.
+
+      //Ideally, we would come up with a better way of listing these classes so as to keep this DRY.
 
       // RxBinding
       val RecyclerViewScrollEvent = AliasTypeNames.Rx.RecyclerViewScrollEvent

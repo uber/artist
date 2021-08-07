@@ -5,13 +5,6 @@ class AliasTypeNames {
   open class Rx {
     companion object {
 
-      // As a consequence of RxBinding2 migrating to RxBinding3 and replacing its static calls
-      // with equivalent extension functions, its important that we do not interrupt any existing
-      // code that was created with RxBinding2 in mind, namely the function names. This can mean
-      // that function names share the same name as the extension function which is being used in
-      // lieu of the original static function.
-
-      //Ideally, we would come up with a better way of listing these classes so as to keep this DRY.
       val RecyclerViewScrollEvent = ClassName("com.jakewharton.rxbinding3.recyclerview", "RecyclerViewScrollEvent")
       val RxView = ClassName("com.jakewharton.rxbinding3.view", "RxView")
       val RxCompoundButton = ClassName("com.jakewharton.rxbinding3.widget", "RxCompoundButton")
