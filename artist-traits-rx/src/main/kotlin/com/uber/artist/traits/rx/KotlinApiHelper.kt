@@ -58,12 +58,12 @@ fun KotlinRxBindingInfo.getRxAlias(): String? {
         .className == rxBindingClassName
   }.keys.toList()
 
-  val alias_2 = if (alias_keys.size > 0) {
+  val rx_alias = if (alias_keys.size > 0) {
     map2_to_alias[alias_keys[0]]
   } else {
     null
   }
-  return alias_2
+  return rx_alias
 }
 
 data class KotlinSettableApi(
@@ -91,7 +91,7 @@ private fun TypeName.irrelevantIfObject(): TypeName {
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
   val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
-  val alias_2 = api.rxBindingInfo.getRxAlias()
+  val rx_alias = api.rxBindingInfo.getRxAlias()
   type.addFunction(FunSpec.builder(api.rxBindingInfo.methodName)
       .addKdoc("${api.rxBindingInfo.methodDoc}\n")
       .apply {
@@ -103,8 +103,8 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
       .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
       .addCode(CodeBlock.builder()
           .apply {
-            if (alias_2 != null) {
-              add("return ${alias_2}()")
+            if (rx_alias != null) {
+              add("return ${rx_alias}()")
             } else {
               add("return ${api.rxBindingInfo.methodName}()")
             }
@@ -131,7 +131,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
   val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
   val disposable = "${api.rxBindingInfo.methodName}Disposable"
 
-  val alias_2 = api.rxBindingInfo.getRxAlias()
+  val rx_alias = api.rxBindingInfo.getRxAlias()
 
   // clicksInitting
   type.addProperty(PropertySpec.builder(isInitting, BOOLEAN, KModifier.PRIVATE)
@@ -218,8 +218,8 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       }
       .addCode(CodeBlock.builder()
           .apply {
-            if (alias_2 != null) {
-              add("$alias_2()")
+            if (rx_alias != null) {
+              add("$rx_alias()")
             } else {
               add("%T.$rxBindingMethod(this)", rxBindingClassName)
             }
