@@ -55,7 +55,6 @@ class AliasTypeNames {
           ExtensionFunctionAlias(RxTabLayout, "selections"),
           ExtensionFunctionAlias(RxRecyclerView, "scrollEvents"),
           ExtensionFunctionAlias(RxTextView, "textChanges")
-
       )
 
       val map2_to_alias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
