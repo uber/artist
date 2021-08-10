@@ -194,8 +194,6 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       .endControlFlow()
       .build())
 
-  val class_cast = api.observableType
-
   type.addFunction(FunSpec.builder(rxBindingMethod)
       .addKdoc(rxBindingMethodDoc)
       .apply {
@@ -232,7 +230,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               artistRxConfig.processTap(this)
             }
           }
-          .addStatement(".subscribe($rxBindingMethod as %T)", Consumer.parameterizedBy(class_cast))
+          .addStatement(".subscribe($rxBindingMethod)")
           .build())
       .endControlFlow()
       .addCode(CodeBlock.builder()
