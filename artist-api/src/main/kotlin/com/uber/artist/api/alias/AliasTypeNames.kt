@@ -47,10 +47,11 @@ class AliasTypeNames {
           ExtensionFunctionAlias(RxSearchView, "queryTextChangeEvents"),
           ExtensionFunctionAlias(RxTabLayout, "selections"),
           ExtensionFunctionAlias(RxRecyclerView, "scrollEvents"),
-          ExtensionFunctionAlias(RxTextView, "textChanges")
+          ExtensionFunctionAlias(RxTextView, "textChanges"),
+              ExtensionFunctionAlias(RxView, "attachEvents")
       )
 
-      val map2_to_alias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
+      val extensionFunctionToAlias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
           .methodName.dropLast(4) }.toMap()
     }
   }

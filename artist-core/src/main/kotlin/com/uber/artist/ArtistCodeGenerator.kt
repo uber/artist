@@ -17,6 +17,7 @@
 package com.uber.artist
 
 import com.google.common.annotations.VisibleForTesting
+import com.uber.artist.api.KotlinViewStencil
 import com.uber.artist.api.Trait
 import com.uber.artist.api.ViewStencil
 import java.io.File
@@ -63,7 +64,7 @@ abstract class ArtistCodeGenerator<
       it.setPrefix(viewNamePrefix)
 
       val typeSpecBuilder = generateTypeSpecFor(it, rPackageName, traitMap, superinterfaceClassName)
-      val fileSpec = generateFileSpecFor(viewPackageName, typeSpecBuilder)
+      val fileSpec = generateFileSpecFor(it, viewPackageName, typeSpecBuilder)
       if (formatSource) {
         writeFileWithFormatting(fileSpec, outputDir, typeSpecBuilder, viewPackageName)
       } else {
@@ -72,7 +73,7 @@ abstract class ArtistCodeGenerator<
     }
   }
 
-  protected abstract fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: OutputType): OutputFileType
+  protected abstract fun generateFileSpecFor(stencil: ViewStencilType, viewPackageName: String, typeSpecBuilder: OutputType): OutputFileType
 
   protected abstract fun generateTypeSpecFor(
       stencil: ViewStencilType,

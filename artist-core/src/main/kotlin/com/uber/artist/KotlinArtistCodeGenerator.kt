@@ -16,7 +16,7 @@
 
 package com.uber.artist
 
-import AliasTypeNames.Rx.Companion.map2_to_alias
+import AliasTypeNames.Rx.Companion.extensionFunctionToAlias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
@@ -44,11 +44,12 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override val globalTraits: Set<Class<out KotlinTrait>>
     get() = KotlinViewStencilService.newInstance().getGlobalTraits()
 
-  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
+  override fun generateFileSpecFor(stencil: KotlinViewStencil, viewPackageName: String,
+                                   typeSpecBuilder: TypeSpec.Builder): FileSpec {
     val typeSpec = typeSpecBuilder.build()
     var builder = FileSpec.builder(viewPackageName, typeSpec.name
         ?: throw IllegalStateException("No name for type: $typeSpec"))
-    for ((extensionFunctionAlias, alias) in map2_to_alias) {
+    for ((extensionFunctionAlias, alias) in extensionFunctionToAlias) {
       builder = builder.addAliasedImport(extensionFunctionAlias.toClassName(), "", alias)
     }
     return builder.addType(typeSpec).build()

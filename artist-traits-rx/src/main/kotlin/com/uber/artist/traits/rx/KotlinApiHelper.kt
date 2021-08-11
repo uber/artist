@@ -18,7 +18,7 @@ package com.uber.artist.traits.rx
 
 import AliasTypeNames.Rx.Companion.SearchViewQueryTextEvent
 import AliasTypeNames.Rx.Companion.SeekBarChangeEvent
-import AliasTypeNames.Rx.Companion.map2_to_alias
+import AliasTypeNames.Rx.Companion.extensionFunctionToAlias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.ClassName
@@ -53,13 +53,13 @@ fun KotlinRxBindingInfo.getRxAlias(): String? {
 
   val rxBindingClassName = className
   val rxBindingMethod = methodName
-  val alias_keys = map2_to_alias.filter {
+  val alias_keys = extensionFunctionToAlias.filter {
     it.key.methodName == rxBindingMethod && it.key
         .className == rxBindingClassName
   }.keys.toList()
 
   val rx_alias = if (alias_keys.size > 0) {
-    map2_to_alias[alias_keys[0]]
+    extensionFunctionToAlias[alias_keys[0]]
   } else {
     null
   }
