@@ -16,9 +16,7 @@
 
 package com.uber.artist.traits.rx
 
-import AliasTypeNames.Rx.Companion.SearchViewQueryTextEvent
-import AliasTypeNames.Rx.Companion.SeekBarChangeEvent
-import AliasTypeNames.Rx.Companion.extensionFunctionToAlias
+import AliasTypeNames.Rx.Companion.rxExtensionFunctionToAlias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.ClassName
@@ -32,15 +30,6 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTypeNames
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.Consumer
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxCompoundButton
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSearchView
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSeekBar
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxSwipeRefreshLayout
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxTabLayout
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxToolbar
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxView
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.ViewScrollChangeEvent
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
 data class KotlinRxBindingInfo(
@@ -50,16 +39,15 @@ data class KotlinRxBindingInfo(
 )
 
 fun KotlinRxBindingInfo.getRxAlias(): String? {
-
   val rxBindingClassName = className
   val rxBindingMethod = methodName
-  val alias_keys = extensionFunctionToAlias.filter {
+  val alias_keys = rxExtensionFunctionToAlias.filter {
     it.key.methodName == rxBindingMethod && it.key
         .className == rxBindingClassName
   }.keys.toList()
 
   val rx_alias = if (alias_keys.size > 0) {
-    extensionFunctionToAlias[alias_keys[0]]
+    rxExtensionFunctionToAlias[alias_keys[0]]
   } else {
     null
   }

@@ -51,7 +51,7 @@ class AliasTypeNames {
               ExtensionFunctionAlias(RxView, "attachEvents")
       )
 
-      val extensionFunctionToAlias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
+      val rxExtensionFunctionToAlias = list.map { it to it.className.simpleName.toLowerCase() + "_" + it
           .methodName.dropLast(4) }.toMap()
     }
   }
