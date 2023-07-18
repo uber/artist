@@ -1,5 +1,11 @@
 Changelog
 =========
+Version 0.4.8
+-------------
+
+_2023-07-18_
+
+* Fixes Rx Kotlin nulls [issue](https://github.com/uber/artist/issues/49) 
 
 Version 0.4.7
 -------------
