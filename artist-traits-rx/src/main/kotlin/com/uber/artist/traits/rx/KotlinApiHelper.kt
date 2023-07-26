@@ -210,7 +210,6 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               add("%T.$rxBindingMethod(this)", rxBindingClassName)
             }
           }
-          .add("it")
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
