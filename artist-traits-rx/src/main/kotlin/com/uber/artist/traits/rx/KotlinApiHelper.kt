@@ -207,9 +207,10 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
             if (rx_alias != null) {
               add("$rx_alias()")
             } else {
-              add("%T.$rxBindingMethod(this)", rxBindingClassName)
+              .add("$rxBindingMethod?.let {\n")
             }
           }
+          .add("it")
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
@@ -218,12 +219,13 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               artistRxConfig.processTap(this)
             }
           }
-          .addStatement(".subscribe($rxBindingMethod)")
+          .addStatement("\n\t.subscribe() }")
           .build())
       .endControlFlow()
       .addCode(CodeBlock.builder()
-          .add("return $rxBindingMethod!!.hide()\n")
+          .add("return $rxBindingMethod?.hide()?")
           .apply { artistRxConfig.processRxBindingStream(this, api.observableType.irrelevantIfObject()) }
+          .add(" ?: Observable.empty()")
           .build())
       .build())
 }
