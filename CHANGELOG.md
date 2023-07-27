@@ -1,5 +1,11 @@
 Changelog
 =========
+Version 0.4.9
+-------------
+_2023-07-27_
+
+* Update version upstreaming unmerged fixes 
+
 Version 0.4.8
 -------------
 
