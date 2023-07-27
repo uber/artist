@@ -50,7 +50,7 @@ class JavaRxTypeNames {
       val RxViewAttachEvent = ClassName.get("com.jakewharton.rxbinding3.view", "ViewAttachEvent")
       val RxViewAttachAttachedEvent = ClassName.get("com.jakewharton.rxbinding3.view", "ViewAttachAttachedEvent")
       val RxViewAttachDetachedEvent = ClassName.get("com.jakewharton.rxbinding3.view", "ViewAttachDetachedEvent")
-      val SearchViewQueryTextEvent = ClassName.get("com.jakewharton.rxbinding3.widget", "SearchViewQueryTextEvent")
+      val SearchViewQueryTextEvent = ClassName.get("com.jakewharton.rxbinding3.appcompat", "SearchViewQueryTextEvent")
       val ViewScrollChangeEvent = ClassName.get("com.jakewharton.rxbinding3.view", "ViewScrollChangeEvent")
     }
   }

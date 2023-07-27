@@ -16,6 +16,7 @@
 
 package com.uber.artist
 
+import AliasTypeNames.Rx.Companion.rxExtensionFunctionToAlias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
@@ -43,12 +44,20 @@ class KotlinArtistCodeGenerator : ArtistCodeGenerator<FileSpec, TypeSpec.Builder
   override val globalTraits: Set<Class<out KotlinTrait>>
     get() = KotlinViewStencilService.newInstance().getGlobalTraits()
 
-  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): FileSpec {
+  override fun generateFileSpecFor(stencil: KotlinViewStencil, viewPackageName: String,
+                                   typeSpecBuilder: TypeSpec.Builder): FileSpec {
     val typeSpec = typeSpecBuilder.build()
-    return FileSpec.builder(viewPackageName, typeSpec.name
+    var builder = FileSpec.builder(viewPackageName, typeSpec.name
         ?: throw IllegalStateException("No name for type: $typeSpec"))
-        .addType(typeSpec)
-        .build()
+
+    for ((extensionFunctionAlias, alias) in stencil.extensionFunctionToAlias()) {
+      builder = builder.addAliasedImport(extensionFunctionAlias.toClassName(), "", alias)
+    }
+    return builder.addType(typeSpec).build()
+  }
+
+  fun AliasTypeNames.Rx.Companion.ExtensionFunctionAlias.toClassName(): ClassName {
+    return ClassName(this.className.packageName, this.methodName)
   }
 
   override fun generateTypeSpecFor(stencil: KotlinViewStencil, rPackageName: String, traitMap: Map<Class<out KotlinTrait>, KotlinTrait>, superinterfaceClassName: String?): TypeSpec.Builder {

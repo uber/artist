@@ -42,7 +42,7 @@ class JavaArtistCodeGenerator : ArtistCodeGenerator<JavaFile, TypeSpec.Builder, 
   override val globalTraits: Set<Class<out JavaTrait>>
     get() = JavaViewStencilService.newInstance().getGlobalTraits()
 
-  override fun generateFileSpecFor(viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): JavaFile {
+  override fun generateFileSpecFor(stencil: JavaViewStencil, viewPackageName: String, typeSpecBuilder: TypeSpec.Builder): JavaFile {
     return JavaFile.builder(viewPackageName, typeSpecBuilder.build()).build()
   }
 

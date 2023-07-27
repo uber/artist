@@ -16,6 +16,7 @@
 
 package com.uber.artist.traits.rx
 
+import AliasTypeNames.Rx.Companion.rxExtensionFunctionToAlias
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.BOOLEAN
 import com.squareup.kotlinpoet.ClassName
@@ -29,7 +30,6 @@ import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.uber.artist.api.KotlinTypeNames
-import com.uber.artist.traits.rx.KotlinRxTypeNames.Rx.Companion.RxView
 import com.uber.artist.traits.rx.config.KotlinArtistRxConfigService
 
 data class KotlinRxBindingInfo(
@@ -37,6 +37,22 @@ data class KotlinRxBindingInfo(
     val methodName: String,
     val methodDoc: String
 )
+
+fun KotlinRxBindingInfo.getRxAlias(): String? {
+  val rxBindingClassName = className
+  val rxBindingMethod = methodName
+  val alias_keys = rxExtensionFunctionToAlias.filter {
+    it.key.methodName == rxBindingMethod && it.key
+        .className == rxBindingClassName
+  }.keys.toList()
+
+  val rx_alias = if (alias_keys.size > 0) {
+    rxExtensionFunctionToAlias[alias_keys[0]]
+  } else {
+    null
+  }
+  return rx_alias
+}
 
 data class KotlinSettableApi(
     val rxBindingInfo: KotlinRxBindingInfo,
@@ -63,6 +79,7 @@ private fun TypeName.irrelevantIfObject(): TypeName {
 
 fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
   val artistRxConfig = KotlinArtistRxConfigService.newInstance().getArtistRxConfig()
+  val rx_alias = api.rxBindingInfo.getRxAlias()
   type.addFunction(FunSpec.builder(api.rxBindingInfo.methodName)
       .addKdoc("${api.rxBindingInfo.methodDoc}\n")
       .apply {
@@ -73,7 +90,13 @@ fun addRxBindingApiForAdditive(type: TypeSpec.Builder, api: KotlinAdditiveApi) {
       .addModifiers(KModifier.OPEN)
       .returns(KotlinRxTypeNames.Rx.Observable.parameterizedBy(api.observableType.irrelevantIfObject()))
       .addCode(CodeBlock.builder()
-          .add("return ${api.rxBindingInfo.methodName}()", api.rxBindingInfo.className)
+          .apply {
+            if (rx_alias != null) {
+              add("return ${rx_alias}()")
+            } else {
+              add("return ${api.rxBindingInfo.methodName}()")
+            }
+          }
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
@@ -95,6 +118,8 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
   val rxBindingMethodDoc = api.rxBindingInfo.methodDoc
   val isInitting = "${api.rxBindingInfo.methodName}IsInitting"
   val disposable = "${api.rxBindingInfo.methodName}Disposable"
+
+  val rx_alias = api.rxBindingInfo.getRxAlias()
 
   // clicksInitting
   type.addProperty(PropertySpec.builder(isInitting, BOOLEAN, KModifier.PRIVATE)
@@ -178,8 +203,13 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
         }
       }
       .addCode(CodeBlock.builder()
-          .add("$rxBindingMethod?.let {\n")
-          .add("it")
+          .apply {
+            if (rx_alias != null) {
+              add("$rx_alias()")
+            } else {
+              add("%T.$rxBindingMethod(this)", rxBindingClassName)
+            }
+          }
           .apply {
             if (api.observableType == KotlinTypeNames.Java.Object) {
               artistRxConfig.processRxBindingSignalEvent(this)
@@ -188,7 +218,7 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               artistRxConfig.processTap(this)
             }
           }
-          .addStatement("\n\t.subscribe() }")
+          .addStatement(".subscribe($rxBindingMethod)")
           .build())
       .endControlFlow()
       .addCode(CodeBlock.builder()

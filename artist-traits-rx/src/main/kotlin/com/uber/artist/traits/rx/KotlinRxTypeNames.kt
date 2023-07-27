@@ -38,27 +38,35 @@ class KotlinRxTypeNames {
       val BehaviorRelay = BehaviorRelay::class.asClassName()
       val PublishRelay = PublishRelay::class.asClassName()
 
+      // As a consequence of RxBinding2 migrating to RxBinding3 and replacing its static calls
+      // with equivalent extension functions, its important that we do not interrupt any existing
+      // code that was created with RxBinding2 in mind, namely the function names. This can mean
+      // that function names share the same name as the extension function which is being used in
+      // lieu of the original static function.
+
+      //Ideally, we would come up with a better way of listing these classes so as to keep this DRY.
+
       // RxBinding
-      val RecyclerViewScrollEvent = ClassName("com.jakewharton.rxbinding3.recyclerview", "RecyclerViewScrollEvent")
-      val RxView = ClassName("com.jakewharton.rxbinding3.view", "RxView")
-      val RxCompoundButton = ClassName("com.jakewharton.rxbinding3.widget", "RxCompoundButton")
-      val RxNestedScrollView = ClassName("com.jakewharton.rxbinding3.core", "RxNestedScrollView")
-      val RxRecyclerView = ClassName("com.jakewharton.rxbinding3.recyclerview", "RxRecyclerView")
-      val RxSearchView = ClassName("com.jakewharton.rxbinding3.appcompat", "RxSearchView")
-      val RxSeekBar = ClassName("com.jakewharton.rxbinding3.widget", "RxSeekBar")
-      val SeekBarChangeEvent = ClassName("com.jakewharton.rxbinding3.widget", "SeekBarChangeEvent")
-      val SeekBarProgressChangeEvent = ClassName("com.jakewharton.rxbinding3.widget", "SeekBarProgressChangeEvent")
-      val SeekBarStartChangeEvent = ClassName("com.jakewharton.rxbinding3.widget", "SeekBarStartChangeEvent")
-      val RxSwipeRefreshLayout = ClassName("com.jakewharton.rxbinding3.swiperefreshlayout", "RxSwipeRefreshLayout")
-      val RxTabLayout = ClassName("com.jakewharton.rxbinding3.material", "RxTabLayout")
-      val RxTextView = ClassName("com.jakewharton.rxbinding3.widget", "RxTextView")
-      val RxToolbar = ClassName("com.jakewharton.rxbinding3.widget", "RxToolbar")
-      val RxViewPager = ClassName("com.jakewharton.rxbinding3.viewpager", "RxViewPager")
-      val RxViewAttachEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachEvent")
-      val RxViewAttachAttachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachAttachedEvent")
-      val RxViewAttachDetachedEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewAttachDetachedEvent")
-      val SearchViewQueryTextEvent = ClassName("com.jakewharton.rxbinding3.appcompat", "SearchViewQueryTextEvent")
-      val ViewScrollChangeEvent = ClassName("com.jakewharton.rxbinding3.view", "ViewScrollChangeEvent")
+      val RecyclerViewScrollEvent = AliasTypeNames.Rx.RecyclerViewScrollEvent
+      val RxView = AliasTypeNames.Rx.RxView
+      val RxCompoundButton = AliasTypeNames.Rx.RxCompoundButton
+      val RxNestedScrollView = AliasTypeNames.Rx.RxNestedScrollView
+      val RxRecyclerView = AliasTypeNames.Rx.RxRecyclerView
+      val RxSearchView = AliasTypeNames.Rx.RxSearchView
+      val RxSeekBar =  AliasTypeNames.Rx.RxSeekBar
+      val SeekBarChangeEvent =  AliasTypeNames.Rx.SeekBarChangeEvent
+      val SeekBarProgressChangeEvent =  AliasTypeNames.Rx.SeekBarProgressChangeEvent
+      val SeekBarStartChangeEvent =  AliasTypeNames.Rx.SeekBarStartChangeEvent
+      val RxSwipeRefreshLayout = AliasTypeNames.Rx.RxSwipeRefreshLayout
+      val RxTabLayout = AliasTypeNames.Rx.RxTabLayout
+      val RxTextView = AliasTypeNames.Rx.RxTextView
+      val RxToolbar = AliasTypeNames.Rx.RxToolbar
+      val RxViewPager = AliasTypeNames.Rx.RxViewPager
+      val RxViewAttachEvent = AliasTypeNames.Rx.RxViewAttachEvent
+      val RxViewAttachAttachedEvent = AliasTypeNames.Rx.RxViewAttachAttachedEvent
+      val RxViewAttachDetachedEvent = AliasTypeNames.Rx.RxViewAttachDetachedEvent
+      val SearchViewQueryTextEvent = AliasTypeNames.Rx.SearchViewQueryTextEvent
+      val ViewScrollChangeEvent = AliasTypeNames.Rx.ViewScrollChangeEvent
     }
   }
 }

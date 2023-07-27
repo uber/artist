@@ -16,6 +16,7 @@
 
 package com.uber.artist.api
 
+import AliasTypeNames.Rx.Companion.rxExtensionFunctionToAlias
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
@@ -56,4 +57,16 @@ open class KotlinViewStencil(
    * Hook for the type builder implementation.
    */
   override fun typeHook(type: TypeSpec.Builder) {}
+
+  /**
+   * In an attempt to allow for newly created extension functions to co-exist alongside legacy
+   * code and not conflict in the naming, especially for the migration from rxbinding2 to
+   * rxbinding3, we provide an ability for stencils to provide their own aliases.
+   *
+   * This corresponds to the syntax import x as y where x is the extension function and y is the
+   * alias
+   */
+  fun extensionFunctionToAlias(): Map<AliasTypeNames.Rx.Companion.ExtensionFunctionAlias, String> {
+    return rxExtensionFunctionToAlias
+  }
 }
