@@ -204,6 +204,9 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
       }
       .addCode(CodeBlock.builder()
           .apply {
+            add("$rxBindingMethod?.let {\n")
+          }
+          .apply {
             if (rx_alias != null) {
               add("$rx_alias()")
             } else {
@@ -218,7 +221,8 @@ fun addRxBindingApiForSettable(type: TypeSpec.Builder, api: KotlinSettableApi, i
               artistRxConfig.processTap(this)
             }
           }
-          .addStatement(".subscribe($rxBindingMethod)")
+          .addStatement(".subscribe(it)")
+          .addStatement(" }\n")
           .build())
       .endControlFlow()
       .addCode(CodeBlock.builder()
